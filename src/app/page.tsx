@@ -1,8 +1,11 @@
+import { LoginForm } from "@/features/auth/components/login-form";
 
-export default function Home() {
+const App = () => {
   return (
     <div className="">
       hllo
+      <LoginForm/>
     </div>
   );
 }
+export default App;
