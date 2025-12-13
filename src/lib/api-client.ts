@@ -1,5 +1,4 @@
 import { env } from '@/config/env';
-import { redirect } from 'next/navigation';
 
 type RequestOptions = {
   method?: string;
@@ -35,20 +34,11 @@ export async function getServerCookies() : Promise<string> {
     const { cookies } = await import('next/headers');
     const cookieStore = await cookies();
     
-    return cookieStore
-      .getAll()
-      .map((c) => `${c.name}=${c.value}`)
-      .join('; ');
+    return cookieStore.getAll().map((c) => `${c.name}=${c.value}`).join('; ');
   } catch(error) {
     console.error('Failed to access cookies:', error);
     return '';
   }
-}
-
-export function setSessionStorageItem(key : string, value : string) {
-  if(typeof window === 'undefined') return;
-  sessionStorage.setItem(key, value);
-  return;
 }
 
 async function fetchApi<T>(url: string, options: RequestOptions = {}) : Promise<T> {
@@ -59,20 +49,14 @@ async function fetchApi<T>(url: string, options: RequestOptions = {}) : Promise<
   if(typeof window === 'undefined' && !cookie){
     cookieHeader = await getServerCookies();
   }
-
-  let token = '';
-  if(typeof window !== 'undefined'){
-    token = sessionStorage.getItem('access_token') ?? '';
-  }
-
+  
   const fullUrl = buildUrlWithParams(`${env.API_URL}${url}`, params);
 
-  let fetchConfig: RequestInit = {
+  const response = await fetch(fullUrl, {
     method,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
       ...headers,
       ...(cookieHeader ? { Cookie: cookieHeader } : {}),
     },
@@ -80,38 +64,16 @@ async function fetchApi<T>(url: string, options: RequestOptions = {}) : Promise<
     credentials: 'include',
     cache,
     next,
-  }
-
-  let response = await fetch(fullUrl, fetchConfig);
+  });
 
   if(response.status === 401){
-    const refresh = await fetch(buildUrlWithParams(`${env.API_URL}/auth/refresh`, {}),{
-      method: 'POST',
-      credentials: 'include',
-    });
 
-    if(!refresh.ok){
-      // Will implement maybe redirect n clearing sessions
-      const data = await refresh.json()
-      redirect(`/${data?.message}`);
-    }
-
-    const data = await refresh.json()
-    setSessionStorageItem('access_token', data.access_token);
-
-    fetchConfig.headers = {
-      ...(fetchConfig.headers as Record<string, string>),
-      Authorization: `Bearer ${data.access_token}`,
-    };    
-
-    response = await fetch(fullUrl, fetchConfig);
   }
 
   if(!response.ok){
     const message = (await response.json()).message || response.statusText;
     if(typeof window !== 'undefined'){
       /*
-      Will implement by myself later.
       useNotifications.getState().addNotification({
         type: 'error',
         title: 'Error',

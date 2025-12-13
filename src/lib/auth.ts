@@ -2,10 +2,17 @@ import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/r
 import { api } from "./api-client";
 import { User } from "@/types/api";
 
-export const getUser = async (): Promise<User> => {
-  const response = (await api.get('/me')) as { data: User };
+/* === Get User ===*/
 
-  return response.data;
+export const getUser = async () : Promise<User | null> => {
+  try {
+    const response : User = await api.get('/me');
+    if(response === undefined) return null;
+    return response;
+  } catch(error : any) {
+    if(error.status === 401) return null;
+  }
+  return null;
 };
 
 const userQueryKey = ['user'];
@@ -19,20 +26,20 @@ export const getUserQueryOptions = () => {
 
 export const useUser = () => useQuery(getUserQueryOptions());
 
-/*
-const googleEntry = () : Promise<LoginResponse> => {
-  return api.post('/auth/google/login');
+/* === Log Out ===*/
+
+const logout = (): Promise<void> => {
+  return api.post('/auth/logout');
 };
 
-export const useLogin = ({ onSuccess }: { onSuccess?: () => void }) => {
+export const useLogout = ({ onSuccess }: { onSuccess?: () => void }) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: googleEntry,
-    onSuccess: (data) => {
-      queryClient.setQueryData(userQueryKey, data.user);
-      sessionStorage.setItem("access_token", data.access_token)
+    mutationFn: logout,
+    onSuccess: () => {
+      queryClient.removeQueries({ queryKey: userQueryKey });
       onSuccess?.();
     },
   });
 };
-*/
+

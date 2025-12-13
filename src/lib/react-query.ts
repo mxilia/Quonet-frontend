@@ -1,6 +1,7 @@
 import { UseMutationOptions, DefaultOptions } from '@tanstack/react-query';
 
-// Query config (GET)
+/* === Query config (GET) === */
+
 export const queryConfig = {
   queries: {
     // throwOnError: true,
@@ -24,7 +25,8 @@ export type QueryConfig
 > 
 = Omit<ReturnType<T>, 'queryKey' | 'queryFn'>;
 
-// Mutation config (POST/PATCH/DELETE)
+/* === Mutation config (POST/PATCH/DELETE) === */
+
 export type MutationConfig
 <
   MutationFnType extends(...args : any) => Promise<any>

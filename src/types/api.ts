@@ -8,6 +8,12 @@ export type Entity<T> = {
   [K in keyof T]: T[K]
 } & BaseEntity
 
+export type Meta = {
+  page: number;
+  total: number;
+  totalPages: number;
+};
+
 export type User = Entity<{
   handler: string;
   email: string;
@@ -61,14 +67,6 @@ export type Like = Entity<{
   is_positive: boolean;
 }>;
 
-export type RenewAccessTokenResponseEntity = {
-  access_token: string;
-  access_token_expires_at: number;
-};
-
-export type LoginResponse = {
-  user: User;
-
-  access_token: string;
-  access_token_expires_at: number;
-};
+export type LikeCount = {
+  like_count: number;
+}

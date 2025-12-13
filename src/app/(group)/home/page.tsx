@@ -1,14 +1,21 @@
 'use client'
 
-import { Thread } from "@/features/threads/components/thread";
-import { getUser } from "@/lib/auth";
-import { User } from "@/types/api";
+import { useLogout, useUser } from "@/lib/auth";
 
-const Home = async () => {
-  const user : User = await getUser()
+const Home = () => {
+  const { data: user, isLoading, error } = useUser();
+  const logout = useLogout({});
+  if(isLoading) return (
+    <>
+      <div>Is loading..</div>
+    </>
+  )
   return (
     <>
-      <Thread imageUrl={user.profile_url} title={user.handler}></Thread>
+      <button onClick={() => logout.mutate()}>logout</button>
+      <div>
+        Current user: {user?.handler}
+      </div>
     </>
   );
 }
