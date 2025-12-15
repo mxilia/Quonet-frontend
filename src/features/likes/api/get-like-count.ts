@@ -3,10 +3,9 @@ import { QueryConfig } from "@/lib/react-query";
 import { LikeCount } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-export const getLikeCount = ({ parentType = "", ownerId = "", parentId = "", page = 1 } : { parentType : string, ownerId : string, parentId : string, page ?: number }) : Promise<{ data: LikeCount }> => {
-  return api.get('/likes/count', {
+export const getLikeCount = ({ parentType = "", ownerId = "", parentId = ""} : { parentType : string, ownerId : string, parentId : string }) : Promise<LikeCount> => {
+  return api.get('/likes/count/count', {
     params: {
-      page: page,
       parent_type: parentType,
       owner_id: ownerId,
       parent_id: parentId,
@@ -17,8 +16,8 @@ export const getLikeCount = ({ parentType = "", ownerId = "", parentId = "", pag
 export const getLikeCountQueryOptions = (parentType : string, ownerId : string, parentId : string) => {
   return queryOptions({
     queryKey: ['likeCount', parentType, ownerId, parentId],
-    queryFn: ({ pageParam = 1 }) => {
-      return getLikeCount({ parentType, ownerId, parentId, page: pageParam as number });
+    queryFn: () => {
+      return getLikeCount({ parentType, ownerId, parentId });
     },
   })
 }
@@ -27,7 +26,6 @@ type UseLikeCountOptions = {
   parentType: string;
   ownerId: string;
   parentId: string;
-  page?: number;
   queryConfig?: QueryConfig<typeof getLikeCount>;
 };
 

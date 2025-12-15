@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { SelectThread } from "@/features/threads/components/select-thread";
 import { Form } from "@/components/ui/form/form";
 import { Input } from "@/components/ui/form/input";
+import { Textarea } from "@/components/ui/form/textarea";
 
 export const CreatePost = () => {
   const { data: user, isLoading, error } = useUser();
@@ -43,7 +44,7 @@ export const CreatePost = () => {
         ({ register, formState }) => (
           <>
             <Input label="title" type="text" className="border" error={formState.errors.title} registration={register("title")}/>
-            <Input label="content" type="text" className="border" error={formState.errors.content} registration={register("content")}/>
+            <Textarea label="content" className="border" error={formState.errors.content} registration={register("content")}/>
             <SelectThread registeration={register("thread_id")} />
             <button type="submit">Submit</button><br/>
           </>

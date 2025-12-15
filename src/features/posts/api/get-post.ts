@@ -5,7 +5,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 
 /* === Public === */
 
-export const getPost = ({ postId } : { postId : string }) : Promise<{ data: Post }> => {
+export const getPost = ({ postId } : { postId : string }) : Promise<Post> => {
   return api.get(`/posts/${postId}`)
 }
 

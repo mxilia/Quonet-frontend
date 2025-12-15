@@ -5,7 +5,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 
 /* === Get By Id === */
 
-export const getUserById = ({ userId } : { userId : string }) : Promise<{ data: User }> => {
+export const getUserById = ({ userId } : { userId : string }) : Promise<User> => {
   return api.get(`/users/${userId}`);
 }
 
@@ -30,7 +30,7 @@ export const useUserById = ({ userId } : useUserByIdOptions) => {
 
 /* === Get By Handler === */
 
-export const getUserByHandler = ({ handler } : { handler : string }) : Promise<{ data: User }> => {
+export const getUserByHandler = ({ handler } : { handler : string }) : Promise<User> => {
   return api.get(`/users/handler/${handler}`);
 }
 
@@ -55,7 +55,7 @@ export const useUserByHandler = ({ handler } : useUserByHandlerOptions) => {
 
 /* === Get By Email === */
 
-export const getUserByEmail = ({ email } : { email : string }) : Promise<{ data: User }> => {
+export const getUserByEmail = ({ email } : { email : string }) : Promise<User> => {
   return api.get(`/users/email/${email}`);
 }
 

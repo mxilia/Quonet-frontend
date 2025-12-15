@@ -2,17 +2,18 @@
 
 import { CreatePost } from "@/features/posts/components/create-post";
 import { PostsList } from "@/features/posts/components/posts-list";
-import { CreateThread } from "@/features/threads/components/create-thread";
 import { Threads } from "@/features/threads/components/threads";
-import { ThreadList } from "@/features/threads/components/threads-list";
+import { useLogout } from "@/lib/auth";
 
 const App = () => {
+  const logout = useLogout();
   return (
-    <div>
+    <div className="bg-neutral-900 min-h-screen">
       Hello World
-      <Threads/>
+      <Threads />
       <PostsList authorId={""} threadId={""} title={""} />
       <CreatePost />
+      <div onClick={() => logout.mutate()}>logout</div>
     </div>
   );
 }

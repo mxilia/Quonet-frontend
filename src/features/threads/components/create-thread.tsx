@@ -33,7 +33,8 @@ export const CreateThread = () => {
         {
         ({ register, formState }) => (
           <>
-            <Input label="title" type="text" className="border" error={formState.errors.title} registration={register("title")}/>
+            <Input label="Title" type="text" className="border" error={formState.errors.title} registration={register("title")}/>
+            <Input label="Description" type="text" className="border" error={formState.errors.description} registration={register("description")}/>
             <button type="submit" className="border">submit</button>
           </>
         )

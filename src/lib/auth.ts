@@ -32,7 +32,7 @@ const logout = (): Promise<void> => {
   return api.post('/auth/logout');
 };
 
-export const useLogout = ({ onSuccess }: { onSuccess?: () => void }) => {
+export const useLogout = ({ onSuccess }: { onSuccess?: () => void } = {}) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: logout,

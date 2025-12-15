@@ -8,7 +8,7 @@ import { getLikeCountQueryOptions } from "./get-like-count";
 
 export const createLikeInputSchema = z.object({
   parent_id: z.string().min(1, 'Required'),
-  parent_type: z.enum(["", "post", "comment"]),
+  parent_type: z.enum(["post", "comment"]),
   is_positive: z.boolean('Required'),
 });
 
