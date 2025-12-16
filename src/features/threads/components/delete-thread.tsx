@@ -11,14 +11,14 @@ type DeleteThreadProps = {
 export const DeleteThread = ({ threadId } : DeleteThreadProps) => {
   const { data: user, isLoading, error } = useUser();
 
+  if(!canDeleteThread(user)) return null;
   if(isLoading) return (<div>is loading...</div>)
-  if(!canDeleteThread(user)) return <div>forbidden</div>
-
+  
   const deleteThread = useDeleteThread();
 
   return (
     <div>
-      <button className="border border-red-500" onClick={() => deleteThread.mutate({ threadId: threadId })}>delete</button>
+      <button className="text-red-500 text-xs hover:underline" onClick={() => deleteThread.mutate({ threadId: threadId })}>delete</button>
     </div>
   )
 }

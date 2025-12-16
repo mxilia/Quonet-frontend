@@ -38,6 +38,7 @@ export const useLogout = ({ onSuccess }: { onSuccess?: () => void } = {}) => {
     mutationFn: logout,
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: userQueryKey });
+      queryClient.invalidateQueries({ queryKey: userQueryKey });
       onSuccess?.();
     },
   });

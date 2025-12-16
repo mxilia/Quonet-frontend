@@ -3,7 +3,7 @@ import { CreateThread } from './create-thread';
 
 export const Threads = () => {
   return (
-    <div className='border'>
+    <div className="w-full">
       <CreateThread/>
       <ThreadList/>
     </div>

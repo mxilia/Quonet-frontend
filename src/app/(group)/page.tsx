@@ -1,20 +1,16 @@
 'use client';
 
-import { CreatePost } from "@/features/posts/components/create-post";
-import { PostsList } from "@/features/posts/components/posts-list";
+import { Posts } from "@/features/posts/components/posts";
 import { Threads } from "@/features/threads/components/threads";
 import { useLogout } from "@/lib/auth";
 
-const App = () => {
+const Home = () => {
   const logout = useLogout();
   return (
-    <div className="bg-neutral-900 min-h-screen">
-      Hello World
+    <div className="pt-17 bg-black text-white min-h-screen grid grid-cols-3">
       <Threads />
-      <PostsList authorId={""} threadId={""} title={""} />
-      <CreatePost />
-      <div onClick={() => logout.mutate()}>logout</div>
+      <Posts authorId={""} threadId={""} title={""} />
     </div>
   );
 }
-export default App;
+export default Home;

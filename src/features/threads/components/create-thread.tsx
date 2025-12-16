@@ -5,6 +5,7 @@ import { CreateThreadInput, createThreadInputSchema, useCreateThread } from "../
 import { canCreateThread } from "@/lib/authorization";
 import { Form } from "@/components/ui/form/form";
 import { Input } from "@/components/ui/form/input";
+import { Textarea } from "@/components/ui/form/textarea";
 
 
 export const CreateThread = () => {
@@ -34,7 +35,7 @@ export const CreateThread = () => {
         ({ register, formState }) => (
           <>
             <Input label="Title" type="text" className="border" error={formState.errors.title} registration={register("title")}/>
-            <Input label="Description" type="text" className="border" error={formState.errors.description} registration={register("description")}/>
+            <Textarea label="Description" className="border" error={formState.errors.description} registration={register("description")}/>
             <button type="submit" className="border">submit</button>
           </>
         )

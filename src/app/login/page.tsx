@@ -1,7 +1,19 @@
+"use client";
+
 import { path } from "@/config/path";
 import { RedirectButton } from "./_components/redirect-button";
+import { useUser } from "@/lib/auth";
+import { useEffect, useState } from "react";
 
 const LoginPage = () => {
+  const { data: user, isLoading, error } = useUser();
+  const  [redirectPath, setRedirect] = useState("");
+
+  useEffect(() => {
+    if(user) setRedirect(path.home.getHref())
+    else setRedirect(path.auth.oauth.getHref())
+  }, [user]);
+
   return (
     <div className="h-screen flex justify-center items-center bg-neutral-900">
       <div className="bg-neutral-800 h-100 w-100 rounded-xl flex items-center flex-col p-2 gap-2 pt-5">
@@ -10,7 +22,7 @@ const LoginPage = () => {
           <a href="/" className="text-blue-500 hover:underline"> Terms of Service</a> and 
           <a className="text-blue-500 hover:underline"> Privacy Policy.</a>
         </span>
-        <RedirectButton text="Sign in with Google Account" redirectPath={path.auth.oauth.getHref()} imgPath="/google-logo.png"/>
+        <RedirectButton text="Sign in with Google Account" redirectPath={redirectPath} imgPath="/google-logo.png"/>
         <div className="text-neutral-500 flex w-10/12 items-center">
           <div className="border-t w-full h-0"></div>
           <div className="ml-1 mr-1">OR</div>

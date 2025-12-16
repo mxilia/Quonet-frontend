@@ -18,7 +18,7 @@ export const DeletePost = ({ postId, threadId } : DeletePostProps) => {
 
   return (
     <div>
-      <button className="border border-red-500" onClick={() => deletePost.mutate({ postId: postId, authorId: user!.id, threadId: threadId })}>delete</button>
+      <button className="text-red-500 text-xs" onClick={() => deletePost.mutate({ postId: postId, authorId: user!.id, threadId: threadId })}>delete</button>
     </div>
   )
 }

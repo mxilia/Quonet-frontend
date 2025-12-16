@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { AppProvider } from "./provider";
 import { getUserQueryOptions } from "@/lib/auth";
+import { Share_Tech_Mono } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const font = Share_Tech_Mono({
+  weight: "400",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
 });
 
 export const metadata: Metadata = {
@@ -29,7 +25,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
   
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${font.className} antialiased`}>
         <AppProvider>
           <HydrationBoundary state={dehydratedState}>
             {children}

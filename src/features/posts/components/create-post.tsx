@@ -16,11 +16,6 @@ export const CreatePost = () => {
   
   if(isLoading) return (<div>is loading..</div>)
 
-  const redirect = useRedirect();
-  useEffect(() => {
-    if(!canCreatePost(user)) redirect(path.public.login.getHref());
-  }, [user])
-
   if(!canCreatePost(user)) return (<div>go login</div>)
 
   const createPost = useCreatePost({ authorId: user!.id });
@@ -38,7 +33,7 @@ export const CreatePost = () => {
 
   return (
     <div>
-      <h1> post form </h1>
+      <h1> New Post </h1>
       <Form schema={createPostInputSchema} onSubmit={onSubmit}>
         {
         ({ register, formState }) => (

@@ -29,7 +29,10 @@ export const path = {
     },
     about: {
       getHref: () => '/about-us'
-    }
+    },
+    feed: {
+      getHref: () => '/feed'
+    },
   },
   private: {
     settings: {

@@ -43,6 +43,7 @@ export type Post = Entity<{
   like_count: number;
 
   author: User;
+  thread: Thread;
   likes: Like[];
   comments: Comment[];
 }>;

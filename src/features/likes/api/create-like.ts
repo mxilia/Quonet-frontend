@@ -1,3 +1,5 @@
+'use client';
+
 import { api } from "@/lib/api-client";
 import { MutationConfig } from "@/lib/react-query";
 import { Like } from "@/types/api";
