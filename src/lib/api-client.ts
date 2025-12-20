@@ -66,12 +66,9 @@ async function fetchApi<T>(url: string, options: RequestOptions = {}) : Promise<
     next,
   });
 
-  if(response.status === 401){
-
-  }
-
   if(!response.ok){
-    const message = (await response.json()).message || response.statusText;
+    const body = await response.json()
+    const message = body.message || response.statusText;
     if(typeof window !== 'undefined'){
       /*
       useNotifications.getState().addNotification({
@@ -80,6 +77,8 @@ async function fetchApi<T>(url: string, options: RequestOptions = {}) : Promise<
         message,
       });
       */
+     console.log(message);
+     console.log(body);
     }
     throw new Error(message);
   }

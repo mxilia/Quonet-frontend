@@ -17,8 +17,6 @@ export const updatePost = ({ postId, data } : { postId : string, data : UpdatePo
 }
 
 type UpdatePostVariables = {
-  authorId: string;
-  threadId: string;
   postId: string;
   data: UpdatePostInput;
 }
@@ -34,28 +32,10 @@ export const useUpdatePost = ({ mutationConfig } : UseUpdatePostOptions = {}) =>
 
   return useMutation<void, Error, UpdatePostVariables>({
     onSuccess: (data, variables, _onMutateResult, _context) => {
-      const { authorId, threadId, postId } = variables
-
-      if(authorId != "" && threadId !=""){
-        queryClient.invalidateQueries({
-          queryKey: getInfinitePostsQueryOptions(authorId, threadId, "").queryKey,
-        });
-      }
-
-      if(authorId != ""){
-        queryClient.invalidateQueries({
-          queryKey: getInfinitePostsQueryOptions(authorId, "", "").queryKey,
-        });
-      }
-
-      if(threadId !=""){
-        queryClient.invalidateQueries({
-          queryKey: getInfinitePostsQueryOptions("", threadId, "").queryKey,
-        });
-      }
+      const { postId } = variables
 
       queryClient.invalidateQueries({
-        queryKey: getInfinitePostsQueryOptions("", "", "").queryKey,
+        queryKey: getInfinitePostsQueryOptions().queryKey,
       });
 
       queryClient.invalidateQueries({

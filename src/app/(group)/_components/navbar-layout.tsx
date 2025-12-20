@@ -7,12 +7,14 @@ import Link from "next/link";
 
 const Layout = ({ children } : { children: React.ReactNode }) => {
   const { data: user, isLoading, error } = useUser();
-  if(isLoading) return <div>is loading</div>
+  if(isLoading) return <div>is loading</div>;
   return (
     <>
-      <nav className="flex items-center h-17 bg-black fixed w-full pl-50 pr-10 text-white border-b border-b-(--foreground)">
-        <div className="text-2xl text-white mr-10"> Quonet </div>
-        <input placeholder="Search?" className="bg-neutral-600 w-150 h-8 mr-10 rounded-xl text-white pl-4 pr-4"/>
+      <nav className="flex items-center h-17 bg-black/30 backdrop-blur-lg fixed w-full pl-48 pr-10 text-white border-b border-b-(--foreground)">
+        <Link href={path.home.getHref()}>
+          <Image src="/logo.svg" alt="quonet's logo" width={134} height={28} className="mr-5 pb-2 hover:blur-xs transition-all" />
+        </Link>
+        <input placeholder="Search?" className="bg-neutral-700 w-150 h-7 mr-10 rounded-2xl text-white pl-4 pr-4"/>
         <Link href={path.home.getHref()}>
           <div className="mr-10">home</div>
         </Link>

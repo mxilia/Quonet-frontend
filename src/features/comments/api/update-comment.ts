@@ -16,9 +16,6 @@ export const updateComment = ({ commentId, data } : { commentId : string, data :
 }
 
 type UpdateCommentVariables = {
-  authorId: string;
-  parentId: string;
-  rootId: string;
   commentId: string;
   data: UpdateCommentInput;
 }
@@ -34,27 +31,14 @@ export const useUpdateComment = ({ mutationConfig } : UseUpdateCommentOptions = 
 
   return useMutation<void, Error, UpdateCommentVariables>({
     onSuccess: (data, variables, _onMutateResult, _context) => {
-      const { authorId = "", parentId = "", rootId = "", commentId } = variables;
+      const { commentId } = variables;
 
       queryClient.invalidateQueries({
-        queryKey: getCommentQueryOptions(commentId).queryKey
+        queryKey: getInfiniteCommentsQueryOptions().queryKey
       });
-
-      const keysToInvalidate = [
-        [authorId, parentId, rootId],
-        [authorId, parentId, ""],
-        [authorId, "", rootId],
-        ["", parentId, rootId],
-        ["", "", rootId],
-        [authorId, "", ""],
-        ["", parentId, ""],
-        ["", "", ""],       
-      ];
-
-      keysToInvalidate.forEach(([author, parent, root]) => {
-        queryClient.invalidateQueries({
-          queryKey: getInfiniteCommentsQueryOptions(author!, parent!, root!).queryKey
-        })
+      
+      queryClient.invalidateQueries({
+        queryKey: getCommentQueryOptions(commentId).queryKey
       });
 
       onSuccess?.(data, variables, _onMutateResult, _context);

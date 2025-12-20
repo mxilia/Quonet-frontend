@@ -71,3 +71,8 @@ export type Like = Entity<{
 export type LikeCount = {
   like_count: number;
 }
+
+export type LikeState = {
+  is_liked: boolean;
+  is_like_positive: boolean;
+}

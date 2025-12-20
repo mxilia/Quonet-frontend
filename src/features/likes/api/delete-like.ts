@@ -3,6 +3,8 @@ import { MutationConfig } from "@/lib/react-query";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getInfiniteLikesQueryOptions } from "./get-likes";
 import { getLikeCountQueryOptions } from "./get-like-count";
+import { getLikeQueryOptions } from "./get-like";
+import { getLikeStateQueryOptions } from "./get-like-state";
 
 export const deleteLike = ({ likeId } : { likeId : string }) : Promise<void> => {
   return api.delete(`/likes/${likeId}`)
@@ -10,9 +12,8 @@ export const deleteLike = ({ likeId } : { likeId : string }) : Promise<void> => 
 
 type DeleteLikeVariables = {
   likeId: string;
-  parentType: string;
-  ownerId: string;
   parentId: string;
+  parentType?: string;
 };
 
 type useDeleteLikeOptions = {
@@ -26,26 +27,22 @@ export const useDeleteLike = ({ mutationConfig } : useDeleteLikeOptions) => {
 
   return useMutation<void, Error, DeleteLikeVariables>({
     onSuccess: (data, variables, _onMutateResult, _context) => {
-      const { parentType, ownerId, parentId } = variables
+      const { likeId, parentType, parentId } = variables
 
-      const keysToInvalidate = [
-        [parentType, ownerId, parentId],
-        [parentType, ownerId, ""],
-        [parentType, "", parentId],
-        ["", ownerId, parentId],
-        ["", "", parentId],
-        [parentType, "", ""],
-        ["", ownerId, ""],
-        ["", "", ""],       
-      ];
+      queryClient.invalidateQueries({
+        queryKey: getInfiniteLikesQueryOptions(parentType).queryKey
+      });
 
-      keysToInvalidate.forEach(([type, owner, parent]) => {
-        queryClient.invalidateQueries({
-          queryKey: getInfiniteLikesQueryOptions(type, owner, parent).queryKey
-        })
-        queryClient.invalidateQueries({
-          queryKey: getLikeCountQueryOptions(type, owner, parent).queryKey
-        })
+      queryClient.invalidateQueries({
+        queryKey: getLikeCountQueryOptions(parentType, undefined, parentId).queryKey
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: getLikeStateQueryOptions(parentType, parentId).queryKey
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: getLikeQueryOptions(likeId).queryKey
       });
 
       onSuccess?.(data, variables, _onMutateResult, _context);

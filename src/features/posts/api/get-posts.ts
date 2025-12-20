@@ -17,11 +17,21 @@ export const getPosts = ({ authorId = "", threadId = "", title = "", page = 1 } 
   })
 }
 
-export const getInfinitePostsQueryOptions = (authorId : string, threadId : string, title : string) => {
+const postsQueryKey = ({ authorId, threadId, title } : { authorId ?: string, threadId ?: string, title ?: string }) => {
+  const key: unknown[] = ['posts'];
+
+  if(authorId) key.push('author', authorId);
+  if(threadId) key.push('thread', threadId);
+  if(title) key.push('title', spacesToDashes(title));
+
+  return key;
+}
+
+export const getInfinitePostsQueryOptions = (authorId ?: string, threadId ?: string, title ?: string) => {
   return infiniteQueryOptions({
-    queryKey: ['posts', authorId, threadId, title],
+    queryKey: postsQueryKey({ authorId, threadId, title }), 
     queryFn: ({ pageParam = 1 }) => {
-      return getPosts({ authorId: authorId, threadId: threadId, title: title, page: pageParam as number });
+      return getPosts({ authorId: authorId ?? "", threadId: threadId ?? "", title: title ?? "", page: pageParam as number });
     },
     getNextPageParam: (lastPage) => {
       if (lastPage?.meta?.page === lastPage?.meta?.totalPages) return undefined;
@@ -33,14 +43,14 @@ export const getInfinitePostsQueryOptions = (authorId : string, threadId : strin
 }
 
 type UsePostsOptions = {
-  authorId: string;
-  threadId: string;
-  title: string;
+  authorId?: string;
+  threadId?: string;
+  title?: string;
   page?: number;
   queryConfig?: QueryConfig<typeof getPosts>;
 };
 
-export const useInfinitePosts = ({ authorId = "", threadId = "", title = "" }: UsePostsOptions) => {
+export const useInfinitePosts = ({ authorId, threadId, title }: UsePostsOptions) => {
   return useInfiniteQuery({
     ...getInfinitePostsQueryOptions(authorId, threadId, title),
   });

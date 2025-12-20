@@ -2,7 +2,9 @@
 
 :root {
   --foreground: #3c434b;
+  --darker-foreground: #191b1e;
   --background: #000000;
+  --secondary: #81e4ff;
 }
 
 html {

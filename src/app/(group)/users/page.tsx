@@ -1,16 +1,15 @@
-import { FullPost } from "@/features/posts/components/full-post";
 import z from "zod";
 
-const PostPage = async ({ params } : { params: Promise<{ id: string }>}) => {
+const UserPage = async ({ params } : { params: Promise<{ id: string }>}) => {
   const postId = (await params).id;
   /*
     TODO 1: validate id
   */
   return (
     <div className="bg-black min-h-screen pt-17 text-white flex justify-center">
-      <FullPost postId={postId}/>
+      
     </div>
   )
 }
 
-export default PostPage;
+export default UserPage;

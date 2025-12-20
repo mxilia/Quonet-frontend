@@ -14,11 +14,22 @@ export const getComments = ({ authorId = "", parentId = "", rootId = "", page = 
   })
 }
 
-export const getInfiniteCommentsQueryOptions = (authorId : string, parentId : string, rootId : string) => {
+const commentsQueryKey = ({ authorId, parentId, rootId } : { authorId ?: string, parentId ?: string, rootId ?: string }) => {
+  const key: unknown[] = ['comments'];
+
+  if(authorId) key.push('author', authorId);
+  if(parentId) key.push('parent', parentId);
+  if(rootId) key.push('root', rootId);
+
+  return key;
+}
+
+
+export const getInfiniteCommentsQueryOptions = (authorId ?: string, parentId ?: string, rootId ?: string) => {
   return infiniteQueryOptions({
-    queryKey: ['comments', authorId, parentId, rootId],
+    queryKey: commentsQueryKey({ authorId, parentId, rootId }),
     queryFn: ({ pageParam = 1 }) => {
-      return getComments({ authorId: authorId, parentId: parentId, rootId: rootId, page: pageParam as number });
+      return getComments({ authorId: authorId ?? "", parentId: parentId ?? "", rootId: rootId ?? "", page: pageParam as number });
     },
     getNextPageParam: (lastPage) => {
       if (lastPage?.meta?.page === lastPage?.meta?.totalPages) return undefined;
@@ -30,14 +41,14 @@ export const getInfiniteCommentsQueryOptions = (authorId : string, parentId : st
 }
 
 type UseCommentsOptions = {
-  authorId: string;
-  parentId: string;
-  rootId: string;
+  authorId?: string;
+  parentId?: string;
+  rootId?: string;
   page?: number;
   queryConfig?: QueryConfig<typeof getComments>;
 };
 
-export const useInfiniteComments = ({ authorId = "", parentId = "", rootId = "" }: UseCommentsOptions) => {
+export const useInfiniteComments = ({ authorId, parentId, rootId }: UseCommentsOptions) => {
   return useInfiniteQuery({
     ...getInfiniteCommentsQueryOptions(authorId, parentId, rootId),
   });

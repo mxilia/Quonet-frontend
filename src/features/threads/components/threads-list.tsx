@@ -16,7 +16,7 @@ export const SmallThread = ({ thread } : SmallThreadProps) => {
       <div className="inline-flex w-[80%] p-2 rounded-xl items-center gap-2 hover:bg-(--foreground)/30">
         { 
           thread.image_url === "" ? 
-          <div className="rounded-xl h-8 w-8 bg-neutral-700 text-[8px] flex items-center justify-center"> no img </div> 
+          <div className="rounded-xl h-8 w-8 bg-(--foreground) text-[8px] flex items-center justify-center"> no img </div> 
           :
           <Image src={thread.image_url} height={32} width={32} alt="thread img" className="rounded-xl" />
         }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1366 768">
+  <!-- Generator: Adobe Illustrator 29.0.1, SVG Export Plug-In . SVG Version: 2.1.0 Build 192)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #fff;
+        stroke: #000;
+      }
+
+      .st0, .st1 {
+        stroke-miterlimit: 10;
+      }
+
+      .st2, .st1 {
+        fill: #81e3ff;
+      }
+
+      .st1 {
+        stroke: aqua;
+        stroke-width: 15px;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1">
+    <path class="st0" d="M166.55,245.74"/>
+  </g>
+  <g id="Layer_2">
+    <g>
+      <polygon class="st2" points="104.43 541.06 548.17 541.06 436.85 471.87 467.49 324.81 166.72 244.13 104.43 541.06"/>
+      <path class="st1" d="M728.39,430.6"/>
+      <g>
+        <rect class="st2" x="583.57" y="430.68" width="15" height="110.02"/>
+        <rect class="st2" x="631.11" y="490.83" width="15" height="84.72" transform="translate(1171.8 -105.41) rotate(90)"/>
+        <rect class="st2" x="678.53" y="430.68" width="15" height="110.02"/>
+      </g>
+      <g>
+        <rect class="st2" x="872.93" y="430.68" width="15" height="110.02"/>
+        <rect class="st2" x="920.47" y="395.82" width="15" height="84.72" transform="translate(489.79 1366.14) rotate(-90)"/>
+        <rect class="st2" x="967.89" y="430.68" width="15" height="110.02"/>
+      </g>
+      <g>
+        <rect class="st2" x="1066.45" y="478.15" width="15" height="110.02" transform="translate(540.79 1607.12) rotate(-90)"/>
+        <rect class="st2" x="1018.94" y="443.27" width="15" height="84.72" transform="translate(2052.89 971.25) rotate(180)"/>
+        <rect class="st2" x="1066.45" y="383.2" width="15" height="110.02" transform="translate(635.75 1512.16) rotate(-90)"/>
+        <rect class="st2" x="1066.45" y="430.18" width="15" height="110.02" transform="translate(588.77 1559.14) rotate(-90)"/>
+      </g>
+      <g>
+        <rect class="st2" x="1216.33" y="478.15" width="15" height="110.02" transform="translate(690.66 1756.99) rotate(-90)"/>
+        <rect class="st2" x="1168.82" y="430.66" width="15" height="110.01" transform="translate(2352.63 971.32) rotate(180)"/>
+        <rect class="st2" x="1216.33" y="430.18" width="15" height="110.02" transform="translate(738.64 1709.01) rotate(-90)"/>
+      </g>
+      <path class="st2" d="M823.4,445.75v79.97h-79.97v-79.97h79.97M838.4,430.75h-109.97v109.97h109.97v-109.97h0Z"/>
+    </g>
+  </g>
+</svg>

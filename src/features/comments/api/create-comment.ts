@@ -7,50 +7,45 @@ import { getInfiniteCommentsQueryOptions } from "./get-comments";
 
 export const createCommentInputSchema = z.object({
   content: z.string().min(1, "Required"),
-  parent_id: z.string().optional(),
-  root_id: z.string().min(1, "Required"),
 });
 
 export type CreateCommentInput = z.infer<typeof createCommentInputSchema>;
 
-export const createComment = ({ data } : { authorId : string, data : CreateCommentInput }) : Promise<Comment> => {
-  return api.post('/comments', data)
+export const createComment = ({ authorId, parentId, rootId, data } : { authorId : string, parentId : string, rootId : string, data : CreateCommentInput }) : Promise<Comment> => {
+  return api.post('/comments', {
+    ...data,
+    author_id: authorId,
+    parent_id: parentId,
+    root_id: rootId,
+  })
 }
 
-type useCreateCommentOptions = {
+type CreateCommentVariables = {
   authorId: string;
+  parentId: string;
+  rootId: string;
+  data: CreateCommentInput;
+};
+
+type useCreateCommentOptions = {
   mutationConfig?: MutationConfig<typeof createComment>;
 };
 
-export const useCreateComment = ({ authorId, mutationConfig } : useCreateCommentOptions) => {
+export const useCreateComment = ({ mutationConfig } : useCreateCommentOptions = {}) => {
   const queryClient = useQueryClient();
 
   const { onSuccess, ...restConfig } = mutationConfig || {};
 
-  return useMutation({
+  return useMutation<Comment, Error, CreateCommentVariables>({
     onSuccess: (data, variables, _onMutateResult, _context) => {
-      const { parent_id: parentId, root_id: rootId } = variables.data;
 
-      const keysToInvalidate = [
-        [authorId, parentId, rootId],
-        [authorId, parentId, ""],
-        [authorId, "", rootId],
-        ["", parentId, rootId],
-        ["", "", rootId],
-        [authorId, "", ""],
-        ["", parentId, ""],
-        ["", "", ""],       
-      ];
-
-      keysToInvalidate.forEach(([author, parent, root]) => {
-        queryClient.invalidateQueries({
-          queryKey: getInfiniteCommentsQueryOptions(author!, parent!, root!).queryKey
-        })
+      queryClient.invalidateQueries({
+        queryKey: getInfiniteCommentsQueryOptions().queryKey
       });
       
       onSuccess?.(data, variables, _onMutateResult, _context);
     },
     ...restConfig,
-    mutationFn: ({ authorId, data }) => createComment({ authorId, data }),
+    mutationFn: ({ authorId , parentId , rootId , data }) => createComment({ authorId, parentId, rootId, data }),
   });
 }

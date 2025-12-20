@@ -19,42 +19,21 @@ export const createPost = ({ data } : { data : CreatePostInput }) : Promise<Post
 }
 
 type useCreatePostOptions = {
-  authorId: string;
   mutationConfig?: MutationConfig<typeof createPost>;
 };
 
-export const useCreatePost = ({ authorId, mutationConfig } : useCreatePostOptions) => {
+export const useCreatePost = ({ mutationConfig } : useCreatePostOptions = {}) => {
   const queryClient = useQueryClient();
 
   const { onSuccess, ...restConfig } = mutationConfig || {};
 
   return useMutation({
-    onSuccess: (data, variables, _onMutateResult, _context) => {
-      const { thread_id: threadId = "" } = variables.data;
-
-      if(authorId != "" && threadId !=""){
-        queryClient.invalidateQueries({
-          queryKey: getInfinitePostsQueryOptions(authorId, threadId, "").queryKey,
-        });
-      }
-
-      if(authorId != ""){
-        queryClient.invalidateQueries({
-          queryKey: getInfinitePostsQueryOptions(authorId, "", "").queryKey,
-        });
-      }
-
-      if(threadId !=""){
-        queryClient.invalidateQueries({
-          queryKey: getInfinitePostsQueryOptions("", threadId, "").queryKey,
-        });
-      }
-
+    onSuccess: (...args) => {
       queryClient.invalidateQueries({
-        queryKey: getInfinitePostsQueryOptions("", "", "").queryKey,
+        queryKey: getInfinitePostsQueryOptions().queryKey,
       });
 
-      onSuccess?.(data, variables, _onMutateResult, _context);
+      onSuccess?.(...args);
     },
     ...restConfig,
     mutationFn: createPost,

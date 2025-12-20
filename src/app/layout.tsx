@@ -25,7 +25,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
   
   return (
     <html lang="en">
-      <body className={`${font.className} antialiased`}>
+      <body className={`font-arial antialiased`}>
         <AppProvider>
           <HydrationBoundary state={dehydratedState}>
             {children}

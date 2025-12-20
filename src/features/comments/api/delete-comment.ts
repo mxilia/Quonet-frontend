@@ -9,9 +9,6 @@ export const deleteComment = ({ commentId } : { commentId : string }) : Promise<
 }
 
 type DeleteCommentVariables = {
-  authorId: string;
-  parentId: string;
-  rootId: string;
   commentId: string;
 };
 
@@ -26,27 +23,14 @@ export const useDeleteComment = ({ mutationConfig } : useDeleteCommentOptions ) 
 
   return useMutation<void, Error, DeleteCommentVariables>({
     onSuccess: (data, variables, _onMutateResult, _context) => {
-      const { authorId = "", parentId = "", rootId = "", commentId } = variables;
+      const { commentId } = variables;
+      
+      queryClient.invalidateQueries({
+        queryKey: getInfiniteCommentsQueryOptions().queryKey
+      });
 
       queryClient.invalidateQueries({
         queryKey: getCommentQueryOptions(commentId).queryKey
-      });
-
-      const keysToInvalidate = [
-        [authorId, parentId, rootId],
-        [authorId, parentId, ""],
-        [authorId, "", rootId],
-        ["", parentId, rootId],
-        ["", "", rootId],
-        [authorId, "", ""],
-        ["", parentId, ""],
-        ["", "", ""],       
-      ];
-
-      keysToInvalidate.forEach(([author, parent, root]) => {
-        queryClient.invalidateQueries({
-          queryKey: getInfiniteCommentsQueryOptions(author!, parent!, root!).queryKey
-        })
       });
 
       onSuccess?.(data, variables, _onMutateResult, _context);

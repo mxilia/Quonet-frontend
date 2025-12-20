@@ -14,11 +14,21 @@ export const getLikes = ({ parentType = "", ownerId = "", parentId = "", page = 
   })
 }
 
-export const getInfiniteLikesQueryOptions = (parentType : string, ownerId : string, parentId : string) => {
+const likesQueryKey = ({ parentType, ownerId, parentId } : { parentType ?: string, ownerId ?: string, parentId ?: string }) => {
+  const key: unknown[] = ['likes'];
+
+  if(parentType) key.push('type', parentType);
+  if(ownerId) key.push('owner', ownerId);
+  if(parentId) key.push('parent', parentId);
+
+  return key;
+}
+
+export const getInfiniteLikesQueryOptions = (parentType ?: string, ownerId ?: string, parentId ?: string) => {
   return infiniteQueryOptions({
-    queryKey: ['likes', parentType, ownerId, parentId],
+    queryKey: likesQueryKey({ parentType, ownerId, parentId }),
     queryFn: ({ pageParam = 1 }) => {
-      return getLikes({ parentType, ownerId, parentId, page: pageParam as number });
+      return getLikes({ parentType: parentType ?? "", ownerId: ownerId ?? "", parentId: parentId ?? "", page: pageParam as number });
     },
     getNextPageParam: (lastPage) => {
       if (lastPage?.meta?.page === lastPage?.meta?.totalPages) return undefined;
@@ -30,14 +40,14 @@ export const getInfiniteLikesQueryOptions = (parentType : string, ownerId : stri
 }
 
 type UseLikesOptions = {
-  parentType: string;
-  ownerId: string;
-  parentId: string;
+  parentType?: string;
+  ownerId?: string;
+  parentId?: string;
   page?: number;
   queryConfig?: QueryConfig<typeof getLikes>;
 };
 
-export const useInfiniteLikes = ({ parentType = "", ownerId = "", parentId = "" }: UseLikesOptions) => {
+export const useInfiniteLikes = ({ parentType, ownerId, parentId }: UseLikesOptions) => {
   return useInfiniteQuery({
     ...getInfiniteLikesQueryOptions(parentType, ownerId, parentId),
   });

@@ -19,9 +19,7 @@ export const Form = <Shape extends ZodRawShape>({ schema, className, children, o
   return (
     <FormProvider {...form}>
       <form className={className} onSubmit={form.handleSubmit(onSubmit)}>
-        <fieldset disabled={form.formState.isSubmitting}>
-          { children(form) }
-        </fieldset>
+        { children(form) }
       </form>
     </FormProvider>
   )

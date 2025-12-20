@@ -11,8 +11,6 @@ export const deletePost = ({ postId } : { postId : string }) : Promise<void> => 
 
 type DeletePostVariables = {
   postId: string;
-  authorId?: string;
-  threadId?: string;
 };
 
 type useDeletePostOptions = {
@@ -26,33 +24,15 @@ export const useDeletePost = ({ mutationConfig } : useDeletePostOptions = {}) =>
 
   return useMutation<void, Error, DeletePostVariables>({
     onSuccess: (data, variables, _onMutateResult, _context) => {
-      const { postId, threadId = "", authorId = "" } = variables;
-
-      if(authorId != "" && threadId !=""){
-        queryClient.invalidateQueries({
-          queryKey: getInfinitePostsQueryOptions(authorId, threadId, "").queryKey,
-        });
-      }
-
-      if(authorId != ""){
-        queryClient.invalidateQueries({
-          queryKey: getInfinitePostsQueryOptions(authorId, "", "").queryKey,
-        });
-      }
-
-      if(threadId !=""){
-        queryClient.invalidateQueries({
-          queryKey: getInfinitePostsQueryOptions("", threadId, "").queryKey,
-        });
-      }
+      const { postId } = variables;
 
       queryClient.invalidateQueries({
-        queryKey: getInfinitePostsQueryOptions("", "", "").queryKey,
+        queryKey: getInfinitePostsQueryOptions().queryKey,
       });
 
       queryClient.invalidateQueries({
         queryKey: getPostQueryOptions(postId).queryKey,
-      })
+      });
       
       onSuccess?.(data, variables, _onMutateResult, _context);
     },
