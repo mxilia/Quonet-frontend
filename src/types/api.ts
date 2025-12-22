@@ -68,6 +68,12 @@ export type Like = Entity<{
   is_positive: boolean;
 }>;
 
+export type Announcement = Entity<{
+  author_id: string;
+  content: string;
+  author: User;
+}>
+
 export type LikeCount = {
   like_count: number;
 }

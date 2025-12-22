@@ -37,7 +37,7 @@ export const FullPost = ({ postId } : FullPostProps) => {
       </Link>
       <div className="text-3xl text-neutral-100 inline mt-3">{ post?.title }</div>
       <p className="whitespace-pre-line mt-3 text-[16px] text-neutral-100">{ post?.content }</p>
-      <ImageFrame src={"/temp.png"} height={80} width={80} imgClassName="w-50" zoomClassName="w-80" className="flex justify-center mt-3 bg-(--darker-foreground) rounded-xl" alt={""} />
+      <ImageFrame src={"/temp.png"} height={80} width={80} imgClassName="w-50" className="flex justify-center mt-3 bg-(--darker-foreground) rounded-xl" alt={""} />
       <div className="inline-flex gap-2 items-center text-[16px] text-neutral-200 mt-2">
         Posted by
         <Image src={ post?.author.profile_url ? post.author.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" className="border rounded-xl w-8 h-8 flex items-center justify-center bg-white" />

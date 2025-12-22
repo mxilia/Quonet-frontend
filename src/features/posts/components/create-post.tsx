@@ -16,14 +16,12 @@ type CreatePostProps = {
 }
 
 export const CreatePost = ({ active, setActive } : CreatePostProps ) => {
-  const { data: user, isLoading, error } = useUser();
+  const user = useUser();
   const resetRef = useRef<(() => void) | null>(null);
-  
-  if(isLoading) return (<div>is loading..</div>)
-
-  if(!canCreatePost(user)) return (<div>go login</div>)
-
   const createPost = useCreatePost();
+  
+  if(user.isLoading) return (<div>is loading..</div>)
+  if(!canCreatePost(user.data)) return (<div>go login</div>)
 
   const onSubmit = async (data : CreatePostInput) => {
     createPost.mutate(

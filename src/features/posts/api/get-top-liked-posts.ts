@@ -17,22 +17,33 @@ export const getTopLikedPosts = ({ authorId = "", threadId = "", title = "", lim
   });
 }
 
-export const getTopLikedPostsQueryOptions = (authorId : string, threadId : string, title : string, limit ?: number) => {
+const topLikedPostsQueryKey = ({ authorId, threadId, title, limit } : { authorId ?: string, threadId ?: string, title ?: string, limit ?: number }) => {
+  const key: unknown[] = ['posts', 'top-liked'];
+
+  if(authorId) key.push('author', authorId);
+  if(threadId) key.push('thread', threadId);
+  if(title) key.push('title', spacesToDashes(title));
+  if(limit) key.push('limit', limit);
+
+  return key;
+}
+
+export const getTopLikedPostsQueryOptions = (authorId ?: string, threadId ?: string, title ?: string, limit ?: number) => {
   return queryOptions({
-    queryKey: ['posts', 'top-liked', 'author', authorId, 'thread', threadId, 'title', title, 'limit', limit],
-    queryFn: () => getTopLikedPosts({authorId, threadId, title, limit}),
-  })
+    queryKey: topLikedPostsQueryKey({authorId, threadId, title, limit}),
+    queryFn: () => getTopLikedPosts({ authorId: authorId ?? "", threadId: threadId ?? "", title: title ?? "", limit: limit ?? 3 }),
+  });
 }
 
 type useTopLikedPostsOptions = {
-  authorId: string;
-  threadId: string; 
-  title: string;
+  authorId?: string;
+  threadId?: string; 
+  title?: string;
   limit?: number;
   queryConfig?: QueryConfig<typeof getTopLikedPostsQueryOptions>;
 }
 
-export const useTopLikedPosts = ({ authorId = "", threadId = "", title = "", limit = 3, queryConfig } : useTopLikedPostsOptions) => {
+export const useTopLikedPosts = ({ authorId, threadId, title, limit = 3, queryConfig } : useTopLikedPostsOptions) => {
   return useQuery({
     ...getTopLikedPostsQueryOptions(authorId, threadId, title, limit),
     ...queryConfig,

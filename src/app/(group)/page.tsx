@@ -1,7 +1,11 @@
 'use client';
 
+import { AnnouncementsLists } from "@/features/announcements/components/announcements-list";
 import { CreatePost } from "@/features/posts/components/create-post";
 import { PostsList } from "@/features/posts/components/posts-list";
+import { TopLikedPostsList } from "@/features/posts/components/top-liked-post-list";
+import { CreateThread } from "@/features/threads/components/create-thread";
+import { ThreadList } from "@/features/threads/components/threads-list";
 import { useUser } from "@/lib/auth";
 import Image from "next/image";
 import { useState } from "react";
@@ -11,12 +15,16 @@ const Home = () => {
   const [active, setActive] = useState(false);
   return (
     <div className="pt-22 bg-black text-white min-h-screen flex flex-col items-center">
-      <CreatePost active={active} setActive={setActive} />
-      <div onClick={() => {setActive(true)}} className="flex gap-2 bg-(--darker-foreground) p-2 rounded-xl items-center">
-        <Image src={user.data?.profile_url ? user.data.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" className="w-9 h-9 rounded-full border bg-white" />
-        <div className="bg-black rounded-2xl text-sm p-2 pl-4 text-neutral-300 w-145"> Say something to the world? </div>
+      <div className="flex flex-col items-center grow w-150 p-2">
+        <CreatePost active={active} setActive={setActive} />
+        <div onClick={() => {setActive(true)}} className="w-full flex gap-2 bg-(--darker-foreground) p-2 rounded-xl items-center mb-2">
+          <Image src={user.data?.profile_url ? user.data.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" className="w-9 h-9 rounded-full border bg-white" />
+          <div className="bg-black rounded-2xl text-sm p-2 pl-4 text-neutral-300 w-full"> Say something to the world? </div>
+        </div>
+        <AnnouncementsLists />
+        <TopLikedPostsList />
+        <ThreadList />
       </div>
-      <PostsList />
     </div>
   );
 }

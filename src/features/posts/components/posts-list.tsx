@@ -24,7 +24,7 @@ type MediumPostProps = {
 
 const MediumPost = ({ post } : MediumPostProps) => {
   return (
-    <div className="inline-flex flex-col w-160 border border-(--foreground) p-3 rounded-xl mt-5">
+    <div className="inline-flex flex-col w-150 border border-(--foreground) p-3 rounded-xl mt-5">
       <div className="inline-flex gap-2">
         <Image src={ post.author.profile_url ? post.author.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" className="border rounded-2xl w-10 h-10 flex items-center justify-center bg-white"/>
         <div>
@@ -47,7 +47,7 @@ const MediumPost = ({ post } : MediumPostProps) => {
         </div>
       </Link>
       <p className="whitespace-pre-line mt-3 text-[16px] text-neutral-200">{ post.content }</p>
-      <ImageFrame src={"/temp.png"} height={80} width={80} imgClassName="w-50" zoomClassName="w-80" className="flex justify-center mt-3 bg-(--darker-foreground) rounded-xl" alt={""} />
+      <ImageFrame src={"/temp.png"} height={80} width={80} imgClassName="w-50" className="flex justify-center mt-3 bg-(--darker-foreground) rounded-xl" alt={""} />
       <div className="mt-3 flex gap-2 items-center">
         <LikeModify parentId={post.id} parentType="post" className="flex gap-2 bg-(--darker-foreground) p-2.5 rounded-xl">
           {

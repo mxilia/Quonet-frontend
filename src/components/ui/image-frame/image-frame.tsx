@@ -12,10 +12,9 @@ type ImageFrameProps = {
   imgClassName?: string
   fallbackPath?: string;
   className?: string;
-  zoomClassName?: string;
 }
 
-export const ImageFrame = ({ src, width, height, alt, imgClassName, fallbackPath, className, zoomClassName } : ImageFrameProps) => {
+export const ImageFrame = ({ src, width, height, alt, imgClassName, fallbackPath, className } : ImageFrameProps) => {
   const [zoom, setZoom] = useState(false);
   return (
     <>
@@ -25,7 +24,7 @@ export const ImageFrame = ({ src, width, height, alt, imgClassName, fallbackPath
       {zoom && 
         <>
           <div className="fixed top-0 left-0 z-10 h-screen w-screen flex justify-center items-center" onClick={() => setZoom(false)}>
-            <Image src={src} width={width*2} height={height*2} className={zoomClassName} alt={alt}/>
+            <Image src={src} width={160} height={160} className="w-80" alt={alt}/>
           </div>
           <BlurBackground />
         </>

@@ -6,10 +6,19 @@ import { getUserByEmailQueryOptions, getUserByHandlerQueryOptions, getUserByIdQu
 import { getInfiniteUsersQueryOptions } from "./get-users";
 
 export const updateUserInputSchema = z.object({
-  handler: z.string(),
-	profile_url: z.string(),
-	role: z.string(),
-});
+  handler: z.string().trim().max(16, "username cannot be longer than 16 characters long").optional().refine(
+    v => v === undefined || v.length >= 1,
+    "username must be at least 1 character long"
+  ),
+	profile_url: z.string().optional(),
+	role: z.enum(["owner", "admin", "member"]).optional(),
+})
+.refine(
+  (data) => Object.values(data).some(v => v !== undefined && v !== ""),
+  {
+    message: "at least one field must be filled",
+  }
+);
 
 export type UpdateUserInput = z.infer<typeof updateUserInputSchema>;
 

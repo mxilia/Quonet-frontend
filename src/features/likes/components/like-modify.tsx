@@ -35,31 +35,3 @@ export const LikeModify = ({ parentId, parentType, children, className } : LikeM
     </div>
   );
 }
-/*
-
-<div className={`rounded-lg ${ likeState.data && likeState.data.is_liked && likeState.data.is_like_positive ? "bg-(--secondary)" : ""}`} onClick={() => {
-        if(!canCreateLike(user.data)) return;
-        createLike.mutate({
-          data: {
-            parent_id: parentId,
-            parent_type: parentType,
-            is_positive: true,
-          }
-        });
-      }}>
-        like
-      </div>
-      <div className="text-white">{ likeCount.data?.like_count }</div>
-      <div className={`rounded-lg ${ likeState.data && likeState.data.is_liked && !likeState.data.is_like_positive ? "bg-(--secondary)" : ""}`} onClick={() => {
-        if(!canCreateLike(user.data)) return;
-        createLike.mutate({
-          data: {
-            parent_id: parentId,
-            parent_type: parentType,
-            is_positive: false,
-          },
-        });
-      }}>
-        dislike
-      </div>
-      */
