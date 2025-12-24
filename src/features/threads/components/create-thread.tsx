@@ -36,6 +36,7 @@ export const CreateThread = () => {
           <>
             <Input label="Title" type="text" className="border" error={formState.errors.title} registration={register("title")}/>
             <Textarea label="Description" className="border" error={formState.errors.description} registration={register("description")}/>
+            <Input label="Image" registration={register("image")} type="file" accept="image/*" />
             <button type="submit" className="border">submit</button>
           </>
         )

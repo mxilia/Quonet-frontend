@@ -10,7 +10,7 @@ export const updateUserInputSchema = z.object({
     v => v === undefined || v.length >= 1,
     "username must be at least 1 character long"
   ),
-	profile_url: z.string().optional(),
+	bio: z.string().max(2000, "bio cannot be longer than 2000 characters long").optional(),
 	role: z.enum(["owner", "admin", "member"]).optional(),
 })
 .refine(

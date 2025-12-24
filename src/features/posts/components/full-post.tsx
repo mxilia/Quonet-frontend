@@ -41,21 +41,27 @@ export const FullPost = ({ postId } : FullPostProps) => {
       <div className="inline-flex gap-2 items-center text-[16px] text-neutral-200 mt-2">
         Posted by
         <Image src={ post?.author.profile_url ? post.author.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" className="border rounded-xl w-8 h-8 flex items-center justify-center bg-white" />
-        { post.author.handler } • { timestampToDate(post.created_at) }
+        <Link href={path.public.user.getHref(post.author_id)} className="hover:underline">{ post.author.handler }</Link> • { timestampToDate(post.created_at) }
       </div>
       <div className="mt-3 flex justify-between mb-4">
         <LikeModify parentId={post.id} parentType="post" className="flex gap-2 bg-(--darker-foreground) p-2 rounded-xl">
           {
             ({ parentId, parentType, likeState, user, createLike, likeCount }) => 
-            <>
+              <>
               <LikeButton 
                 parentId={parentId} 
                 parentType={parentType} 
                 createLike={createLike} 
                 likeState={likeState} 
                 user={user} value={true} 
-                className=""
-                activatedClassName="bg-(--foreground)"
+                className="w-0 h-0 
+                          border-l-8 border-l-transparent
+                          border-r-8 border-r-transparent
+                          border-b-12 border-b-neutral-200"
+                activatedClassName="w-0 h-0 
+                          border-l-8 border-l-transparent
+                          border-r-8 border-r-transparent
+                          border-b-12 border-b-(--secondary)"
               />
               <LikeCounter likeCount={likeCount} />
               <LikeButton 
@@ -64,8 +70,14 @@ export const FullPost = ({ postId } : FullPostProps) => {
                 createLike={createLike} 
                 likeState={likeState} 
                 user={user} value={false} 
-                className=""
-                activatedClassName="bg-(--foreground)"
+                className="w-0 h-0 
+                          border-l-8 border-l-transparent
+                          border-r-8 border-r-transparent
+                          border-t-12 border-t-neutral-200"
+                activatedClassName="w-0 h-0 
+                          border-l-8 border-l-transparent
+                          border-r-8 border-r-transparent
+                          border-t-12 border-t-(--secondary)"
               />
             </>
           }

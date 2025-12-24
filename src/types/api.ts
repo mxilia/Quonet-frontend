@@ -18,6 +18,7 @@ export type User = Entity<{
   handler: string;
   email: string;
   profile_url: string;
+  bio: string;
   role: 'member' | 'admin' | 'owner';
   is_banned: boolean;
   banned_until: number;
@@ -29,6 +30,7 @@ export type User = Entity<{
 
 export type Thread = Entity<{
   title: string;
+  description: string;
   image_url: string;
   posts: Post[];
 }>;

@@ -1,3 +1,5 @@
+"use client";
+
 import { useInfinitePosts } from "../api/get-posts";
 import { DeletePost } from "./delete-post";
 import { UpdatePost } from "./update-post";
@@ -28,7 +30,7 @@ const MediumPost = ({ post } : MediumPostProps) => {
       <div className="inline-flex gap-2">
         <Image src={ post.author.profile_url ? post.author.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" className="border rounded-2xl w-10 h-10 flex items-center justify-center bg-white"/>
         <div>
-          <div className="text-[16px] text-neutral-300 inline">{ post.author.handler }</div>
+          <Link href={path.public.user.getHref(post.author.id)} className="hover:underline text-[16px] text-neutral-300 inline">{ post.author.handler }</Link>
           <div className="text-xs text-neutral-500">{ timestampToDate(post.created_at) }</div>
         </div>
       </div>
@@ -59,7 +61,14 @@ const MediumPost = ({ post } : MediumPostProps) => {
                 createLike={createLike} 
                 likeState={likeState} 
                 user={user} value={true} 
-                className=""
+                className="w-0 h-0 
+                          border-l-8 border-l-transparent
+                          border-r-8 border-r-transparent
+                          border-b-12 border-b-neutral-200"
+                activatedClassName="w-0 h-0 
+                          border-l-8 border-l-transparent
+                          border-r-8 border-r-transparent
+                          border-b-12 border-b-(--secondary)"
               />
               <LikeCounter likeCount={likeCount} />
               <LikeButton 
@@ -68,7 +77,14 @@ const MediumPost = ({ post } : MediumPostProps) => {
                 createLike={createLike} 
                 likeState={likeState} 
                 user={user} value={false} 
-                className=""
+                className="w-0 h-0 
+                          border-l-8 border-l-transparent
+                          border-r-8 border-r-transparent
+                          border-t-12 border-t-neutral-200"
+                activatedClassName="w-0 h-0 
+                          border-l-8 border-l-transparent
+                          border-r-8 border-r-transparent
+                          border-t-12 border-t-(--secondary)"
               />
             </>
           }
@@ -108,6 +124,8 @@ export const PostsList = ({ authorId, threadId, title } : PostsListProps) => {
   if(postsQuery.isLoading) return ( <div> loading.. </div> );
 
   const posts = postsQuery.data?.pages.flatMap((page) => page.data);
+
+  if(!posts || posts?.length === 0) return <div>no posts found</div>
   
   return (
     <div className="inline-flex flex-col">

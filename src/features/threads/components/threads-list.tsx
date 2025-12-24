@@ -1,9 +1,13 @@
+'use client';
+
 import { Thread } from "@/types/api";
 import { useInfiniteThreads } from "../api/get-threads"
 import { DeleteThread } from "./delete-thread";
 import Image from "next/image";
 import Link from "next/link";
 import { path } from "@/config/path";
+import { useDebounce } from "@/utils/debounce";
+import { useState } from "react";
 
 type SmallThreadProps = {
   thread: Thread;
@@ -30,14 +34,16 @@ export const SmallThread = ({ thread } : SmallThreadProps) => {
 }
 
 export const ThreadList = () => {
-  const threadsQuery = useInfiniteThreads();
-  if(threadsQuery.isLoading) return <div> loading.. </div> ;
+  const [searchString, setSearchString] = useState("");
+  const debouncedSearch = useDebounce(searchString, 300);
 
+  const threadsQuery = useInfiniteThreads({ title: debouncedSearch });
   const threads = threadsQuery.data?.pages.flatMap((page) => page.data);
 
   return (
     <div className="w-full inline-flex flex-col mt-2 grow">
-      <h1 className="text-xl w-full mb-2">Topics you might like</h1>
+      <h1 className="text-xl w-full mb-1">Topics you might like</h1>
+      <input placeholder="Search for thread?" className="bg-neutral-950 text-sm border-(--foreground) border mr-10 mt-1 rounded-lg p-1 mb-2 px-3 w-full" type="text" onChange={(e) => {setSearchString(e.target.value)}} />
       <div className="inline-flex flex-col grow gap-1 w-full overflow-y-scroll no-scrollbar">
         {
           threads?.map((e) => (<SmallThread key={`list-${e.id}`} thread={e}/>))

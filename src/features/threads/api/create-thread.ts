@@ -5,10 +5,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import z from "zod";
 import { getInfiniteThreadsQueryOptions } from "./get-threads";
 
+const MAX_SIZE = 1*1024*1024;
+const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
 export const createThreadInputSchema = z.object({
   title: z.string().min(1, 'Required'),
   description: z.string().min(1, "Required"),
-  image_url: z.string().optional(),
+  image: z.custom<File | undefined>().optional().refine((file) => !file || file.size <= MAX_SIZE, {
+      message: "Max file size is 1MB",
+    })
+    .refine((file) => !file || ACCEPTED_TYPES.includes(file.type), {
+      message: "Only JPG, PNG, WEBP allowed",
+    }),
 });
 
 export type CreateThreadInput = z.infer<typeof createThreadInputSchema>;

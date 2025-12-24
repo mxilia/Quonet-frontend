@@ -8,6 +8,8 @@ import { LikeModify } from "@/features/likes/components/like-modify";
 import { useUser } from "@/lib/auth";
 import { LikeButton } from "@/features/likes/components/like-button";
 import { LikeCounter } from "@/features/likes/components/like-counter";
+import Link from "next/link";
+import { path } from "@/config/path";
 
 type CommentBox = {
   comment: Comment;
@@ -36,11 +38,11 @@ const CommentBox = ({ comment, rootId, depth, setHandler, setIsReplying, setPare
       <div className="flex items-stretch gap-2">
         <div className="flex flex-col items-center pt-1.5 shrink-0">
           <Image src={ comment.author.profile_url ? comment.author.profile_url : "/default-avatar.png"} height={32} width={32} alt="user profile" className="border rounded-2xl w-8 flex items-center justify-center bg-white"/>
-          {showMore && <div className="mt-1 flex-1 w-px bg-(--foreground)"></div>}
+          {showMore && false && <div className="mt-1 flex-1 w-px bg-(--foreground)"></div>}
         </div>
 
         <div className="flex flex-col flex-1">
-          <div className="text-neutral-200 text-sm">{comment.author.handler}</div>
+          <Link href={path.public.user.getHref(comment.author_id)} className="text-neutral-200 text-sm hover:underline w-fit">{comment.author.handler}</Link>
           <p className="whitespace-pre-line text-md text-neutral-100">{ comment.content }</p>
           <div className="flex gap-2">
             <LikeModify parentId={comment.id} parentType="comment" className="flex gap-2">
@@ -53,7 +55,14 @@ const CommentBox = ({ comment, rootId, depth, setHandler, setIsReplying, setPare
                     createLike={createLike} 
                     likeState={likeState} 
                     user={user} value={true} 
-                    className="text-xs text-neutral-300"
+                    className="w-0 h-0 
+                          border-l-6 border-l-transparent
+                          border-r-6 border-r-transparent
+                          border-b-8 border-b-neutral-200"
+                    activatedClassName="w-0 h-0 
+                              border-l-6 border-l-transparent
+                              border-r-6 border-r-transparent
+                              border-b-8 border-b-(--secondary)"
                   />
                   <LikeCounter likeCount={likeCount} className="text-xs text-(--secondary)" />
                   <LikeButton 
@@ -62,7 +71,14 @@ const CommentBox = ({ comment, rootId, depth, setHandler, setIsReplying, setPare
                     createLike={createLike} 
                     likeState={likeState} 
                     user={user} value={false} 
-                    className="text-xs text-neutral-300"
+                    className="w-0 h-0 
+                          border-l-6 border-l-transparent
+                          border-r-6 border-r-transparent
+                          border-t-8 border-t-neutral-200"
+                    activatedClassName="w-0 h-0 
+                              border-l-6 border-l-transparent
+                              border-r-6 border-r-transparent
+                              border-t-8 border-t-(--secondary)"
                   />
                 </>
               }

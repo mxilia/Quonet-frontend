@@ -3,7 +3,7 @@ import { QueryConfig } from "@/lib/react-query";
 import { Thread } from "@/types/api";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-export const getThread = ({ threadId } : { threadId : string }) : Promise<{ data: Thread }> => {
+export const getThread = ({ threadId } : { threadId : string }) : Promise<Thread> => {
   return api.get(`/threads/${threadId}`)
 }
 

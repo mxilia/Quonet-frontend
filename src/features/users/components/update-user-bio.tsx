@@ -1,17 +1,14 @@
 'use client';
 
 import { useUser } from "@/lib/auth";
-import { UpdateUserInput, updateUserInputSchema, useUpdateUser } from "../api/update-user"
-import { Input } from "@/components/ui/form/input";
+import { UpdateUserInput, updateUserInputSchema, useUpdateUser } from "../api/update-user";
 import { Form } from "@/components/ui/form/form";
-import { useRef } from "react";
+import { Textarea } from "@/components/ui/form/textarea";
 import { useRouter } from 'next/navigation';
 
-
-export const UpdateUserHandler = () => {
+export const UpdateUserBio = () => {
   const user = useUser();
   const updateUser = useUpdateUser();
-  const resetRef = useRef<(() => void) | null>(null);
   const router = useRouter();
 
   const onSubmit = async (data : UpdateUserInput) => {
@@ -24,9 +21,8 @@ export const UpdateUserHandler = () => {
         },
         {
           onSuccess: () => {
-            resetRef.current?.();
+            console.log("User updated!");
             router.refresh();
-            console.log("Thread created!");
           },
         }
       )
@@ -37,11 +33,10 @@ export const UpdateUserHandler = () => {
     <div className="border-b pb-2 border-(--foreground) mb-2">
       <Form schema={updateUserInputSchema} onSubmit={onSubmit}>
         {
-          ({ register, formState, reset }) => {
-            resetRef.current = reset;
+          ({ register, formState }) => {
             return (
               <>
-                <Input label="Handler" registration={register("handler")} error={formState.errors.handler} defaultValue={user.data?.handler} className="text-sm border bg-neutral-950 border-(--foreground) mb-1 rounded-lg w-50 p-1 px-2"/>
+                <Textarea label="Bio" registration={register("bio")} error={formState.errors.bio} placeholder="Enter info about yourself that you want to share." className="text-sm border bg-neutral-950 border-(--foreground) rounded-xl w-full h-20 p-1 px-2 no-scrollbar" />
                 <button className="border border-(--foreground) hover:text-(--secondary) hover:border-(--secondary) p-1 px-2 rounded-xl text-sm text-neutral-200">submit</button>
               </>
             )

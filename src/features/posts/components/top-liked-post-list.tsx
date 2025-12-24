@@ -1,3 +1,5 @@
+'use client';
+
 import { Post } from "@/types/api";
 import { useTopLikedPosts } from "../api/get-top-liked-posts";
 import { ImageFrame } from "@/components/ui/image-frame/image-frame";
@@ -25,7 +27,12 @@ export const SmallPost = ({ post } : SmallPostProps ) => {
           <p className="line-clamp-3 text-xs text-neutral-400 h-12 max-w-30 whitespace-pre-line">{post.content}</p>
         </div>
       </div>
-      <div className="text-xs text-neutral-300 h-3">posted by {post.author.handler}</div>
+      <div className="text-xs text-neutral-300 h-3">
+        {`posted by `}
+        <Link href={path.public.user.getHref(post.author.id)} className="hover:underline">
+        {post.author.handler}
+        </Link>
+      </div>
       <Link href={path.public.post.getHref(post.id)} className="text-xs text-(--secondary) hover:underline">(view full)</Link>
     </div>
   )

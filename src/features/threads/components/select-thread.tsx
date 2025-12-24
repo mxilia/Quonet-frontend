@@ -2,28 +2,34 @@
 
 import { useInfiniteThreads } from "../api/get-threads";
 import { Select } from "@/components/ui/form/select";
+import { useDebounce } from "@/utils/debounce";
+import { useMemo, useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 type SelectThreadProps = {
   registeration: Partial<UseFormRegisterReturn>;
+  label?: string;
+  className?: string;
+  searchBarClassName?: string;
 }
 
-export const SelectThread = ({ registeration } : SelectThreadProps) => {
-  const threadsQuery = useInfiniteThreads();
-
-  if(threadsQuery.isLoading) return <div>loading..</div>;
-
+export const SelectThread = ({ registeration, label, className, searchBarClassName } : SelectThreadProps) => {
+  const [searchString, setSearchString] = useState("");
+  const debouncedSearch = useDebounce(searchString, 300);
+  
+  const threadsQuery = useInfiniteThreads({ title: debouncedSearch });
   const threads = threadsQuery?.data?.pages.flatMap((page) => page.data);
-  const options = threads?.map((thread) => (
-    {
-      label: thread.title, 
-      value: thread.id
-    }
-  ));
-
+  
+  const options = useMemo(() => {
+    return threads?.map((thread) => ({
+      label: thread.title,
+      value: thread.id,
+    }));
+  }, [threads]);
   return (
     <>
-      <Select options={options} registration={registeration} />
+      <Select label={label} className={className} options={options} registration={registeration} />
+      <input placeholder="Search for thread?" className={searchBarClassName} type="text" onChange={(e) => {setSearchString(e.target.value)}} />
     </>
   )
 }

@@ -1,0 +1,22 @@
+import { PostsList } from "@/features/posts/components/posts-list";
+import { TopLikedPostsList } from "@/features/posts/components/top-liked-post-list";
+import { FullUser } from "@/features/users/components/full-user";
+import z from "zod";
+
+const UserPage = async ({ params } : { params: Promise<{ id: string }>}) => {
+  const userId = (await params).id;
+  /*
+    TODO 1: validate id
+  */
+  return (
+    <div className="bg-black min-h-screen pt-17 text-white flex justify-center">
+      <div className="inline-flex flex-col w-150 pt-3">
+        <FullUser userId={userId} />
+        <TopLikedPostsList authorId={userId} />
+        <PostsList authorId={userId} />
+      </div>
+    </div>
+  )
+}
+
+export default UserPage;

@@ -10,7 +10,7 @@ type LikeButtonProps = Omit<LikeModifyChildrenProps, "likeCount"> &
 
 export const LikeButton = ({ parentId, parentType, createLike, likeState, user, value, className, activatedClassName } : LikeButtonProps) => {
   return (
-    <div className={`select-none ${className} ${ likeState.data && likeState.data.is_liked && likeState.data.is_like_positive === value ? activatedClassName : ""}`} onClick={() => {
+    <div className="flex justify-center items-center p-1 rounded-sm hover:bg-(--secondary)/10" onClick={() => {
       if(user.isLoading) return;
       if(!canCreateLike(user.data)) return;
       createLike.mutate({
@@ -21,7 +21,8 @@ export const LikeButton = ({ parentId, parentType, createLike, likeState, user, 
         }
       });
     }}>
-      {value ? "like" : "dislike"}
+      <div className={`select-none ${ likeState.data !== undefined && likeState.data.is_liked === true && likeState.data.is_like_positive === value ? activatedClassName : className}`}>
+      </div>
     </div>
   )
 }
