@@ -12,18 +12,31 @@ export const createPostInputSchema = z.object({
   title: z.string().min(1, 'Required'),
   thread_id: z.string().min(1, 'Required'),
   content: z.string().min(1, 'Required'),
-  thumbnail: z.custom<File | undefined>().optional().refine((file) => !file || file.size <= MAX_SIZE, {
-    message: "Max file size is 1MB",
+  thumbnail: z.any()
+  .transform((files) => {
+    if (files instanceof FileList) return files[0];
+    return files;
   })
-  .refine((file) => !file || ACCEPTED_TYPES.includes(file.type), {
-    message: "Only JPG, PNG, WEBP allowed",
-  }),
+  .refine((file) => !file || file instanceof File, "Invalid file")
+  .optional()
+  .refine((file) => !file || file.size <= MAX_SIZE, "Max file size is 1MB")
+  .refine((file) => !file || ACCEPTED_TYPES.includes(file.type), "Only JPG, PNG, WEBP allowed"),
 });
 
 export type CreatePostInput = z.infer<typeof createPostInputSchema>;
 
 export const createPost = ({ data } : { data : CreatePostInput }) : Promise<Post> => {
-  return api.post('/posts', data)
+  const formData = new FormData();
+
+  formData.append('title', data.title);
+  formData.append('thread_id', data.thread_id);
+  formData.append('content', data.content);
+
+  if(data.thumbnail) {
+    formData.append('thumbnail', data.thumbnail);
+  }
+
+  return api.post('/posts', formData)
 }
 
 type useCreatePostOptions = {

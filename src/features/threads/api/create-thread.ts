@@ -11,12 +11,15 @@ const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 export const createThreadInputSchema = z.object({
   title: z.string().min(1, 'Required'),
   description: z.string().min(1, "Required"),
-  image: z.custom<File | undefined>().optional().refine((file) => !file || file.size <= MAX_SIZE, {
-      message: "Max file size is 1MB",
+  image: z.any()
+    .transform((files) => {
+      if(files instanceof FileList) return files[0];
+      return files;
     })
-    .refine((file) => !file || ACCEPTED_TYPES.includes(file.type), {
-      message: "Only JPG, PNG, WEBP allowed",
-    }),
+    .refine((file) => !file || file instanceof File, "Invalid file")
+    .optional()
+    .refine((file) => !file || file.size <= MAX_SIZE, "Max file size is 1MB")
+    .refine((file) => !file || ACCEPTED_TYPES.includes(file.type), "Only JPG, PNG, WEBP allowed"),
 });
 
 export type CreateThreadInput = z.infer<typeof createThreadInputSchema>;

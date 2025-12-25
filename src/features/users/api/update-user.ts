@@ -6,7 +6,12 @@ import { getUserByEmailQueryOptions, getUserByHandlerQueryOptions, getUserByIdQu
 import { getInfiniteUsersQueryOptions } from "./get-users";
 
 export const updateUserInputSchema = z.object({
-  handler: z.string().trim().max(16, "username cannot be longer than 16 characters long").optional().refine(
+  handler: z.string().trim().min(3, "username must be equal or longer than 3 characters").max(16, "username cannot be longer than 16 characters")
+  .regex(
+    /^[a-zA-Z][a-zA-Z0-9_]{2,16}$/, 
+    "Username must start with a letter and contain only letters, numbers, or underscores (3-16 chars)")
+  .optional()
+  .refine(
     v => v === undefined || v.length >= 1,
     "username must be at least 1 character long"
   ),

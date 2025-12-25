@@ -7,6 +7,7 @@ import Image from "next/image";
 import { timestampToDate } from "@/utils/format";
 import Link from "next/link";
 import { path } from "@/config/path";
+import { ImageFrame } from "@/components/ui/image-frame/image-frame";
 
 type AnnouncementBoxProps = {
   announcement: Announcement;
@@ -16,7 +17,7 @@ const AnnouncementBox = ({ announcement } : AnnouncementBoxProps) => {
   return (
     <div className="border border-(--darker-foreground) p-2 pl-3 pr-3 rounded-xl inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(99,102,241,0.35),transparent_45%),radial-gradient(circle_at_70%_60%,rgba(236,72,153,0.30),transparent_50%)] hover:bg-(--darker-foreground) transition-all">
       <div className="inline-flex gap-2 items-center">
-        <Image src={ announcement.author.profile_url ? announcement.author.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" className="border rounded-xl w-8 h-8 flex items-center justify-center bg-white"/>
+        <ImageFrame src={ announcement.author.profile_url ? announcement.author.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" imgClassName="border rounded-xl w-8 h-8 border-(--foreground) flex items-center justify-center bg-white"/>
         <div>
           <Link href={path.public.user.getHref(announcement.author_id)} className="text-[16px] text-neutral-300 inline hover:underline">{ announcement.author.handler }</Link>
           <div className="text-xs text-neutral-500">{ timestampToDate(announcement.created_at) }</div>

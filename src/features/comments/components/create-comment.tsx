@@ -15,7 +15,7 @@ type CreateCommentProps = {
 
 export const CreateComment = ({ parentId, rootId, handler, setIsReplying } : CreateCommentProps) => {
   const { data: user, isLoading, error } = useUser();
-    const resetRef = useRef<(() => void) | null>(null);
+  const resetRef = useRef<(() => void) | null>(null);
     
   if(isLoading) return (<div>is loading..</div>)
 

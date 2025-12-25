@@ -19,21 +19,22 @@ type SmallPostProps = {
 
 export const SmallPost = ({ post } : SmallPostProps ) => {
   return (
-    <div className="bg-(--darker-foreground) p-2 rounded-xl border border-black hover:border-(--secondary)">
-      <div className="inline-flex max-w-50 gap-2 mb-2">
-        <ImageFrame src={"/temp.png"} width={40} height={40} className="flex aspect-square justify-center rounded-xl" imgClassName="aspect-square rounded-lg" alt="" />
+    <div className="bg-(--darker-foreground) p-2 rounded-xl w-50 border border-black hover:border-(--secondary) inline-flex flex-col justify-between">
+      <div className="inline-flex max-w-50 gap-2">
+        <ImageFrame src={post.thumbnail_url} width={40} height={40} className="" imgClassName="border border-neutral-500 flex aspect-square justify-center rounded-xl aspect-square rounded-lg" alt="" />
         <div>
           <Link href={path.public.post.getHref(post.id)} className="line-clamp-1 hover:underline pr-2">{post.title}</Link>
-          <p className="line-clamp-3 text-xs text-neutral-400 h-12 max-w-30 whitespace-pre-line">{post.content}</p>
+          <p className="line-clamp-3 text-xs text-neutral-400 max-h-12 max-w-30 whitespace-pre-line">{post.content}</p>
         </div>
       </div>
-      <div className="text-xs text-neutral-300 h-3">
+      <div className="text-xs text-neutral-300">
         {`posted by `}
         <Link href={path.public.user.getHref(post.author.id)} className="hover:underline">
         {post.author.handler}
-        </Link>
+        </Link><br/>
+        <Link href={path.public.post.getHref(post.id)} className="text-xs text-(--secondary) hover:underline">(view full)</Link>
       </div>
-      <Link href={path.public.post.getHref(post.id)} className="text-xs text-(--secondary) hover:underline">(view full)</Link>
+      
     </div>
   )
 }

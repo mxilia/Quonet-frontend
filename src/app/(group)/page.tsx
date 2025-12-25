@@ -2,9 +2,7 @@
 
 import { AnnouncementsLists } from "@/features/announcements/components/announcements-list";
 import { CreatePost } from "@/features/posts/components/create-post";
-import { PostsList } from "@/features/posts/components/posts-list";
 import { TopLikedPostsList } from "@/features/posts/components/top-liked-post-list";
-import { CreateThread } from "@/features/threads/components/create-thread";
 import { ThreadList } from "@/features/threads/components/threads-list";
 import { useUser } from "@/lib/auth";
 import Image from "next/image";
@@ -24,6 +22,7 @@ const Home = () => {
         <AnnouncementsLists />
         <TopLikedPostsList />
         <ThreadList />
+        <div className="shimmer-premium w-50 h-50"></div>
       </div>
     </div>
   );

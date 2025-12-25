@@ -5,10 +5,12 @@ import { UpdateUserInput, updateUserInputSchema, useUpdateUser } from "../api/up
 import { Form } from "@/components/ui/form/form";
 import { Textarea } from "@/components/ui/form/textarea";
 import { useRouter } from 'next/navigation';
+import { useRef } from "react";
 
 export const UpdateUserBio = () => {
   const user = useUser();
   const updateUser = useUpdateUser();
+  const resetRef = useRef<(() => void) | null>(null);
   const router = useRouter();
 
   const onSubmit = async (data : UpdateUserInput) => {
@@ -22,6 +24,7 @@ export const UpdateUserBio = () => {
         {
           onSuccess: () => {
             console.log("User updated!");
+            resetRef.current?.();
             router.refresh();
           },
         }
@@ -33,7 +36,8 @@ export const UpdateUserBio = () => {
     <div className="border-b pb-2 border-(--foreground) mb-2">
       <Form schema={updateUserInputSchema} onSubmit={onSubmit}>
         {
-          ({ register, formState }) => {
+          ({ register, formState, reset }) => {
+            resetRef.current = reset
             return (
               <>
                 <Textarea label="Bio" registration={register("bio")} error={formState.errors.bio} placeholder="Enter info about yourself that you want to share." className="text-sm border bg-neutral-950 border-(--foreground) rounded-xl w-full h-20 p-1 px-2 no-scrollbar" />

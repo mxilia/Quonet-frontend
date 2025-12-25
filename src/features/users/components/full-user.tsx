@@ -1,7 +1,7 @@
 "use client";
 
+import { ImageFrame } from "@/components/ui/image-frame/image-frame";
 import { useUserById } from "../api/get-user";
-import Image from "next/image";
 
 type FullUserProps = {
   userId: string;
@@ -17,7 +17,7 @@ export const FullUser = ({ userId } : FullUserProps ) => {
   return (
     <div className={`p-3 border border-(--darker-foreground) ${user.role === "member" ? "bg-(--darker-foreground)" : adminBg} rounded-2xl mb-2`}>
       <div className="flex items-center gap-2">
-        <Image src={ user.profile_url ? user.profile_url : "/default-avatar.png"} height={40} width={40} alt="user profile" className="border rounded-full flex items-center justify-center bg-white" />
+        <ImageFrame src={ user.profile_url ? user.profile_url : "/default-avatar.png"} height={40} width={40} alt="user profile" imgClassName="rounded-full" className="border border-(--foreground) rounded-full flex items-center justify-center bg-white" />
         <div className="text-xl text-center">{user.handler}</div>
         <div className={`border rounded-xl pl-1 pr-1 text-[10px] text-center mt-2 ${user.role === "owner" ? "text-(--secondary) border-(--secondary)" : user.role === "admin" ?  "text-yellow-300 border-yellow-300" : "text-green-300 border-green-300"}`}>{user.role}</div>
       </div>

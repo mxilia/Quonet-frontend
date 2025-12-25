@@ -52,15 +52,20 @@ async function fetchApi<T>(url: string, options: RequestOptions = {}) : Promise<
   
   const fullUrl = buildUrlWithParams(`${env.API_URL}${url}`, params);
 
+  const isFormData = body instanceof FormData;
+
   const response = await fetch(fullUrl, {
     method,
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      ...(isFormData ? {} : {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          }
+      ),
       ...headers,
       ...(cookieHeader ? { Cookie: cookieHeader } : {}),
     },
-    body: body ? JSON.stringify(body) : undefined,
+    body: body ? isFormData ? body : JSON.stringify(body) : undefined,
     credentials: 'include',
     cache,
     next,

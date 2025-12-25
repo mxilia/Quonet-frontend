@@ -37,10 +37,10 @@ export const FullPost = ({ postId } : FullPostProps) => {
       </Link>
       <div className="text-3xl text-neutral-100 inline mt-3">{ post?.title }</div>
       <p className="whitespace-pre-line mt-3 text-[16px] text-neutral-100">{ post?.content }</p>
-      <ImageFrame src={"/temp.png"} height={80} width={80} imgClassName="w-50" className="flex justify-center mt-3 bg-(--darker-foreground) rounded-xl" alt={""} />
+      <ImageFrame src={post.thumbnail_url} height={80} width={80} imgClassName="w-50" className="flex justify-center mt-3 bg-(--darker-foreground) rounded-xl" alt={""} />
       <div className="inline-flex gap-2 items-center text-[16px] text-neutral-200 mt-2">
         Posted by
-        <Image src={ post?.author.profile_url ? post.author.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" className="border rounded-xl w-8 h-8 flex items-center justify-center bg-white" />
+        <ImageFrame src={ post?.author.profile_url ? post.author.profile_url : "/default-avatar.png"} height={50} width={50} alt="user profile" imgClassName="border rounded-xl w-8 h-8 border-(--foreground) flex items-center justify-center bg-white" />
         <Link href={path.public.user.getHref(post.author_id)} className="hover:underline">{ post.author.handler }</Link> • { timestampToDate(post.created_at) }
       </div>
       <div className="mt-3 flex justify-between mb-4">
@@ -82,7 +82,7 @@ export const FullPost = ({ postId } : FullPostProps) => {
             </>
           }
         </LikeModify>
-        <DeletePost postId={post.id} threadId={post.thread_id}/>
+        <DeletePost postId={post.id} authorHandler={post.author.handler}/>
         <UpdatePost postId={post.id} threadId={post.thread_id}/>
       </div>
       <div className="text-xl mb-2">Comments</div>

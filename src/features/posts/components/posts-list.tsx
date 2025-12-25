@@ -28,7 +28,7 @@ const MediumPost = ({ post } : MediumPostProps) => {
   return (
     <div className="inline-flex flex-col w-150 border border-(--foreground) p-3 rounded-xl mt-5">
       <div className="inline-flex gap-2">
-        <Image src={ post.author.profile_url ? post.author.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" className="border rounded-2xl w-10 h-10 flex items-center justify-center bg-white"/>
+        <ImageFrame src={ post.author.profile_url ? post.author.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" imgClassName="rounded-2xl border border-(--foreground) rounded-2xl w-10 h-10 flex items-center justify-center bg-white"/>
         <div>
           <Link href={path.public.user.getHref(post.author.id)} className="hover:underline text-[16px] text-neutral-300 inline">{ post.author.handler }</Link>
           <div className="text-xs text-neutral-500">{ timestampToDate(post.created_at) }</div>
@@ -49,7 +49,7 @@ const MediumPost = ({ post } : MediumPostProps) => {
         </div>
       </Link>
       <p className="whitespace-pre-line mt-3 text-[16px] text-neutral-200">{ post.content }</p>
-      <ImageFrame src={"/temp.png"} height={80} width={80} imgClassName="w-50" className="flex justify-center mt-3 bg-(--darker-foreground) rounded-xl" alt={""} />
+      <ImageFrame src={post.thumbnail_url} height={80} width={80} imgClassName="w-50" className="flex justify-center mt-3 bg-(--darker-foreground) rounded-xl" alt={""} />
       <div className="mt-3 flex gap-2 items-center">
         <LikeModify parentId={post.id} parentType="post" className="flex gap-2 bg-(--darker-foreground) p-2.5 rounded-xl">
           {
@@ -92,7 +92,7 @@ const MediumPost = ({ post } : MediumPostProps) => {
         <Link href={path.public.post.getHref(post.id)} className="bg-(--darker-foreground) rounded-xl flex justify-center items-center w-11 h-11 pt-0.5">
           <Image src="/comment-icon.png" height={27} width={27} alt="comment img" className="invert-90"/>
         </Link>
-        <DeletePost postId={post.id} threadId={post.thread_id}/>
+        <DeletePost post={post}/>
         <UpdatePost postId={post.id} threadId={post.thread_id}/>
       </div>
     </div>

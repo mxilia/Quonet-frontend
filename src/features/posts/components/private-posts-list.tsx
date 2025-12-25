@@ -23,7 +23,7 @@ export const PrivatePostsList = ({ authorId = "", threadId = "", title = "" } : 
           <div key={e?.id}>
             <h1> {e?.title} </h1>
             <span> {e?.content} </span>
-            <DeletePost postId={e.id} threadId={threadId}/>
+            <DeletePost post={e}/>
           </div>
         )
       )}

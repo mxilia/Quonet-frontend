@@ -2,23 +2,24 @@
 
 import { useUser } from "@/lib/auth";
 import { useDeletePost } from "../api/delete-post";
+import { canDeletePost } from "@/lib/authorization";
+import { Post } from "@/types/api";
 
 type DeletePostProps = {
-  postId: string;
-  threadId?: string;
+  post: Post;
 }
 
-export const DeletePost = ({ postId, threadId } : DeletePostProps) => {
-  const { data: user, isLoading, error } = useUser();
+export const DeletePost = ({ post } : DeletePostProps) => {
+  const user = useUser();
   
-  if(!user) return <div>forbid</div>
-  if(isLoading) return <div>is loading..</div>
+  if(!canDeletePost(user.data, post)) return null;
+  if(user.isLoading) return <div>is loading..</div>;
 
   const deletePost = useDeletePost()
 
   return (
     <div>
-      <button className="text-red-500 text-xs" onClick={() => deletePost.mutate({ postId: postId })}>delete</button>
+      <button className="text-red-500 text-xs" onClick={() => deletePost.mutate({ postId: post.id })}>delete</button>
     </div>
   )
 }

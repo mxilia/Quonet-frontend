@@ -28,7 +28,7 @@ const Layout = ({ children } : { children: React.ReactNode }) => {
           {
             user ?
               <>
-                <Image src={user?.profile_url ? user.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" className="rounded-full border bg-white" />
+                <Image src={user?.profile_url ? user.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" className="rounded-full border border-(--foreground) bg-white" />
                 <Link href={path.public.user.getHref(user.id)} className="hover:text-(--secondary) hover:underline transition-all">{user.handler}</Link>
               </>
             :
