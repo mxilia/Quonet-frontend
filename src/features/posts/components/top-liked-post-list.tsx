@@ -5,6 +5,7 @@ import { useTopLikedPosts } from "../api/get-top-liked-posts";
 import { ImageFrame } from "@/components/ui/image-frame/image-frame";
 import { path } from "@/config/path";
 import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton/skeleton";
 
 type TopLikedPostsList = {
   authorId?: string;
@@ -34,14 +35,39 @@ export const SmallPost = ({ post } : SmallPostProps ) => {
         </Link><br/>
         <Link href={path.public.post.getHref(post.id)} className="text-xs text-(--secondary) hover:underline">(view full)</Link>
       </div>
-      
     </div>
   )
 }
 
+const SmallPostSkeleton = () => {
+  return (
+    <div className="bg-(--darker-foreground) p-2 rounded-xl w-50 border border-black inline-flex flex-col justify-between">
+      <div className="inline-flex max-w-50 gap-2">
+        <Skeleton className="w-10 h-10"/>
+          <div>
+            <Skeleton className="h-5 w-12 mb-1" />
+            <Skeleton className="h-12 w-30" />
+          </div>
+      </div>
+      <Skeleton className="h-5 w-12 mb-1" />
+      <Skeleton className="h-5 w-12" />
+    </div>
+  );
+}
+
 export const TopLikedPostsList = ({ authorId, threadId, title, limit } : TopLikedPostsList) => {
   const topLikedPosts = useTopLikedPosts({ authorId, threadId, title, limit });
-  if(topLikedPosts.isLoading) return <div>loading</div>;
+  if(topLikedPosts.isLoading) return (
+    <div className="w-full">
+      <h1 className="text-lg mb-2">Top Posts (Sorted by likes)</h1>
+      <div className="inline-flex w-full gap-2">
+        <SmallPostSkeleton />
+        <SmallPostSkeleton />
+        <SmallPostSkeleton />
+      </div>
+    </div>
+  );
+  if(!topLikedPosts.data || topLikedPosts.data?.length === 0) return null;
   return (
     <div className="w-full">
       <h1 className="text-lg mb-2">Top Posts (Sorted by likes)</h1>

@@ -13,6 +13,7 @@ import { useEffect, useRef } from "react";
 import { LikeButton } from "@/features/likes/components/like-button";
 import { LikeCounter } from "@/features/likes/components/like-counter";
 import { ImageFrame } from "@/components/ui/image-frame/image-frame";
+import { Skeleton } from "@/components/ui/skeleton/skeleton";
 
 type PostsListProps = {
   authorId?: string, 
@@ -104,8 +105,8 @@ export const PostsList = ({ authorId, threadId, title } : PostsListProps) => {
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!loadMoreRef.current) return;
-    if (!postsQuery.hasNextPage) return;
+    if(!loadMoreRef.current) return;
+    if(!postsQuery.hasNextPage) return;
 
     const observer = new IntersectionObserver(entries => {
       const entry = entries[0];
@@ -121,16 +122,48 @@ export const PostsList = ({ authorId, threadId, title } : PostsListProps) => {
     postsQuery.isFetchingNextPage,
   ]);
 
-  if(postsQuery.isLoading) return ( <div> loading.. </div> );
-
   const posts = postsQuery.data?.pages.flatMap((page) => page.data);
 
-  if(!posts || posts?.length === 0) return <div>no posts found</div>
+  if(postsQuery.isLoading) return (
+    <div className="inline-flex flex-col">
+      <div className="inline-flex flex-col w-150 border h-fit border-(--foreground) p-3 rounded-xl mt-5">
+        <div className="inline-flex gap-2 mb-2">
+          <Skeleton className="w-10 h-10"/>
+          <div>
+            <Skeleton className="h-5 w-20 mb-1" />
+            <Skeleton className="h-3 w-12" />
+          </div>
+        </div>
+        <Skeleton className="h-10 w-50 mb-1"/>
+        <div className="inline-flex items-center mb-2">
+          <Skeleton className="h-6 w-6" />
+          <Skeleton className="h-3 w-14" />
+        </div>
+        <Skeleton className="w-full h-50" />
+      </div>
+      <div className="inline-flex flex-col w-150 border h-fit border-(--foreground) p-3 rounded-xl mt-5">
+        <div className="inline-flex gap-2 mb-2">
+          <Skeleton className="w-10 h-10"/>
+          <div>
+            <Skeleton className="h-5 w-20 mb-1" />
+            <Skeleton className="h-3 w-12" />
+          </div>
+        </div>
+        <Skeleton className="h-10 w-50 mb-1"/>
+        <div className="inline-flex items-center mb-2">
+          <Skeleton className="h-6 w-6" />
+          <Skeleton className="h-3 w-14" />
+        </div>
+        <Skeleton className="w-full h-50" />
+      </div>
+    </div>
+  );
+  if(!posts || posts?.length === 0) return <div className="text-sm text-neutral-500">no posts found</div>
   
   return (
     <div className="inline-flex flex-col">
       {posts?.map((e) => (<MediumPost key={e.id} post={e}/>))}
-      {postsQuery.hasNextPage && <div ref={loadMoreRef}>Loading more..</div>}
+      {postsQuery.hasNextPage && <div ref={loadMoreRef} className="text-sm text-neutral-500">Loading more..</div>}
     </div>
   );
 }

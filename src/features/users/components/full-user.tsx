@@ -2,6 +2,7 @@
 
 import { ImageFrame } from "@/components/ui/image-frame/image-frame";
 import { useUserById } from "../api/get-user";
+import { Skeleton } from "@/components/ui/skeleton/skeleton";
 
 type FullUserProps = {
   userId: string;
@@ -11,9 +12,19 @@ const adminBg = "inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(99,102,241,0
 
 export const FullUser = ({ userId } : FullUserProps ) => {
   const userQuery = useUserById({userId});
-  if(userQuery.isLoading) return <div>loading</div>;
+  if(userQuery.isLoading) return (
+    <div className={`p-3 border border-(--darker-foreground) bg-(--darker-foreground) rounded-2xl mb-2`}>
+      <div className="flex items-center gap-2">
+        <Skeleton className="h-10 w-10" />
+        <Skeleton className="h-5 w-25"/>
+        <Skeleton className="w-13 h-5" />
+      </div>
+      <Skeleton className="mt-3 h-7 w-12" />
+      <Skeleton className="mt-2 h-50 w-full" />
+    </div>
+  );
   const user = userQuery.data;
-  if(!user) return <div>user not found</div>;
+  if(!user) return <div className="text-xs text-neutral-500">user not found</div>;
   return (
     <div className={`p-3 border border-(--darker-foreground) ${user.role === "member" ? "bg-(--darker-foreground)" : adminBg} rounded-2xl mb-2`}>
       <div className="flex items-center gap-2">
@@ -24,5 +35,5 @@ export const FullUser = ({ userId } : FullUserProps ) => {
       <div className="mt-3 text-2xl"> Bio </div>
       <p className="whitespace-pre-line text-[16px] text-neutral-300">{ user.bio === "" ? "no bio" : user.bio }</p>
     </div>
-  )
+  );
 }

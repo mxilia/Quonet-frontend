@@ -8,13 +8,13 @@ import Link from "next/link";
 import { path } from "@/config/path";
 import { useDebounce } from "@/utils/debounce";
 import { useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton/skeleton";
 
 type SmallThreadProps = {
   thread: Thread;
 }
 
 export const SmallThread = ({ thread } : SmallThreadProps) => {
-
   return (
     <>
       <Link href={path.public.thread.getHref(thread.id)}>
@@ -33,6 +33,17 @@ export const SmallThread = ({ thread } : SmallThreadProps) => {
   );
 }
 
+const SmallThreadSkeleton = () => {
+  return (
+    <div>
+      <div className="inline-flex w-full p-2 rounded-xl items-center gap-2 bg-(--foreground)/30 border border-black hover:border-(--secondary)">
+        <Skeleton className="h-8 w-8" />
+        <Skeleton className="h-5 w-50" />
+      </div>
+    </div>
+  )
+}
+
 export const ThreadList = () => {
   const [searchString, setSearchString] = useState("");
   const debouncedSearch = useDebounce(searchString, 300);
@@ -40,12 +51,26 @@ export const ThreadList = () => {
   const threadsQuery = useInfiniteThreads({ title: debouncedSearch });
   const threads = threadsQuery.data?.pages.flatMap((page) => page.data);
 
+  if(threadsQuery.isLoading) return (
+    <div className="w-full inline-flex flex-col mt-2 grow">
+      <h1 className="text-xl w-full mb-1">Topics you might like</h1>
+      <input placeholder="Search for thread?" className="bg-neutral-950 text-sm border-(--foreground) border mr-10 mt-1 rounded-lg p-1 mb-2 px-3 w-full" type="text" onChange={(e) => {setSearchString(e.target.value)}} />
+      <div className="inline-flex flex-col grow gap-1 w-full overflow-y-scroll no-scrollbar">
+        <SmallThreadSkeleton />
+        <SmallThreadSkeleton />
+        <SmallThreadSkeleton />
+        <SmallThreadSkeleton />
+      </div>
+    </div>
+  );
+
   return (
     <div className="w-full inline-flex flex-col mt-2 grow">
       <h1 className="text-xl w-full mb-1">Topics you might like</h1>
       <input placeholder="Search for thread?" className="bg-neutral-950 text-sm border-(--foreground) border mr-10 mt-1 rounded-lg p-1 mb-2 px-3 w-full" type="text" onChange={(e) => {setSearchString(e.target.value)}} />
       <div className="inline-flex flex-col grow gap-1 w-full overflow-y-scroll no-scrollbar">
         {
+          !threads || threads.length === 0 ? <div className="text-sm text-neutral-500">no threads found</div> :
           threads?.map((e) => (<SmallThread key={`list-${e.id}`} thread={e}/>))
         }
       </div>

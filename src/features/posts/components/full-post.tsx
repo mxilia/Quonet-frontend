@@ -12,6 +12,7 @@ import { Comments } from "@/features/comments/components/comments";
 import { LikeButton } from "@/features/likes/components/like-button";
 import { LikeCounter } from "@/features/likes/components/like-counter";
 import { ImageFrame } from "@/components/ui/image-frame/image-frame";
+import { Skeleton } from "@/components/ui/skeleton/skeleton";
 
 type FullPostProps = {
   postId: string;
@@ -19,9 +20,19 @@ type FullPostProps = {
 
 export const FullPost = ({ postId } : FullPostProps) => {
   const postQuery = usePost({postId});
-  if(postQuery.isLoading) return <div>loading</div>;
-  const post = postQuery.data
-  if(!post) return <div>post not found</div>
+  if(postQuery.isLoading) return (
+    <div className="inline-flex flex-col w-200 p-4">
+      <div className="inline-flex items-center">
+        <Skeleton className="h-10 w-10" />
+        <Skeleton className="ml-2 h-5 w-20" />
+      </div>
+      <Skeleton className="h-10 w-50 inline mt-3"/>
+      <Skeleton className="w-full h-50 mt-3"/>
+    </div>
+  );
+
+  const post = postQuery.data;
+  if(!post) return <div className="text-sm text-neutral-500">post not found</div>
   return (
     <div className="inline-flex flex-col w-200 p-4">
       <Link href={path.public.thread.getHref(post.thread.id)} className="inline-flex items-center">
@@ -82,7 +93,7 @@ export const FullPost = ({ postId } : FullPostProps) => {
             </>
           }
         </LikeModify>
-        <DeletePost postId={post.id} authorHandler={post.author.handler}/>
+        <DeletePost post={post}/>
         <UpdatePost postId={post.id} threadId={post.thread_id}/>
       </div>
       <div className="text-xl mb-2">Comments</div>

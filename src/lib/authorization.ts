@@ -27,3 +27,11 @@ export const canCreateComment = (user : User | null | undefined) => {
 export const canDeleteComment = (user : User | null | undefined, comment : Comment | null | undefined) => {
   return user?.role === "admin" || user?.role === "owner" || user?.id === comment?.author_id;
 }
+
+export const isAdmin = (user : User | null | undefined) => {
+  return user?.role === "admin" || user?.role === "owner";
+}
+
+export const isLogin = (user : User | null | undefined) => {
+  return user !== null && user !== undefined;
+}

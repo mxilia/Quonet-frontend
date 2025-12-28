@@ -16,7 +16,7 @@ type useDeleteCommentOptions = {
   mutationConfig?: MutationConfig<typeof deleteComment>;
 };
 
-export const useDeleteComment = ({ mutationConfig } : useDeleteCommentOptions ) => {
+export const useDeleteComment = ({ mutationConfig } : useDeleteCommentOptions = {}) => {
   const queryClient = useQueryClient();
 
   const { onSuccess, ...restConfig } = mutationConfig || {};

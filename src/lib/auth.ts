@@ -15,7 +15,7 @@ export const getUser = async () : Promise<User | null> => {
   return null;
 };
 
-const userQueryKey = ['user'];
+export const userQueryKey = ['user'];
 
 export const getUserQueryOptions = () => {
   return queryOptions({

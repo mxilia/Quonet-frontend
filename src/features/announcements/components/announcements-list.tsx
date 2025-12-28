@@ -8,6 +8,7 @@ import { timestampToDate } from "@/utils/format";
 import Link from "next/link";
 import { path } from "@/config/path";
 import { ImageFrame } from "@/components/ui/image-frame/image-frame";
+import { Skeleton } from "@/components/ui/skeleton/skeleton";
 
 type AnnouncementBoxProps = {
   announcement: Announcement;
@@ -31,9 +32,12 @@ const AnnouncementBox = ({ announcement } : AnnouncementBoxProps) => {
 export const AnnouncementsLists = () => {
   const [showPast, setShowPast] = useState(false);
   const announcementsQuery = useInfiniteAnnouncements();
-
-  if(announcementsQuery.isLoading) return <div>loading</div>;
-
+  if(announcementsQuery.isLoading) return (
+    <div className="w-full mb-2">
+      <h1 className="text-2xl mb-2">Announcements</h1>
+      <Skeleton className="w-full h-30"/>
+    </div>
+  );
   const announcements = announcementsQuery.data?.pages.flatMap((page) => page.data)
   return (
     <div className="w-full mb-2">
@@ -46,11 +50,12 @@ export const AnnouncementsLists = () => {
           (announcements !== undefined && announcements.length>0 ? 
             <AnnouncementBox key={announcements[0].id} announcement={announcements[0]} />
             :
-            <div> no announcement at this time </div>
+            <div className="text-sm text-neutral-500"> no announcement at this time </div>
           )
         }
       </div>
-      <div onClick={() => setShowPast(!showPast)} className="mt-1 text-xs text-neutral-400">{showPast ? "hide past announcements" : "show past announcements"}</div>
+      {announcements && announcements.length > 0 &&
+      <div onClick={() => setShowPast(!showPast)} className="mt-1 text-xs text-neutral-400">{showPast ? "hide past announcements" : "show past announcements"}</div>}
     </div>
   )
 }
