@@ -7,13 +7,13 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const LoginPage = () => {
-  const { data: user, isLoading, error } = useUser();
+  const user = useUser();
   const  [redirectPath, setRedirect] = useState("");
 
   useEffect(() => {
-    if(user) setRedirect(path.home.getHref())
+    if(user.data) setRedirect(path.home.getHref())
     else setRedirect(path.auth.oauth.getHref())
-  }, [user]);
+  }, [user.data]);
 
   return (
     <div className="h-screen flex justify-center items-center bg-black">
