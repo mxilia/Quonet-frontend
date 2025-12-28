@@ -1,7 +1,13 @@
 import { PostsList } from "@/features/posts/components/posts-list";
 import { TopLikedPostsList } from "@/features/posts/components/top-liked-post-list";
 import { FullUser } from "@/features/users/components/full-user";
-import z from "zod";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "User",
+  description: "Home page",
+};
+
 
 const UserPage = async ({ params } : { params: Promise<{ id: string }>}) => {
   const userId = (await params).id;

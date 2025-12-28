@@ -1,12 +1,12 @@
 'use client';
 
-import { Skeleton } from "@/components/ui/skeleton/skeleton";
 import { AnnouncementsLists } from "@/features/announcements/components/announcements-list";
 import { CreatePost } from "@/features/posts/components/create-post";
 import { TopLikedPostsList } from "@/features/posts/components/top-liked-post-list";
 import { ThreadList } from "@/features/threads/components/threads-list";
 import { useUser } from "@/lib/auth";
 import { isLogin } from "@/lib/authorization";
+import { Metadata } from "next";
 import Image from "next/image";
 import { useState } from "react";
 

@@ -7,6 +7,9 @@ import { getUserQueryOptions } from "@/lib/auth";
 export const metadata: Metadata = {
   title: "Quonet",
   description: "Application for posting questions.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {

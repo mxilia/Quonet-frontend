@@ -1,6 +1,11 @@
-'use client';
-
 import { PostsList } from "@/features/posts/components/posts-list";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Feed",
+  description: "Feed page",
+};
+
 
 const FeedPage = () => {
   return (

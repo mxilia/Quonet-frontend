@@ -1,5 +1,10 @@
 import { FullPost } from "@/features/posts/components/full-post";
-import z from "zod";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Post",
+  description: "Post page",
+};
 
 const PostPage = async ({ params } : { params: Promise<{ id: string }>}) => {
   const postId = (await params).id;

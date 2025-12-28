@@ -1,6 +1,13 @@
 import { PostsList } from "@/features/posts/components/posts-list";
 import { TopLikedPostsList } from "@/features/posts/components/top-liked-post-list";
 import { FullThread } from "@/features/threads/components/full-thread";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Thread",
+  description: "Home page",
+};
+
 
 const ThreadPage = async ({ params } : { params: Promise<{ id: string }>}) => {
   const threadId = (await params).id;
