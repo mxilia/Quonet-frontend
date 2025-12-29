@@ -2,8 +2,8 @@ import * as z from "zod";
 
 const createEnv = () => {
   const EnvSchema = z.object({
-    API_URL: z.string().optional().default("http://localhost:8000/api/v2"),
-    APP_URL: z.string().optional().default('http://localhost:3000'),
+    API_URL: z.url(),
+    APP_URL: z.url(),
   })
 
   const envVars = {
@@ -11,7 +11,7 @@ const createEnv = () => {
     APP_URL: process.env.APP_URL,
   }
 
-  const parsedEnv = z.safeParse(EnvSchema, envVars)
+  const parsedEnv = EnvSchema.safeParse(envVars)
   if(!parsedEnv.success){
     throw new Error(
       `Invalid env provided.
