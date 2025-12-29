@@ -14,7 +14,7 @@ const Home = () => {
   const [active, setActive] = useState(false);
   return (
     <div className="pt-22 bg-black text-white min-h-screen flex flex-col items-center">
-      <div className="flex flex-col items-center grow w-150 p-2">
+      <div className="flex flex-col items-center w-full grow sm:w-150 sm:p-2 pl-4 pr-4">
         <CreatePost active={active} setActive={setActive} />
         {isLogin(user.data) &&
           <div onClick={() => {setActive(true)}} className="w-full flex gap-2 bg-(--darker-foreground) p-2 rounded-xl items-center mb-2">

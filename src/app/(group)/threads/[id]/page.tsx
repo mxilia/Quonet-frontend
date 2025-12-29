@@ -13,7 +13,7 @@ const ThreadPage = async ({ params } : { params: Promise<{ id: string }>}) => {
   const threadId = (await params).id;
   return (
     <div className="bg-black min-h-screen pt-17 text-white flex justify-center">
-      <div className="inline-flex flex-col w-150">
+      <div className="inline-flex flex-col w-full sm:w-150 sm:p-2 pl-4 pr-4 pt-3">
         <FullThread threadId={threadId} />
         <TopLikedPostsList threadId={threadId} />
         <PostsList threadId={threadId} />

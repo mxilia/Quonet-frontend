@@ -31,7 +31,7 @@ const SettingsPage = () => {
 
   return (
     <div className="bg-black min-h-screen pt-17 text-white flex justify-center">
-      <div className="inline-flex flex-col pt-2 w-150">
+      <div className="inline-flex flex-col w-full sm:w-150 sm:p-2 pl-4 pr-4 pt-3">
         <h1 className="text-2xl mb-1 border-b border-(--foreground) pb-2">Settings</h1>
         <UpdateUserBio />
         <UpdateUserHandler />

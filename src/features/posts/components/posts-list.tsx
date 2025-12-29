@@ -27,7 +27,7 @@ type MediumPostProps = {
 
 const MediumPost = ({ post } : MediumPostProps) => {
   return (
-    <div className="inline-flex flex-col w-150 border border-(--foreground) p-3 rounded-xl mt-5">
+    <div className="inline-flex flex-col w-full sm:w-150 pl-4 pr-4 pt-3 border border-(--foreground) p-3 rounded-xl mt-5">
       <div className="inline-flex gap-2">
         <ImageFrame src={ post.author.profile_url ? post.author.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" imgClassName="rounded-2xl border border-(--foreground) rounded-2xl w-10 h-10 flex items-center justify-center bg-white"/>
         <div>
@@ -125,8 +125,8 @@ export const PostsList = ({ authorId, threadId, title } : PostsListProps) => {
   const posts = postsQuery.data?.pages.flatMap((page) => page.data);
 
   if(postsQuery.isLoading) return (
-    <div className="inline-flex flex-col">
-      <div className="inline-flex flex-col w-150 border h-fit border-(--foreground) p-3 rounded-xl mt-5">
+    <div className="inline-flex flex-col w-full sm:w-150 p-2 pt-3">
+      <div className="inline-flex flex-col w-full sm:w-150 sm:p-2 pl-4 pr-4 pt-3 border h-fit border-(--foreground) p-3 rounded-xl mt-5">
         <div className="inline-flex gap-2 mb-2">
           <Skeleton className="w-10 h-10"/>
           <div>
@@ -141,7 +141,7 @@ export const PostsList = ({ authorId, threadId, title } : PostsListProps) => {
         </div>
         <Skeleton className="w-full h-50" />
       </div>
-      <div className="inline-flex flex-col w-150 border h-fit border-(--foreground) p-3 rounded-xl mt-5">
+      <div className="inline-flex flex-col w-full sm:w-150 sm:p-2 pl-4 pr-4 pt-3 border h-fit border-(--foreground) p-3 rounded-xl mt-5">
         <div className="inline-flex gap-2 mb-2">
           <Skeleton className="w-10 h-10"/>
           <div>
@@ -161,7 +161,7 @@ export const PostsList = ({ authorId, threadId, title } : PostsListProps) => {
   if(!posts || posts?.length === 0) return <div className="text-sm text-neutral-500">no posts found</div>
   
   return (
-    <div className="inline-flex flex-col">
+    <div className="inline-flex flex-col w-full sm:w-150 pt-3">
       {posts?.map((e) => (<MediumPost key={e.id} post={e}/>))}
       {postsQuery.hasNextPage && <div ref={loadMoreRef} className="text-sm text-neutral-500">Loading more..</div>}
     </div>
