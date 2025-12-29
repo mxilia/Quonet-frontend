@@ -3,7 +3,7 @@
 import { path } from "@/config/path";
 import { RedirectButton } from "./_components/redirect-button";
 import Image from "next/image";
-import { env } from "process";
+import { env } from "@/config/env";
 import { useEffect, useState } from "react";
 import { useUser } from "@/lib/auth";
 
