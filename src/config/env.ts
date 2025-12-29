@@ -7,8 +7,8 @@ const createEnv = () => {
   })
 
   const envVars = {
-    API_URL: process.env.API_URL,
-    APP_URL: process.env.APP_URL,
+    API_URL: process.env.NEXT_PUBLIC_API_URL!,
+    APP_URL: process.env.NEXT_PUBLIC_APP_URL!,
   }
 
   const parsedEnv = EnvSchema.safeParse(envVars)
@@ -26,4 +26,4 @@ const createEnv = () => {
   return parsedEnv.data ?? {}
 }
 
-export const env = createEnv()
+export const env = createEnv();

@@ -6,7 +6,6 @@ import { TopLikedPostsList } from "@/features/posts/components/top-liked-post-li
 import { ThreadList } from "@/features/threads/components/threads-list";
 import { useUser } from "@/lib/auth";
 import { isLogin } from "@/lib/authorization";
-import { Metadata } from "next";
 import Image from "next/image";
 import { useState } from "react";
 

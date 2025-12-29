@@ -1,14 +1,6 @@
-import { env } from "@/config/env";
-
 export const path = {
   home: {
     getHref: () => '/',
-  },
-
-  auth: {
-    oauth: {
-      getHref: () => `${env.API_URL}/auth/google/login`,
-    }
   },
 
   public: {
