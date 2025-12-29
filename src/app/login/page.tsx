@@ -20,7 +20,7 @@ const LoginPage = () => {
 
   return (
     <div className="h-screen flex justify-center items-center bg-black">
-      <div className="bg-(--darker-foreground) w-full [@media(min-width:300px)]:w-100 w-95 rounded-xl flex items-center flex-col p-2 gap-2 pt-4 pb-4">
+      <div className="bg-(--darker-foreground) [@media(min-width:300px)]:w-100 w-95 rounded-xl flex items-center flex-col p-2 gap-2 pt-4 pb-4">
         <div className="h-20 w-70 flex justify-center items-center">
           <Image src="/logo.svg" alt="quonet's logo" width={200} height={50} className="object-cover object-center" />
         </div>
