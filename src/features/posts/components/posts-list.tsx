@@ -90,8 +90,8 @@ const MediumPost = ({ post } : MediumPostProps) => {
             </>
           }
         </LikeModify>
-        <Link href={path.public.post.getHref(post.id)} className="bg-(--darker-foreground) rounded-xl flex justify-center items-center w-11 h-11 pt-0.5">
-          <Image src="/comment-icon.png" height={27} width={27} alt="comment img" className="invert-90"/>
+        <Link href={path.public.post.getHref(post.id)} className="bg-(--darker-foreground) rounded-xl flex pb-1 justify-center items-center w-11 h-11 pt-0.5">
+          <Image src="/blue-chat.png" height={27} width={27} alt="comment img"/>
         </Link>
         <DeletePost post={post}/>
         <UpdatePost postId={post.id} threadId={post.thread_id}/>
