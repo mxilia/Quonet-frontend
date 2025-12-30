@@ -3,6 +3,7 @@
 import { useUser } from "@/lib/auth";
 import { useDeleteThread } from "../api/delete-thread"
 import { canDeleteThread } from "@/lib/authorization";
+import { Skeleton } from "@/components/ui/skeleton/skeleton";
 
 type DeleteThreadProps = {
   threadId : string,
@@ -10,11 +11,10 @@ type DeleteThreadProps = {
 
 export const DeleteThread = ({ threadId } : DeleteThreadProps) => {
   const { data: user, isLoading, error } = useUser();
+  const deleteThread = useDeleteThread();
 
   if(!canDeleteThread(user)) return null;
-  if(isLoading) return (<div>is loading...</div>)
-  
-  const deleteThread = useDeleteThread();
+  if(isLoading) return <Skeleton className="h-7 w-17"/>;
 
   return (
     <div>

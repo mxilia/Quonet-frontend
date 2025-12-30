@@ -1,5 +1,6 @@
 'use client';
 
+import { Skeleton } from "@/components/ui/skeleton/skeleton";
 import { path } from "@/config/path";
 import { useUser } from "@/lib/auth";
 import { isLogin } from "@/lib/authorization";
@@ -10,7 +11,16 @@ import { usePathname } from 'next/navigation';
 const Layout = ({ children } : { children: React.ReactNode }) => {
   const user = useUser();
   const currentPath = usePathname();
-  if(user.isLoading) return <div>is loading</div>;
+  if(user.isLoading) (
+    <>
+      <nav className="z-50 [@media(max-width:1000px)]:justify-center flex items-center xl:pl-48 lg:pl-7 h-17 bg-black/30 backdrop-blur-lg fixed w-full pr-4 sm:pr-10 text-white border-b border-b-(--foreground)">
+        <Skeleton className="pb-2 w-[130px] h-[50px] mr-4" />
+        <Skeleton className="hidden [@media(min-width:1000px)]:flex w-150 h-7 mr-10p-2 pl-4 pr-4"/>
+        <Skeleton className="h-[27px] w-[27px] mr-8 p-2"/>
+        <Link href={path.public.feed.getHref()} className="h-[27px] w-[27px] mr-6 p-2"/>
+      </nav>
+    </>
+  )
   return (
     <>
       <nav className="z-50 [@media(max-width:1000px)]:justify-center flex items-center xl:pl-48 lg:pl-7 h-17 bg-black/30 backdrop-blur-lg fixed w-full pr-4 sm:pr-10 text-white border-b border-b-(--foreground)">
@@ -33,10 +43,10 @@ const Layout = ({ children } : { children: React.ReactNode }) => {
         <div className="inline-flex items-center gap-3">
           {
             user.data ?
-              <>
+              <Link href={path.public.user.getHref(user.data!.id)} className="inline-flex items-center gap-3">
                 <Image src={user.data?.profile_url ? user.data.profile_url : "/default-avatar.png"} height={30} width={30} alt="user profile" className="rounded-full border border-(--foreground) bg-white" />
-                <Link href={path.public.user.getHref(user.data!.id)} className="[@media(min-width:420px)]:inline truncate hidden hover:text-(--secondary) hover:underline transition-all">{user.data!.handler}</Link>
-              </>
+                <div className="[@media(min-width:420px)]:inline truncate hidden hover:text-(--secondary) hover:underline transition-all">{user.data!.handler}</div>
+              </Link>
             :
             <Link href={path.public.login.getHref()}>
               <button className="rounded-xl p-1 px-3 hover:bg-(--secondary)/40 transition-colors">

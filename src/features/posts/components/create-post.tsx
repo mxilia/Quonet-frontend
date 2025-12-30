@@ -21,7 +21,7 @@ export const CreatePost = ({ active, setActive } : CreatePostProps ) => {
   const resetRef = useRef<(() => void) | null>(null);
   const createPost = useCreatePost();
   
-  if(user.isLoading) return (<div>is loading..</div>)
+  if(user.isLoading) return null;
   if(!canCreatePost(user.data)) return null;
 
   const onSubmit = async (data : CreatePostInput) => {

@@ -13,8 +13,8 @@ export const CreateThread = () => {
   const { data: user, isLoading, error } = useUser();
   const resetRef = useRef<(() => void) | null>(null);
 
-  if(isLoading) return (<div>is loading..</div>);
-  if(!canCreateThread(user)) return <div>forbid</div>;
+  if(isLoading) return null;
+  if(!canCreateThread(user)) return null;
   
   const createThread = useCreateThread();
 
