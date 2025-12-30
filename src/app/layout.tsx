@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { AppProvider } from "./provider";
 import { getUserQueryOptions } from "@/lib/auth";
+import { Notifications } from "@/components/ui/notification/notification";
 
 export const metadata: Metadata = {
   title: "Quonet",
@@ -24,6 +25,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
       <body className={`font-arial antialiased`}>
         <AppProvider>
           <HydrationBoundary state={undefined}>
+            <Notifications />
             {children}
           </HydrationBoundary>
         </AppProvider>

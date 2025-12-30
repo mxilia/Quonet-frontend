@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/form/input";
 import { useRef } from "react";
 import { BlurBackground } from "@/components/ui/background/blur-background";
 import { Textarea } from "@/components/ui/form/textarea";
+import { useNotificationStore } from "@/components/ui/notification/notification.store";
 
 type CreateCommentProps = {
   parentId: string;
@@ -17,27 +18,36 @@ type CreateCommentProps = {
 export const CreateComment = ({ parentId, rootId, handler, setIsReplying } : CreateCommentProps) => {
   const user = useUser();
   const resetRef = useRef<(() => void) | null>(null);
+  const createPost = useCreateComment();
+  const notify = useNotificationStore((s) => s.notify);
 
   if(!canCreateComment(user.data)) return null;
-
-  const createPost = useCreateComment();
 
   const onSubmit = async (data : CreateCommentInput) => {
     createPost.mutate(
       { authorId: user.data!.id, parentId: parentId, rootId: rootId, data: data },
       {
         onSuccess: () => {
-          console.log("Comment created!");
+          notify({
+            type: "success",
+            message: "Created comment successfully",
+          });
           resetRef.current?.();
           setIsReplying(false);
         },
+        onError: () => {
+          notify({
+            type: "error",
+            message: "Failed to create comment",
+          });
+        }
       }
     )
   }
   return (
     <>
       <div className="fixed top-0 left-0 z-10 flex justify-center items-center h-screen w-screen flex-col">
-        <div className="bg-black p-3 w-100 rounded-lg border-(--foreground) border text-neutral-100">
+        <div className="bg-black p-3 [@media(min-width:400px)]:w-100 w-70 rounded-lg border-(--foreground) border text-neutral-100">
           <div className="pb-1 flex justify-between items-center" >
             <h1 className="text-xl font-semibold"> {`Replying to ${handler}`} </h1>
             <div onClick={() => setIsReplying(false)} className="text-red-500 text-xs">close</div>

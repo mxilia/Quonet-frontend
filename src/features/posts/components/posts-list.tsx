@@ -9,7 +9,7 @@ import { timestampToDate } from "@/utils/format";
 import { LikeModify } from "@/features/likes/components/like-modify";
 import { path } from "@/config/path";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import { LikeButton } from "@/features/likes/components/like-button";
 import { LikeCounter } from "@/features/likes/components/like-counter";
 import { ImageFrame } from "@/components/ui/image-frame/image-frame";
@@ -100,6 +100,26 @@ const MediumPost = ({ post } : MediumPostProps) => {
   )
 }
 
+const MediumPostSkeleton = ({ ref } : { ref ?: RefObject<HTMLDivElement | null>}) => {
+  return (
+    <div ref={ref} className="inline-flex flex-col w-full sm:w-150 sm:p-2 pl-4 pr-4 pt-3 border h-fit border-(--foreground) p-3 rounded-xl mt-5">
+      <div className="inline-flex gap-2 mb-2">
+        <Skeleton className="w-10 h-10"/>
+        <div>
+          <Skeleton className="h-5 w-20 mb-1" />
+          <Skeleton className="h-3 w-12" />
+        </div>
+      </div>
+      <Skeleton className="h-10 w-50 mb-1"/>
+      <div className="inline-flex items-center mb-2">
+        <Skeleton className="h-6 w-6" />
+        <Skeleton className="h-3 w-14" />
+      </div>
+      <Skeleton className="w-full h-50" />
+    </div>
+  )
+}
+
 export const PostsList = ({ authorId, threadId, title } : PostsListProps) => {
   const postsQuery = useInfinitePosts({ authorId, threadId, title });
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -126,36 +146,8 @@ export const PostsList = ({ authorId, threadId, title } : PostsListProps) => {
 
   if(postsQuery.isLoading) return (
     <div className="inline-flex flex-col w-full sm:w-150 pt-3">
-      <div className="inline-flex flex-col w-full sm:w-150 sm:p-2 pl-4 pr-4 pt-3 border h-fit border-(--foreground) p-3 rounded-xl mt-5">
-        <div className="inline-flex gap-2 mb-2">
-          <Skeleton className="w-10 h-10"/>
-          <div>
-            <Skeleton className="h-5 w-20 mb-1" />
-            <Skeleton className="h-3 w-12" />
-          </div>
-        </div>
-        <Skeleton className="h-10 w-50 mb-1"/>
-        <div className="inline-flex items-center mb-2">
-          <Skeleton className="h-6 w-6" />
-          <Skeleton className="h-3 w-14" />
-        </div>
-        <Skeleton className="w-full h-50" />
-      </div>
-      <div className="inline-flex flex-col w-full sm:w-150 sm:p-2 pl-4 pr-4 pt-3 border h-fit border-(--foreground) p-3 rounded-xl mt-5">
-        <div className="inline-flex gap-2 mb-2">
-          <Skeleton className="w-10 h-10"/>
-          <div>
-            <Skeleton className="h-5 w-20 mb-1" />
-            <Skeleton className="h-3 w-12" />
-          </div>
-        </div>
-        <Skeleton className="h-10 w-50 mb-1"/>
-        <div className="inline-flex items-center mb-2">
-          <Skeleton className="h-6 w-6" />
-          <Skeleton className="h-3 w-14" />
-        </div>
-        <Skeleton className="w-full h-50" />
-      </div>
+      <MediumPostSkeleton />
+      <MediumPostSkeleton />
     </div>
   );
   if(!posts || posts?.length === 0) return <div className="text-sm text-neutral-500">no posts found</div>
@@ -163,7 +155,7 @@ export const PostsList = ({ authorId, threadId, title } : PostsListProps) => {
   return (
     <div className="inline-flex flex-col w-full sm:w-150 pt-3">
       {posts?.map((e) => (<MediumPost key={e.id} post={e}/>))}
-      {postsQuery.hasNextPage && <div ref={loadMoreRef} className="text-sm text-neutral-500">Loading more..</div>}
+      {postsQuery.hasNextPage && <MediumPostSkeleton ref={loadMoreRef} />}
     </div>
   );
 }

@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/form/textarea";
 import { useRef } from "react";
 import { BlurBackground } from "@/components/ui/background/blur-background";
 import { FieldError } from "react-hook-form";
+import { useNotificationStore } from "@/components/ui/notification/notification.store";
 
 type CreatePostProps = {
   active: boolean;
@@ -20,6 +21,7 @@ export const CreatePost = ({ active, setActive } : CreatePostProps ) => {
   const user = useUser();
   const resetRef = useRef<(() => void) | null>(null);
   const createPost = useCreatePost();
+  const notify = useNotificationStore((s) => s.notify);
   
   if(user.isLoading) return null;
   if(!canCreatePost(user.data)) return null;
@@ -30,9 +32,19 @@ export const CreatePost = ({ active, setActive } : CreatePostProps ) => {
       { data },
       {
         onSuccess: () => {
-          console.log("Post created!");
+          setActive(false);
+          notify({
+            type: "success",
+            message: "Created post successfully",
+          });
           resetRef.current?.();
         },
+        onError: () => {
+          notify({
+            type: "error",
+            message: "Failed to create post",
+          });
+        }
       }
     )
   }
@@ -42,7 +54,7 @@ export const CreatePost = ({ active, setActive } : CreatePostProps ) => {
   return (
     <>
       <div className="fixed top-0 left-0 z-10 flex justify-center items-center h-screen w-screen flex-col">
-        <div className="bg-black p-3 w-100 rounded-lg border-(--foreground) border text-neutral-100">
+        <div className="bg-black p-3 [@media(min-width:400px)]:w-100 w-70 rounded-lg border-(--foreground) border text-neutral-100">
           <div className="border-b border-(--foreground) pb-1 flex justify-between items-center" >
             <h1 className="text-xl font-semibold"> New Post </h1>
             <div onClick={() => setActive(false)} className="text-red-500 text-xs">close</div>
