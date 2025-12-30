@@ -66,12 +66,12 @@ export const CreatePost = ({ active, setActive } : CreatePostProps ) => {
               return (
                 <div className="inline-flex flex-col gap-2">
                   <Input label="Title" type="text" placeholder="Your post's title" className="text-sm border bg-neutral-950 border-(--foreground) rounded-lg w-50 p-1 px-2" error={formState.errors.title} registration={register("title")}/>
-                  <Textarea label="Content" error={formState.errors.content} placeholder="Your post's content or story" registration={register("content")} className="text-sm border bg-neutral-950 border-(--foreground) rounded-xl w-full h-20 p-1 px-2 no-scrollbar"/>
+                  <Textarea label="Content" error={formState.errors.content} placeholder="Your post's content or story" registration={register("content")} className="text-sm border bg-neutral-950 border-(--foreground) rounded-xl [@media(min-width:400px)]:w-94 w-64 h-20 p-1 px-2 no-scrollbar"/>
                   <div>
                     <SelectThread 
                       label="Select Thread" registeration={register("thread_id")} error={formState.errors.thread_id}
-                      className="text-sm border bg-neutral-950 border-(--foreground) rounded-xl w-full p-1 px-2" 
-                      searchBarClassName="bg-neutral-900 text-sm border-(--foreground) border h-7 mr-10 mt-1 rounded-lg p-1 px-2 w-full"
+                      className="text-sm border bg-neutral-950 border-(--foreground) rounded-xl [@media(min-width:400px)]:w-94 w-64 p-1 px-2" 
+                      searchBarClassName="bg-neutral-900 text-sm border-(--foreground) border h-7 mr-10 mt-1 rounded-lg p-1 px-2 [@media(min-width:400px)]:w-94 w-64"
                     />
                     <div className="text-xs text-neutral-500 mb-2">Please make sure to select which thread you want your post to be in. It's required. </div>
                   </div>
