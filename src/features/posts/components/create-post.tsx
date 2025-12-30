@@ -73,7 +73,7 @@ export const CreatePost = ({ active, setActive } : CreatePostProps ) => {
                       className="text-sm border bg-neutral-950 border-(--foreground) rounded-xl [@media(min-width:400px)]:w-94 w-64 p-1 px-2" 
                       searchBarClassName="bg-neutral-900 text-sm border-(--foreground) border h-7 mr-10 mt-1 rounded-lg p-1 px-2 [@media(min-width:400px)]:w-94 w-64"
                     />
-                    <div className="text-xs text-neutral-500 mb-2">Please make sure to select which thread you want your post to be in. It's required. </div>
+                    <div className="text-xs text-neutral-500 mb-2 [@media(min-width:400px)]:w-94 w-64">Please make sure to select which thread you want your post to be in. It's required. </div>
                   </div>
                   <Input label="Post's Thumbnail" registration={register("thumbnail")} error={formState.errors.thumbnail as FieldError | undefined} type="file" accept="image/*" className="inline text-sm file:py-1 file:px-2 file:rounded-2xl file:border file:text-xs file:font-semibold hover:file:border-(--secondary) hover:file:text-(--secondary)" />
                   <button type="submit" disabled={formState.isSubmitting} className="w-fit mt-4 border border-(--foreground) hover:text-(--secondary) hover:border-(--secondary) p-1 px-2 rounded-xl text-sm text-neutral-200">Submit</button>
