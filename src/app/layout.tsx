@@ -14,16 +14,16 @@ export const metadata: Metadata = {
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   /*for prefetching data n send it to client with query keys so queryClient doesn't fetch. */
-  
+  /*
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(getUserQueryOptions());
   const dehydratedState = dehydrate(queryClient);
-  
+  */
   return (
     <html lang="en">
       <body className={`font-arial antialiased`}>
         <AppProvider>
-          <HydrationBoundary state={dehydratedState}>
+          <HydrationBoundary state={undefined}>
             {children}
           </HydrationBoundary>
         </AppProvider>
