@@ -1,59 +1,72 @@
-import { api } from "@/lib/api-client";
-import { MutationConfig } from "@/lib/react-query";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import z from "zod";
-import { getUserByEmailQueryOptions, getUserByHandlerQueryOptions, getUserByIdQueryOptions } from "./get-user";
-import { getInfiniteUsersQueryOptions } from "./get-users";
+import { api } from "@/lib/api-client"
+import { MutationConfig } from "@/lib/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import z from "zod"
+import {
+  getUserByEmailQueryOptions,
+  getUserByHandlerQueryOptions,
+  getUserByIdQueryOptions,
+} from "./get-user"
+import { getInfiniteUsersQueryOptions } from "./get-users"
 
-export const updateUserInputSchema = z.object({
-  handler: z.string().trim().min(3, "username must be equal or longer than 3 characters").max(16, "username cannot be longer than 16 characters")
-  .regex(
-    /^[a-zA-Z][a-zA-Z0-9_]{2,16}$/, 
-    "Username must start with a letter and contain only letters, numbers, or underscores (3-16 chars)")
-  .optional()
-  .refine(
-    v => v === undefined || v.length >= 1,
-    "username must be at least 1 character long"
-  ),
-	bio: z.string().max(2000, "bio cannot be longer than 2000 characters long").optional(),
-	role: z.enum(["owner", "admin", "member"]).optional(),
-})
-.refine(
-  (data) => Object.values(data).some(v => v !== undefined && v !== ""),
-  {
+export const updateUserInputSchema = z
+  .object({
+    handler: z
+      .string()
+      .trim()
+      .min(3, "username must be equal or longer than 3 characters")
+      .max(16, "username cannot be longer than 16 characters")
+      .regex(
+        /^[a-zA-Z][a-zA-Z0-9_]{2,16}$/,
+        "Username must start with a letter and contain only letters, numbers, or underscores (3-16 chars)",
+      )
+      .optional()
+      .refine(
+        (v) => v === undefined || v.length >= 1,
+        "username must be at least 1 character long",
+      ),
+    bio: z.string().max(2000, "bio cannot be longer than 2000 characters long").optional(),
+    role: z.enum(["owner", "admin", "member"]).optional(),
+  })
+  .refine((data) => Object.values(data).some((v) => v !== undefined && v !== ""), {
     message: "at least one field must be filled",
-  }
-);
+  })
 
-export type UpdateUserInput = z.infer<typeof updateUserInputSchema>;
+export type UpdateUserInput = z.infer<typeof updateUserInputSchema>
 
-export const updateUser = ({ userId, data } : { userId : string, data : UpdateUserInput }) : Promise<void> => {
+export const updateUser = ({
+  userId,
+  data,
+}: {
+  userId: string
+  data: UpdateUserInput
+}): Promise<void> => {
   return api.patch(`/users/${userId}`, data)
 }
 
 type UpdateUserVariables = {
-  userId: string;
-  handler: string;
-  email: string;
-  data: UpdateUserInput;
+  userId: string
+  handler: string
+  email: string
+  data: UpdateUserInput
 }
 
 type UseUpdateUserOptions = {
-  mutationConfig?: MutationConfig<typeof updateUser>;
-};
+  mutationConfig?: MutationConfig<typeof updateUser>
+}
 
-export const useUpdateUser = ({ mutationConfig } : UseUpdateUserOptions = {}) => {
-  const queryClient = useQueryClient();
+export const useUpdateUser = ({ mutationConfig }: UseUpdateUserOptions = {}) => {
+  const queryClient = useQueryClient()
 
-  const { onSuccess, ...restConfig } = mutationConfig || {};
+  const { onSuccess, ...restConfig } = mutationConfig || {}
 
   return useMutation<void, Error, UpdateUserVariables>({
     onSuccess: (data, variables, _onMutateResult, _context) => {
-      const { userId, handler, email } = variables;
+      const { userId, handler, email } = variables
 
       queryClient.invalidateQueries({
         queryKey: getUserByIdQueryOptions(userId).queryKey,
-      });
+      })
 
       queryClient.invalidateQueries({
         queryKey: getUserByHandlerQueryOptions(handler).queryKey,
@@ -67,10 +80,9 @@ export const useUpdateUser = ({ mutationConfig } : UseUpdateUserOptions = {}) =>
         queryKey: getInfiniteUsersQueryOptions().queryKey,
       })
 
-      onSuccess?.(data, variables, _onMutateResult, _context);
+      onSuccess?.(data, variables, _onMutateResult, _context)
     },
     ...restConfig,
     mutationFn: ({ userId, data }) => updateUser({ userId, data }),
-  });
-};
-
+  })
+}

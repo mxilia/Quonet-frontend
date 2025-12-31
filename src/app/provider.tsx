@@ -1,18 +1,18 @@
-'use client';
+"use client"
 
-import { ErrorBoundary } from "react-error-boundary";
-import { MainErrorFallBack } from "@/components/errors/main";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import React from "react";
-import { queryConfig } from "@/lib/react-query";
+import { ErrorBoundary } from "react-error-boundary"
+import { MainErrorFallBack } from "@/components/errors/main"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import React from "react"
+import { queryConfig } from "@/lib/react-query"
 
 type AppProviderProps = {
-  children: React.ReactNode,
-};
+  children: React.ReactNode
+}
 
-export const AppProvider = ({ children } : AppProviderProps) => {
-  const [queryClient] = React.useState(() => new QueryClient({defaultOptions: queryConfig,}));
+export const AppProvider = ({ children }: AppProviderProps) => {
+  const [queryClient] = React.useState(() => new QueryClient({ defaultOptions: queryConfig }))
 
   return (
     <ErrorBoundary FallbackComponent={MainErrorFallBack}>
@@ -22,5 +22,5 @@ export const AppProvider = ({ children } : AppProviderProps) => {
         {children}
       </QueryClientProvider>
     </ErrorBoundary>
-  );
+  )
 }

@@ -1,29 +1,29 @@
-import { api } from "@/lib/api-client";
-import { QueryConfig } from "@/lib/react-query";
-import { Post } from "@/types/api";
-import { queryOptions, useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api-client"
+import { QueryConfig } from "@/lib/react-query"
+import { Post } from "@/types/api"
+import { queryOptions, useQuery } from "@tanstack/react-query"
 
 /* === Public === */
 
-export const getPost = ({ postId } : { postId : string }) : Promise<Post> => {
+export const getPost = ({ postId }: { postId: string }): Promise<Post> => {
   return api.get(`/posts/${postId}`)
 }
 
-export const getPostQueryOptions = (postId : string) => {
+export const getPostQueryOptions = (postId: string) => {
   return queryOptions({
-    queryKey: ['posts', postId],
-    queryFn: () => getPost({postId}),
+    queryKey: ["posts", postId],
+    queryFn: () => getPost({ postId }),
   })
 }
 
 type usePostOptions = {
-  postId: string;
-  queryConfig?: QueryConfig<typeof getPostQueryOptions>;
+  postId: string
+  queryConfig?: QueryConfig<typeof getPostQueryOptions>
 }
 
-export const usePost = ({ postId, queryConfig } : usePostOptions) => {
+export const usePost = ({ postId, queryConfig }: usePostOptions) => {
   return useQuery({
     ...getPostQueryOptions(postId),
     ...queryConfig,
-  });
+  })
 }

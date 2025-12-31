@@ -1,39 +1,39 @@
 export const path = {
   home: {
-    getHref: () => '/',
+    getHref: () => "/",
   },
 
   public: {
     login: {
-      getHref: () => '/login',
+      getHref: () => "/login",
     },
     thread: {
-      getHref: (id : string) => `/threads/${id}`,
+      getHref: (id: string) => `/threads/${id}`,
     },
     post: {
-      getHref: (id : string) => `/posts/${id}`
+      getHref: (id: string) => `/posts/${id}`,
     },
     user: {
-      getHref: (id : string) => `/users/${id}`
+      getHref: (id: string) => `/users/${id}`,
     },
     terms: {
-      getHref: () => '/term-of-service'
+      getHref: () => "/term-of-service",
     },
     about: {
-      getHref: () => '/about-us'
+      getHref: () => "/about-us",
     },
     feed: {
-      getHref: () => '/feed'
+      getHref: () => "/feed",
     },
   },
   private: {
     settings: {
-      getHref: () => '/settings'
+      getHref: () => "/settings",
     },
   },
   admin: {
     dashboard: {
-      getHref: () => '/admin/dashboard'
+      getHref: () => "/admin/dashboard",
     },
-  }
+  },
 }

@@ -1,40 +1,44 @@
-import { api } from "@/lib/api-client";
-import { QueryConfig } from "@/lib/react-query";
-import { Meta, Announcement } from "@/types/api";
-import { infiniteQueryOptions, useInfiniteQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api-client"
+import { QueryConfig } from "@/lib/react-query"
+import { Meta, Announcement } from "@/types/api"
+import { infiniteQueryOptions, useInfiniteQuery } from "@tanstack/react-query"
 
 /* === Public === */
 
-export const getAnnouncements = ({ page = 1 } : { page ?: number }) : Promise<{ data: Announcement[]; meta: Meta }> => {
-  return api.get('/announcements', {
+export const getAnnouncements = ({
+  page = 1,
+}: {
+  page?: number
+}): Promise<{ data: Announcement[]; meta: Meta }> => {
+  return api.get("/announcements", {
     params: {
       page: page,
-    }
+    },
   })
 }
 
 export const getInfiniteAnnouncementsQueryOptions = () => {
   return infiniteQueryOptions({
-    queryKey: ["announcements"], 
+    queryKey: ["announcements"],
     queryFn: ({ pageParam = 1 }) => {
-      return getAnnouncements({ page: pageParam as number });
+      return getAnnouncements({ page: pageParam as number })
     },
     getNextPageParam: (lastPage) => {
-      if (lastPage?.meta?.page === lastPage?.meta?.totalPages) return undefined;
-      const nextPage = lastPage.meta.page + 1;
-      return nextPage;
+      if (lastPage?.meta?.page === lastPage?.meta?.totalPages) return undefined
+      const nextPage = lastPage.meta.page + 1
+      return nextPage
     },
     initialPageParam: 1,
   })
 }
 
 type UseAnnouncementsOptions = {
-  page?: number;
-  queryConfig?: QueryConfig<typeof getAnnouncements>;
-};
+  page?: number
+  queryConfig?: QueryConfig<typeof getAnnouncements>
+}
 
 export const useInfiniteAnnouncements = ({ page, queryConfig }: UseAnnouncementsOptions = {}) => {
   return useInfiniteQuery({
     ...getInfiniteAnnouncementsQueryOptions(),
-  });
-};
+  })
+}

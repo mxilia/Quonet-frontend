@@ -1,39 +1,58 @@
-"use client";
+"use client"
 
-import { ImageFrame } from "@/components/ui/image-frame/image-frame";
-import { useUserById } from "../api/get-user";
-import { Skeleton } from "@/components/ui/skeleton/skeleton";
+import { ImageFrame } from "@/components/ui/image-frame/image-frame"
+import { useUserById } from "../api/get-user"
+import { Skeleton } from "@/components/ui/skeleton/skeleton"
 
 type FullUserProps = {
-  userId: string;
+  userId: string
 }
 
-const adminBg = "inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(99,102,241,0.35),transparent_45%),radial-gradient(circle_at_70%_60%,rgba(236,72,153,0.30),transparent_50%)]";
+const adminBg =
+  "inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(99,102,241,0.35),transparent_45%),radial-gradient(circle_at_70%_60%,rgba(236,72,153,0.30),transparent_50%)]"
 
-export const FullUser = ({ userId } : FullUserProps ) => {
-  const userQuery = useUserById({userId});
-  if(userQuery.isLoading) return (
-    <div className={`p-3 border border-(--darker-foreground) bg-(--darker-foreground) rounded-2xl mb-2`}>
-      <div className="flex items-center gap-2">
-        <Skeleton className="h-10 w-10" />
-        <Skeleton className="h-5 w-25"/>
-        <Skeleton className="w-13 h-5" />
+export const FullUser = ({ userId }: FullUserProps) => {
+  const userQuery = useUserById({ userId })
+  if (userQuery.isLoading)
+    return (
+      <div
+        className={`mb-2 rounded-2xl border border-(--darker-foreground) bg-(--darker-foreground) p-3`}
+      >
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-10 w-10" />
+          <Skeleton className="h-5 w-25" />
+          <Skeleton className="h-5 w-13" />
+        </div>
+        <Skeleton className="mt-3 h-7 w-12" />
+        <Skeleton className="mt-2 h-50 w-full" />
       </div>
-      <Skeleton className="mt-3 h-7 w-12" />
-      <Skeleton className="mt-2 h-50 w-full" />
-    </div>
-  );
-  const user = userQuery.data;
-  if(!user) return <div className="text-xs text-neutral-500">user not found</div>;
+    )
+  const user = userQuery.data
+  if (!user) return <div className="text-xs text-neutral-500">user not found</div>
   return (
-    <div className={`p-3 border border-(--darker-foreground) ${user.role === "member" ? "bg-(--darker-foreground)" : adminBg} rounded-2xl mb-2`}>
+    <div
+      className={`border border-(--darker-foreground) p-3 ${user.role === "member" ? "bg-(--darker-foreground)" : adminBg} mb-2 rounded-2xl`}
+    >
       <div className="flex items-center gap-2">
-        <ImageFrame src={ user.profile_url ? user.profile_url : "/default-avatar.png"} height={40} width={40} alt="user profile" imgClassName="rounded-full" className="border border-(--foreground) rounded-full flex items-center justify-center bg-white" />
-        <div className="text-xl text-center">{user.handler}</div>
-        <div className={`border rounded-xl pl-1 pr-1 text-[10px] text-center mt-2 ${user.role === "owner" ? "text-(--secondary) border-(--secondary)" : user.role === "admin" ?  "text-yellow-300 border-yellow-300" : "text-green-300 border-green-300"}`}>{user.role}</div>
+        <ImageFrame
+          src={user.profile_url ? user.profile_url : "/default-avatar.png"}
+          height={40}
+          width={40}
+          alt="user profile"
+          imgClassName="rounded-full"
+          className="flex items-center justify-center rounded-full border border-(--foreground) bg-white"
+        />
+        <div className="text-center text-xl">{user.handler}</div>
+        <div
+          className={`mt-2 rounded-xl border pr-1 pl-1 text-center text-[10px] ${user.role === "owner" ? "border-(--secondary) text-(--secondary)" : user.role === "admin" ? "border-yellow-300 text-yellow-300" : "border-green-300 text-green-300"}`}
+        >
+          {user.role}
+        </div>
       </div>
       <div className="mt-3 text-2xl"> Bio </div>
-      <p className="whitespace-pre-line text-[16px] text-neutral-300">{ user.bio === "" ? "no bio" : user.bio }</p>
+      <p className="text-[16px] whitespace-pre-line text-neutral-300">
+        {user.bio === "" ? "no bio" : user.bio}
+      </p>
     </div>
-  );
+  )
 }

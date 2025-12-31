@@ -1,4 +1,3 @@
-
 export const MainErrorFallBack = () => {
   return (
     <div>

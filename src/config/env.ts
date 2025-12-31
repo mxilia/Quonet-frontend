@@ -1,4 +1,4 @@
-import * as z from "zod";
+import * as z from "zod"
 
 const createEnv = () => {
   const EnvSchema = z.object({
@@ -12,13 +12,13 @@ const createEnv = () => {
   }
 
   const parsedEnv = EnvSchema.safeParse(envVars)
-  if(!parsedEnv.success){
+  if (!parsedEnv.success) {
     throw new Error(
       `Invalid env provided.
        The following variables are missing or invalid:
         ${Object.entries(parsedEnv.error.flatten().fieldErrors)
           .map(([k, v]) => `- ${k}: ${v}`)
-          .join('\n')}
+          .join("\n")}
       `,
     )
   }
@@ -26,4 +26,4 @@ const createEnv = () => {
   return parsedEnv.data ?? {}
 }
 
-export const env = createEnv();
+export const env = createEnv()

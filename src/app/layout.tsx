@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import "@/styles/globals.css";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { AppProvider } from "./provider";
-import { getUserQueryOptions } from "@/lib/auth";
-import { Notifications } from "@/components/ui/notification/notification";
+import type { Metadata } from "next"
+import "@/styles/globals.css"
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query"
+import { AppProvider } from "./provider"
+import { getUserQueryOptions } from "@/lib/auth"
+import { Notifications } from "@/components/ui/notification/notification"
 
 export const metadata: Metadata = {
   title: "Quonet",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
-};
+}
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   /*for prefetching data n send it to client with query keys so queryClient doesn't fetch. */
@@ -31,9 +31,9 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
         </AppProvider>
       </body>
     </html>
-  );
+  )
 }
 
-export default RootLayout;
+export default RootLayout
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic"

@@ -1,44 +1,63 @@
-'use client';
+"use client"
 
-import { path } from "@/config/path";
-import { RedirectButton } from "./_components/redirect-button";
-import Image from "next/image";
-import { env } from "@/config/env";
-import { useEffect, useState } from "react";
-import { useUser } from "@/lib/auth";
+import { path } from "@/config/path"
+import { RedirectButton } from "./_components/redirect-button"
+import Image from "next/image"
+import { env } from "@/config/env"
+import { useEffect, useState } from "react"
+import { useUser } from "@/lib/auth"
 
 const LoginPage = () => {
-  const loginPath = `${env.API_URL}/auth/google/login`;
+  const loginPath = `${env.API_URL}/auth/google/login`
 
-  const user = useUser();
-  const  [redirectPath, setRedirect] = useState("");
+  const user = useUser()
+  const [redirectPath, setRedirect] = useState("")
 
   useEffect(() => {
-    if(user.data) setRedirect(path.home.getHref())
+    if (user.data) setRedirect(path.home.getHref())
     else setRedirect(loginPath)
-  }, [user.data]);
+  }, [user.data])
 
   return (
-    <div className="h-screen flex justify-center items-center bg-black">
-      <div className="bg-(--darker-foreground) [@media(min-width:300px)]:w-100 w-95 rounded-xl flex items-center flex-col p-2 gap-2 pt-4 pb-4">
-        <div className="h-20 w-70 flex justify-center items-center">
-          <Image src="/logo.svg" alt="quonet's logo" width={200} height={50} className="object-cover object-center" />
+    <div className="flex h-screen items-center justify-center bg-black">
+      <div className="flex w-95 flex-col items-center gap-2 rounded-xl bg-(--darker-foreground) p-2 pt-4 pb-4 [@media(min-width:300px)]:w-100">
+        <div className="flex h-20 w-70 items-center justify-center">
+          <Image
+            src="/logo.svg"
+            alt="quonet's logo"
+            width={200}
+            height={50}
+            className="object-cover object-center"
+          />
         </div>
-        <RedirectButton text="Sign in with Google Account" redirectPath={redirectPath} imgPath="/google-logo.png"/>
-        <div className="text-neutral-500 flex w-10/12 items-center">
-          <div className="border-t w-full h-0"></div>
-          <div className="ml-1 mr-1">OR</div>
-          <div className="border-t w-full h-0"></div>
+        <RedirectButton
+          text="Sign in with Google Account"
+          redirectPath={redirectPath}
+          imgPath="/google-logo.png"
+        />
+        <div className="flex w-10/12 items-center text-neutral-500">
+          <div className="h-0 w-full border-t"></div>
+          <div className="mr-1 ml-1">OR</div>
+          <div className="h-0 w-full border-t"></div>
         </div>
-        <RedirectButton text="Anonymously read Quonet" redirectPath={path.home.getHref()} imgPath="/default-avatar.png"/>
-        <span className="text-xs w-10/12 text-neutral-300 mb-3">By continuing you indicate that you agree to Quonet’s 
-          <a href="/" className="text-blue-500 hover:underline"> Terms of Service</a> and 
+        <RedirectButton
+          text="Anonymously read Quonet"
+          redirectPath={path.home.getHref()}
+          imgPath="/default-avatar.png"
+        />
+        <span className="mb-3 w-10/12 text-xs text-neutral-300">
+          By continuing you indicate that you agree to Quonet’s
+          <a href="/" className="text-blue-500 hover:underline">
+            {" "}
+            Terms of Service
+          </a>{" "}
+          and
           <a className="text-blue-500 hover:underline"> Privacy Policy.</a>
         </span>
-        <div className="text-neutral-300 text-xs mt-10">About - Privacy - Terms - Contact</div>
+        <div className="mt-10 text-xs text-neutral-300">About - Privacy - Terms - Contact</div>
       </div>
     </div>
-  );
+  )
 }
 
-export default LoginPage;
+export default LoginPage
