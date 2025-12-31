@@ -1,52 +1,63 @@
-"use client"
-
-import { timestampToDate } from "@/utils/format"
-import { usePost } from "../api/get-post"
-import Image from "next/image"
-import Link from "next/link"
+import { ImageFrame } from "@/components/ui/image-frame/image-frame"
 import { path } from "@/config/path"
+import { Post } from "@/types/api"
+import Link from "next/link"
+import Image from "next/image"
+import { timestampToDate } from "@/utils/format"
 import { LikeModify } from "@/features/likes/components/like-modify"
-import { DeletePost } from "./delete-post"
-import { UpdatePost } from "./update-post"
-import { Comments } from "@/features/comments/components/comments"
 import { LikeButton } from "@/features/likes/components/like-button"
 import { LikeCounter } from "@/features/likes/components/like-counter"
-import { ImageFrame } from "@/components/ui/image-frame/image-frame"
-import { FullPostSkeleton } from "./skeletons/full-post-skeleton"
+import { DeletePost } from "./delete-post"
+import { UpdatePost } from "./update-post"
 
-type FullPostProps = {
-  postId: string
+type MediumPostProps = {
+  post: Post
 }
 
-export const FullPost = ({ postId }: FullPostProps) => {
-  const postQuery = usePost({ postId })
-  if (postQuery.isLoading) return <FullPostSkeleton />
-
-  const post = postQuery.data
-  if (!post) return <div className="text-sm text-neutral-500">post not found</div>
+export const MediumPost = ({ post }: MediumPostProps) => {
   return (
-    <div className="inline-flex w-200 flex-col p-4">
+    <div className="mt-5 inline-flex w-full flex-col rounded-xl border border-(--foreground) p-3 pt-3 sm:w-150">
+      <div className="inline-flex gap-2">
+        <ImageFrame
+          src={post.author.profile_url ? post.author.profile_url : "/default-avatar.png"}
+          height={30}
+          width={30}
+          alt="user profile"
+          imgClassName="rounded-2xl border border-(--foreground) rounded-2xl w-10 h-10 flex items-center justify-center bg-white"
+        />
+        <div>
+          <Link
+            href={path.public.user.getHref(post.author.id)}
+            className="inline text-[16px] text-neutral-300 hover:underline"
+          >
+            {post.author.handler}
+          </Link>
+          <div className="text-xs text-neutral-500">{timestampToDate(post.created_at)}</div>
+        </div>
+      </div>
+      <Link href={path.public.post.getHref(post.id)}>
+        <div className="inline text-xl text-neutral-100 hover:underline">{post.title}</div>
+      </Link>
       <Link href={path.public.thread.getHref(post.thread.id)} className="inline-flex items-center">
-        {post?.thread.image_url === "" ? (
-          <div className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-(--foreground) text-[6px]">
+        {post.thread.image_url === "" ? (
+          <div className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-(--foreground) text-[6px]">
             {" "}
             no img{" "}
           </div>
         ) : (
           <Image
             src={post.thread.image_url}
-            height={40}
-            width={40}
+            height={24}
+            width={24}
             alt="thread img"
             className="rounded-2xl"
           />
         )}
-        <div className="ml-2 text-lg text-(--secondary) hover:underline">
-          {`${post.thread.title}`}
+        <div className="ml-2 inline text-sm text-(--secondary) hover:underline">
+          {`/thread/${post.thread.title}`}
         </div>
       </Link>
-      <div className="mt-3 inline text-3xl text-neutral-100">{post?.title}</div>
-      <p className="mt-3 text-[16px] whitespace-pre-line text-neutral-100">{post?.content}</p>
+      <p className="mt-3 text-[16px] whitespace-pre-line text-neutral-200">{post.content}</p>
       <ImageFrame
         src={post.thumbnail_url}
         height={80}
@@ -55,25 +66,11 @@ export const FullPost = ({ postId }: FullPostProps) => {
         className="mt-3 flex justify-center rounded-xl bg-(--darker-foreground)"
         alt={""}
       />
-      <div className="mt-2 inline-flex items-center gap-2 text-[16px] text-neutral-200">
-        Posted by
-        <ImageFrame
-          src={post?.author.profile_url ? post.author.profile_url : "/default-avatar.png"}
-          height={50}
-          width={50}
-          alt="user profile"
-          imgClassName="border rounded-xl w-8 h-8 border-(--foreground) flex items-center justify-center bg-white"
-        />
-        <Link href={path.public.user.getHref(post.author_id)} className="hover:underline">
-          {post.author.handler}
-        </Link>{" "}
-        • {timestampToDate(post.created_at)}
-      </div>
-      <div className="mt-3 mb-4 flex justify-between">
+      <div className="mt-3 flex items-center gap-2">
         <LikeModify
           parentId={post.id}
           parentType="post"
-          className="flex gap-2 rounded-xl bg-(--darker-foreground) p-2"
+          className="flex gap-2 rounded-xl bg-(--darker-foreground) p-2.5"
         >
           {({ parentId, parentType, likeState, user, createLike, likeCount }) => (
             <>
@@ -107,11 +104,15 @@ export const FullPost = ({ postId }: FullPostProps) => {
             </>
           )}
         </LikeModify>
+        <Link
+          href={path.public.post.getHref(post.id)}
+          className="flex h-11 w-11 items-center justify-center rounded-xl bg-(--darker-foreground) pt-0.5 pb-1"
+        >
+          <Image src="/blue-chat.png" height={27} width={27} alt="comment img" />
+        </Link>
         <DeletePost post={post} />
         <UpdatePost postId={post.id} threadId={post.thread_id} />
       </div>
-      <div className="mb-2 text-xl">Comments</div>
-      <Comments rootId={postId} />
     </div>
   )
 }

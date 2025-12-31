@@ -2,7 +2,7 @@
 
 import { ImageFrame } from "@/components/ui/image-frame/image-frame"
 import { useUserById } from "../api/get-user"
-import { Skeleton } from "@/components/ui/skeleton/skeleton"
+import { FullUserSkeleton } from "./skeletons/full-user-skeleton"
 
 type FullUserProps = {
   userId: string
@@ -13,20 +13,7 @@ const adminBg =
 
 export const FullUser = ({ userId }: FullUserProps) => {
   const userQuery = useUserById({ userId })
-  if (userQuery.isLoading)
-    return (
-      <div
-        className={`mb-2 rounded-2xl border border-(--darker-foreground) bg-(--darker-foreground) p-3`}
-      >
-        <div className="flex items-center gap-2">
-          <Skeleton className="h-10 w-10" />
-          <Skeleton className="h-5 w-25" />
-          <Skeleton className="h-5 w-13" />
-        </div>
-        <Skeleton className="mt-3 h-7 w-12" />
-        <Skeleton className="mt-2 h-50 w-full" />
-      </div>
-    )
+  if (userQuery.isLoading) return <FullUserSkeleton />
   const user = userQuery.data
   if (!user) return <div className="text-xs text-neutral-500">user not found</div>
   return (

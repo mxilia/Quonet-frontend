@@ -10,11 +10,11 @@ type DeleteThreadProps = {
 }
 
 export const DeleteThread = ({ threadId }: DeleteThreadProps) => {
-  const { data: user, isLoading, error } = useUser()
+  const user = useUser()
   const deleteThread = useDeleteThread()
 
-  if (!canDeleteThread(user)) return null
-  if (isLoading) return <Skeleton className="h-7 w-17" />
+  if (user.isLoading) return <Skeleton className="h-7 w-17" />
+  if (!canDeleteThread(user.data)) return null
 
   return (
     <div>

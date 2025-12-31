@@ -1,6 +1,8 @@
 import { PostsList } from "@/features/posts/components/posts-list"
 import { TopLikedPostsList } from "@/features/posts/components/top-liked-post-list"
+import { getUserById, getUserByIdQueryOptions } from "@/features/users/api/get-user"
 import { FullUser } from "@/features/users/components/full-user"
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -13,14 +15,19 @@ const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   /*
     TODO 1: validate id
   */
+  const queryClient = new QueryClient()
+  await queryClient.prefetchQuery(getUserByIdQueryOptions(userId))
+  const dehydratedState = dehydrate(queryClient)
   return (
-    <div className="flex min-h-screen justify-center bg-black pt-17 text-white">
-      <div className="inline-flex w-full flex-col pt-3 pr-4 pl-4 sm:w-150 sm:p-2">
-        <FullUser userId={userId} />
-        <TopLikedPostsList authorId={userId} />
-        <PostsList authorId={userId} />
+    <HydrationBoundary state={dehydratedState}>
+      <div className="flex min-h-screen justify-center bg-black pt-17 text-white">
+        <div className="inline-flex w-full flex-col pt-3 pr-4 pl-4 sm:w-150 sm:p-2">
+          <FullUser userId={userId} />
+          <TopLikedPostsList authorId={userId} />
+          <PostsList authorId={userId} />
+        </div>
       </div>
-    </div>
+    </HydrationBoundary>
   )
 }
 

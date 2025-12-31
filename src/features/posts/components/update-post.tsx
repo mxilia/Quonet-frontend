@@ -12,10 +12,9 @@ type UpdatePostProps = {
 export const UpdatePost = ({ postId, threadId }: UpdatePostProps) => {
   const { data: user, isLoading, error } = useUser()
   const resetRef = useRef<(() => void) | null>(null)
-
-  if (isLoading) return <div>is loading...</div>
-
   const updatePost = useUpdatePost()
+
+  if (isLoading) return null
 
   return null
 }

@@ -9,11 +9,11 @@ import { Textarea } from "@/components/ui/form/textarea"
 import { useRef } from "react"
 
 export const CreateThread = () => {
-  const { data: user, isLoading, error } = useUser()
+  const user = useUser()
   const resetRef = useRef<(() => void) | null>(null)
 
-  if (isLoading) return null
-  if (!canCreateThread(user)) return null
+  if (user.isLoading) return null
+  if (!canCreateThread(user.data)) return null
 
   const createThread = useCreateThread()
 

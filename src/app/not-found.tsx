@@ -1,8 +1,6 @@
 import { path } from "@/config/path"
 import Link from "next/link"
 
-export const dynamic = "force-dynamic"
-
 const NotFoundPage = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-1 bg-black font-semibold text-white">
