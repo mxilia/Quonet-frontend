@@ -17,7 +17,7 @@ const ThreadPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   const queryClient = new QueryClient()
   await Promise.all([
-    //queryClient.prefetchQuery(getThreadQueryOptions(threadId)),
+    queryClient.prefetchQuery(getThreadQueryOptions(threadId)),
     queryClient.prefetchQuery(getTopLikedPostsQueryOptions(undefined, threadId)),
     queryClient.prefetchInfiniteQuery(getInfinitePostsQueryOptions(undefined, threadId)),
   ])
