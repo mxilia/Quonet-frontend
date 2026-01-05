@@ -6,26 +6,45 @@ import { Input } from "@/components/ui/form/input"
 import { Form } from "@/components/ui/form/form"
 import { useRef } from "react"
 import { useRouter } from "next/navigation"
+import { useNotificationStore } from "@/components/ui/notification/notification.store"
 
-export const UpdateUserHandler = () => {
+type UpdateUserHandlerProps = {
+  userId: string;
+  handler: string;
+  email: string;
+}
+
+export const UpdateUserHandler = ({ userId, handler, email }: UpdateUserHandlerProps) => {
   const user = useUser()
   const updateUser = useUpdateUser()
   const resetRef = useRef<(() => void) | null>(null)
   const router = useRouter()
+  const notify = useNotificationStore((s) => s.notify)
+
+  if (!user || !user.data) return null
 
   const onSubmit = async (data: UpdateUserInput) => {
     updateUser.mutate(
       {
-        userId: user.data!.id,
+        userId: userId,
         data: data,
-        handler: user.data!.handler,
-        email: user.data!.email,
+        handler: handler,
+        email: email,
       },
       {
         onSuccess: () => {
           resetRef.current?.()
           router.refresh()
-          console.log("Thread created!")
+          notify({
+            type: "success",
+            message: "Updated handler successfully",
+          })
+        },
+        onError: () => {
+          notify({
+            type: "error",
+            message: "Failed to update handler",
+          })
         },
       },
     )

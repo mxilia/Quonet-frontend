@@ -6,26 +6,45 @@ import { Form } from "@/components/ui/form/form"
 import { Textarea } from "@/components/ui/form/textarea"
 import { useRouter } from "next/navigation"
 import { useRef } from "react"
+import { useNotificationStore } from "@/components/ui/notification/notification.store"
 
-export const UpdateUserBio = () => {
+type UpdateUserBioProps = {
+  userId: string;
+  handler: string;
+  email: string;
+}
+
+export const UpdateUserBio = ({ userId, handler, email }: UpdateUserBioProps) => {
   const user = useUser()
   const updateUser = useUpdateUser()
   const resetRef = useRef<(() => void) | null>(null)
   const router = useRouter()
+  const notify = useNotificationStore((s) => s.notify)
+
+  if (!user || !user.data) return null
 
   const onSubmit = async (data: UpdateUserInput) => {
     updateUser.mutate(
       {
-        userId: user.data!.id,
+        userId: userId,
         data: data,
-        handler: user.data!.handler,
-        email: user.data!.email,
+        handler: handler,
+        email: email,
       },
       {
         onSuccess: () => {
-          console.log("User updated!")
+          notify({
+            type: "success",
+            message: "Updated bio successfully",
+          })
           resetRef.current?.()
           router.refresh()
+        },
+        onError: () => {
+          notify({
+            type: "error",
+            message: "Failed to update bio",
+          })
         },
       },
     )

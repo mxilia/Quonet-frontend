@@ -27,7 +27,6 @@ export const CreatePost = ({ active, setActive }: CreatePostProps) => {
   if (!canCreatePost(user.data)) return null
 
   const onSubmit = async (data: CreatePostInput) => {
-    console.log("submitted")
     createPost.mutate(
       { data },
       {

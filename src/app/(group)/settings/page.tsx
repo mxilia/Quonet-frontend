@@ -33,8 +33,8 @@ const SettingsPage = () => {
     <div className="flex min-h-screen justify-center bg-black pt-17 text-white">
       <div className="inline-flex w-full flex-col pt-3 pr-4 pl-4 sm:w-150 sm:p-2">
         <h1 className="mb-1 border-b border-(--foreground) pb-2 text-2xl">Settings</h1>
-        <UpdateUserBio />
-        <UpdateUserHandler />
+        {user.data && <UpdateUserBio userId={user.data!.id} handler={user.data!.handler} email={user.data!.email} />}
+        {user.data && <UpdateUserHandler userId={user.data!.id} handler={user.data!.handler} email={user.data!.email} />}
         {isAdmin(user.data) && (
           <Link href={path.admin.dashboard.getHref()}>
             <button className="mb-5 w-fit rounded-xl border border-green-400 p-1 px-2 text-sm text-green-400 hover:bg-(--darker-foreground)">
@@ -50,7 +50,7 @@ const SettingsPage = () => {
           {" "}
           logout{" "}
         </button>
-        <DeleteUser />
+        {user.data && <DeleteUser userId={user.data!.id} handler={user.data!.handler} email={user.data!.email} />}
       </div>
     </div>
   )
