@@ -38,7 +38,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         />
         <Link
           href={path.home.getHref()}
-          className={`${currentPath === "/" ? "bg-(--foreground)/50" : ""} mr-8 rounded-xl p-2 transition-colors hover:bg-(--secondary)/30`}
+          className={`${currentPath === "/" ? "bg-(--foreground)/50" : ""} mr-6 rounded-xl p-2 transition-colors hover:bg-(--secondary)/30`}
         >
           <Image src="/home-icon.png" width={27} height={27} alt="home" className="invert-90" />
         </Link>
@@ -51,7 +51,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         {isLogin(user.data) && (
           <Link
             href={path.private.settings.getHref()}
-            className={`${currentPath === "/settings" ? "bg-(--foreground)/50" : ""} mr-8 rounded-xl p-2 transition-colors hover:bg-(--secondary)/30`}
+            className={`${currentPath === "/settings" ? "bg-(--foreground)/50" : ""} mr-6 rounded-xl p-2 transition-colors hover:bg-(--secondary)/30`}
           >
             <Image
               src="/settings-icon.png"
@@ -73,9 +73,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 height={30}
                 width={30}
                 alt="user profile"
-                className="rounded-full border border-(--foreground) bg-white"
+                className="rounded-full border border-foreground bg-white"
               />
-              <div className="hidden truncate transition-all hover:text-(--secondary) hover:underline [@media(min-width:420px)]:inline">
+              <div className="hidden truncate transition-all hover:text-secondary hover:underline [@media(min-width:420px)]:inline">
                 {user.data!.handler}
               </div>
             </Link>

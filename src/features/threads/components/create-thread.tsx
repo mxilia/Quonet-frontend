@@ -7,6 +7,7 @@ import { Form } from "@/components/ui/form/form"
 import { Input } from "@/components/ui/form/input"
 import { Textarea } from "@/components/ui/form/textarea"
 import { useRef } from "react"
+import { FieldError } from "react-hook-form"
 
 export const CreateThread = () => {
   const user = useUser()
@@ -30,8 +31,8 @@ export const CreateThread = () => {
   }
 
   return (
-    <div>
-      <h1>Create Thread</h1>
+    <div className="border-b border-foreground pb-2">
+      <h1 className="text-xl mb-2 border-b border-foreground">Create Thread</h1>
       <Form schema={createThreadInputSchema} onSubmit={onSubmit}>
         {({ register, formState, reset }) => {
           resetRef.current = reset
@@ -40,25 +41,33 @@ export const CreateThread = () => {
               <Input
                 label="Title"
                 type="text"
-                className="border"
+                className="w-50 rounded-lg border border-foreground bg-neutral-950 p-1 px-2 text-sm"
                 error={formState.errors.title}
                 registration={register("title")}
               />
               <Textarea
                 label="Description"
-                className="border"
+                className="no-scrollbar h-20 w-full rounded-xl border border-foreground bg-neutral-950 p-1 px-2 text-sm"
                 error={formState.errors.description}
                 registration={register("description")}
               />
-              <Input label="Image" registration={register("image")} type="file" accept="image/*" />
-              <button type="submit" className="border">
+              <Input
+                label="Thread's Image"
+                registration={register("image")}
+                error={formState.errors.image as FieldError | undefined}
+                type="file"
+                accept="image/*"
+                className="inline text-sm file:rounded-2xl file:border file:px-2 file:py-1 file:text-xs file:font-semibold hover:file:border-secondary hover:file:text-(--secondary)"
+              />
+              <button disabled={formState.isSubmitting}
+                    className="mt-4 w-fit rounded-xl border border-foreground p-1 px-2 text-sm text-neutral-200 hover:border-secondary hover:text-secondary">
                 submit
               </button>
+              {formState.errors.root && <div className="text-xs text-red-500 mt-1">{formState.errors.root.message}</div>}
             </>
           )
         }}
       </Form>
-      <div>-----------------------------------</div>
     </div>
   )
 }

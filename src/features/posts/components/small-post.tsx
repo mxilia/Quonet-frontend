@@ -36,7 +36,7 @@ export const SmallPost = ({ post }: SmallPostProps) => {
           </p>
         </div>
       </div>
-      <div className="text-xs text-neutral-300">
+      <div className="text-xs mt-1 text-neutral-300">
         {`posted by `}
         <Link href={path.public.user.getHref(post.author.id)} className="hover:underline">
           {post.author.handler}
@@ -44,7 +44,7 @@ export const SmallPost = ({ post }: SmallPostProps) => {
         <br />
         <Link
           href={path.public.post.getHref(post.id)}
-          className="text-xs text-(--secondary) hover:underline"
+          className="text-xs text-secondary hover:underline"
         >
           (view full)
         </Link>

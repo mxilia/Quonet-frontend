@@ -28,7 +28,7 @@ export const FullPost = ({ postId }: FullPostProps) => {
     <div className="inline-flex w-200 flex-col p-4">
       <Link href={path.public.thread.getHref(post.thread.id)} className="inline-flex items-center">
         {post?.thread.image_url === "" ? (
-          <div className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-(--foreground) text-[6px]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-foreground text-[6px]">
             {" "}
             no img{" "}
           </div>
@@ -41,7 +41,7 @@ export const FullPost = ({ postId }: FullPostProps) => {
             className="rounded-2xl"
           />
         )}
-        <div className="ml-2 text-lg text-(--secondary) hover:underline">
+        <div className="ml-2 text-lg text-secondary hover:underline">
           {`${post.thread.title}`}
         </div>
       </Link>
@@ -67,7 +67,7 @@ export const FullPost = ({ postId }: FullPostProps) => {
         <Link href={path.public.user.getHref(post.author_id)} className="hover:underline">
           {post.author.handler}
         </Link>{" "}
-        • {timestampToDate(post.created_at)}
+        <div className="text-neutral-400 text-sm">• {timestampToDate(post.created_at)}</div>
       </div>
       <div className="mt-3 mb-4 flex justify-between">
         <LikeModify

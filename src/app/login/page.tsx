@@ -45,16 +45,13 @@ const LoginPage = () => {
           redirectPath={path.home.getHref()}
           imgPath="/default-avatar.png"
         />
-        <span className="mb-3 w-10/12 text-xs text-neutral-300">
-          By continuing you indicate that you agree to Quonet’s
-          <a href="/" className="text-blue-500 hover:underline">
-            {" "}
-            Terms of Service
-          </a>{" "}
-          and
-          <a className="text-blue-500 hover:underline"> Privacy Policy.</a>
+        <span className="mb-3 w-10/12 text-xs text-neutral-500">
+          This application is a test/demo project and is provided “AS IS”.
+          The owner is not liable for any damages, data loss, or issues
+          arising from the use of this application.
+          Use at your own risk.
         </span>
-        <div className="mt-10 text-xs text-neutral-300">About - Privacy - Terms - Contact</div>
+        <div className="mt-10 text-xs text-neutral-300">© 2025 mxilia</div>
       </div>
     </div>
   )

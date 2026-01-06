@@ -9,6 +9,7 @@ import { LikeButton } from "@/features/likes/components/like-button"
 import { LikeCounter } from "@/features/likes/components/like-counter"
 import { DeletePost } from "./delete-post"
 import { UpdatePost } from "./update-post"
+import { ConfigurePost } from "./configure-post"
 
 type MediumPostProps = {
   post: Post
@@ -16,7 +17,7 @@ type MediumPostProps = {
 
 export const MediumPost = ({ post }: MediumPostProps) => {
   return (
-    <div className="mt-5 inline-flex w-full flex-col rounded-xl border border-(--foreground) p-3 pt-3 sm:w-150">
+    <div className="mt-5 inline-flex w-full flex-col rounded-xl border border-foreground p-3 pt-3 sm:w-150">
       <div className="inline-flex gap-2">
         <ImageFrame
           src={post.author.profile_url ? post.author.profile_url : "/default-avatar.png"}
@@ -40,7 +41,7 @@ export const MediumPost = ({ post }: MediumPostProps) => {
       </Link>
       <Link href={path.public.thread.getHref(post.thread.id)} className="inline-flex items-center">
         {post.thread.image_url === "" ? (
-          <div className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-(--foreground) text-[6px]">
+          <div className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-foreground text-[6px]">
             {" "}
             no img{" "}
           </div>
@@ -53,7 +54,7 @@ export const MediumPost = ({ post }: MediumPostProps) => {
             className="rounded-2xl"
           />
         )}
-        <div className="ml-2 inline text-sm text-(--secondary) hover:underline">
+        <div className="ml-2 inline text-sm text-secondary hover:underline">
           {`/thread/${post.thread.title}`}
         </div>
       </Link>
@@ -106,11 +107,11 @@ export const MediumPost = ({ post }: MediumPostProps) => {
         </LikeModify>
         <Link
           href={path.public.post.getHref(post.id)}
-          className="flex h-11 w-11 items-center justify-center rounded-xl bg-(--darker-foreground) pt-0.5 pb-1"
+          className="flex h-11 select-none w-11 items-center justify-center rounded-xl bg-(--darker-foreground) pt-0.5 pb-1 hover:bg-foreground transition-colors duration-200"
         >
           <Image src="/blue-chat.png" height={27} width={27} alt="comment img" />
         </Link>
-        <DeletePost post={post} />
+        <ConfigurePost post={post} />
         <UpdatePost postId={post.id} threadId={post.thread_id} />
       </div>
     </div>

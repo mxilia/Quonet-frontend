@@ -5,12 +5,14 @@ import { useDeletePost } from "../api/delete-post"
 import { canDeletePost } from "@/lib/authorization"
 import { Post } from "@/types/api"
 import { useNotificationStore } from "@/components/ui/notification/notification.store"
+import { cn } from "@/lib/utils"
 
 type DeletePostProps = {
   post: Post
+  className?: string
 }
 
-export const DeletePost = ({ post }: DeletePostProps) => {
+export const DeletePost = ({ post, className }: DeletePostProps) => {
   const user = useUser()
   const deletePost = useDeletePost()
   const notify = useNotificationStore((s) => s.notify)
@@ -38,10 +40,8 @@ export const DeletePost = ({ post }: DeletePostProps) => {
     )
 
   return (
-    <div>
-      <button className="text-xs text-red-500" onClick={onDelete}>
-        delete
-      </button>
-    </div>
+    <button className={cn("text-xs text-red-500", className)} onClick={onDelete}>
+      delete
+    </button>
   )
 }
