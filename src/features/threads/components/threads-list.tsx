@@ -25,19 +25,23 @@ export const ThreadList = () => {
           setSearchString(e.target.value)
         }}
       />
-      {threadsQuery.isFetching && <div className="no-scrollbar inline-flex w-full grow flex-col gap-1 overflow-y-scroll">
-        <SmallThreadSkeleton />
-        <SmallThreadSkeleton />
-        <SmallThreadSkeleton />
-        <SmallThreadSkeleton />
-      </div>}
-      {!threadsQuery.isFetching && <div className="no-scrollbar inline-flex w-full grow flex-col gap-1 overflow-y-scroll">
-        {!threads || threads.length === 0 ? (
-          <div className="text-sm text-neutral-500">no threads found</div>
-        ) : (
-          threads?.map((e) => <SmallThread key={`list-${e.id}`} thread={e} />)
-        )}
-      </div>}
+      {threadsQuery.isFetching && (
+        <div className="no-scrollbar inline-flex w-full grow flex-col gap-1 overflow-y-scroll">
+          <SmallThreadSkeleton />
+          <SmallThreadSkeleton />
+          <SmallThreadSkeleton />
+          <SmallThreadSkeleton />
+        </div>
+      )}
+      {!threadsQuery.isFetching && (
+        <div className="no-scrollbar inline-flex w-full grow flex-col gap-1 overflow-y-scroll">
+          {!threads || threads.length === 0 ? (
+            <div className="text-sm text-neutral-500">no threads found</div>
+          ) : (
+            threads?.map((e) => <SmallThread key={`list-${e.id}`} thread={e} />)
+          )}
+        </div>
+      )}
       {threads && threads?.length > 0 && threadsQuery.hasNextPage ? (
         <div onClick={() => threadsQuery.fetchNextPage()} className="mt-1 text-xs text-neutral-400">
           load more

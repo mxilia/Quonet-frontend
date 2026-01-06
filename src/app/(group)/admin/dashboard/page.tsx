@@ -13,8 +13,8 @@ const AdminPage = () => {
   if (!isAdmin(user.data)) return <div className="min-h-screen w-full bg-black" />
 
   return (
-    <div className="flex justify-center min-h-screen w-full bg-black pt-17 text-white">
-      <div className="sm:w-150 px-2">
+    <div className="flex min-h-screen w-full justify-center bg-black pt-17 text-white">
+      <div className="px-2 sm:w-150">
         <CreateAnnouncement />
         <CreateThread />
         <AdminUsersList />

@@ -9,9 +9,9 @@ import { useRef } from "react"
 import { useNotificationStore } from "@/components/ui/notification/notification.store"
 
 type UpdateUserBioProps = {
-  userId: string;
-  handler: string;
-  email: string;
+  userId: string
+  handler: string
+  email: string
 }
 
 export const UpdateUserBio = ({ userId, handler, email }: UpdateUserBioProps) => {

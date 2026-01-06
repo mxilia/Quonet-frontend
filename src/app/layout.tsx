@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description: "Application for posting questions.",
   icons: {
     icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
   },
 }
 

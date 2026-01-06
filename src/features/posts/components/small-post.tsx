@@ -11,14 +11,19 @@ export const SmallPost = ({ post }: SmallPostProps) => {
   return (
     <div className="inline-flex w-50 flex-col justify-between rounded-xl border border-black bg-(--darker-foreground) p-2 hover:border-(--secondary)">
       <div className="inline-flex max-w-50 gap-2">
-        <ImageFrame
-          src={post.thumbnail_url}
-          width={40}
-          height={40}
-          className=""
-          imgClassName="border border-neutral-500 flex aspect-square justify-center rounded-xl aspect-square rounded-lg"
-          alt=""
-        />
+        {post.thumbnail_url ? (
+          <ImageFrame
+            src={post.thumbnail_url}
+            width={40}
+            height={40}
+            className="inline-flex aspect-square h-8 w-8 items-center justify-center gap-2 rounded-xl border border-neutral-500"
+            alt={""}
+          />
+        ) : (
+          <div className="inline-flex aspect-square h-8 w-8 items-center justify-center gap-2 rounded-xl border border-neutral-500 bg-(--foreground) text-center text-[8px] text-neutral-400">
+            no img
+          </div>
+        )}
         <div>
           <Link
             href={path.public.post.getHref(post.id)}

@@ -7,9 +7,9 @@ import { path } from "@/config/path"
 import { useNotificationStore } from "@/components/ui/notification/notification.store"
 
 type DeleteUserProps = {
-  userId: string;
-  handler: string;
-  email: string;
+  userId: string
+  handler: string
+  email: string
 }
 
 export const DeleteUser = ({ userId, handler, email }: DeleteUserProps) => {
@@ -48,7 +48,7 @@ export const DeleteUser = ({ userId, handler, email }: DeleteUserProps) => {
   return (
     <button
       onClick={onDeleteUser}
-      className="w-fit rounded-xl h-fit border border-red-700 p-1 px-2 text-sm text-red-700 hover:bg-(--darker-foreground)"
+      className="h-fit w-fit rounded-xl border border-red-700 p-1 px-2 text-sm text-red-700 hover:bg-(--darker-foreground)"
     >
       {" "}
       delete account{" "}

@@ -9,9 +9,9 @@ import { useRouter } from "next/navigation"
 import { useNotificationStore } from "@/components/ui/notification/notification.store"
 
 type UpdateUserHandlerProps = {
-  userId: string;
-  handler: string;
-  email: string;
+  userId: string
+  handler: string
+  email: string
 }
 
 export const UpdateUserHandler = ({ userId, handler, email }: UpdateUserHandlerProps) => {
