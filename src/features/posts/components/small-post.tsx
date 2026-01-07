@@ -16,7 +16,7 @@ export const SmallPost = ({ post }: SmallPostProps) => {
             src={post.thumbnail_url}
             width={40}
             height={40}
-            className="inline-flex aspect-square h-8 w-8 items-center justify-center gap-2 rounded-xl border border-neutral-500"
+            className="inline-flex aspect-square object-contain h-8 w-8 items-center justify-center gap-2 rounded-xl border border-neutral-500"
             alt={""}
           />
         ) : (
