@@ -19,11 +19,11 @@ export const DeleteThread = ({ threadId, className }: DeleteThreadProps) => {
   if (!canDeleteThread(user.data)) return null
 
   return (
-      <button
-        className={cn("text-xs text-red-500 hover:underline", className)}
-        onClick={() => deleteThread.mutate({ threadId: threadId })}
-      >
-        delete
-      </button>
+    <button
+      className={cn("text-xs text-red-500 hover:underline", className)}
+      onClick={() => deleteThread.mutate({ threadId: threadId })}
+    >
+      delete
+    </button>
   )
 }

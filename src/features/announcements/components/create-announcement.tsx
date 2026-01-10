@@ -30,7 +30,7 @@ export const CreateAnnouncement = () => {
   }
   return (
     <div className="mb-2">
-      <h1 className="text-xl mb-2 border-b border-foreground">Create Announcement</h1>
+      <h1 className="border-foreground mb-2 border-b text-xl">Create Announcement</h1>
       <Form schema={createAnnouncementInputSchema} onSubmit={onSubmit}>
         {({ register, formState, reset }) => {
           resetRef.current = reset
@@ -38,12 +38,15 @@ export const CreateAnnouncement = () => {
             <>
               <Textarea
                 label="content"
-                className="no-scrollbar h-20 w-full rounded-xl border border-foreground bg-neutral-950 p-1 px-2 text-sm"
+                className="no-scrollbar border-foreground h-20 w-full rounded-xl border bg-neutral-950 p-1 px-2 text-sm"
                 error={formState.errors.content}
                 registration={register("content")}
               />
-              <button type="submit" disabled={formState.isSubmitting}
-                    className="w-fit rounded-xl border border-(--foreground) p-1 px-2 text-sm text-neutral-200 hover:border-(--secondary) hover:text-(--secondary)">
+              <button
+                type="submit"
+                disabled={formState.isSubmitting}
+                className="w-fit rounded-xl border border-(--foreground) p-1 px-2 text-sm text-neutral-200 hover:border-(--secondary) hover:text-(--secondary)"
+              >
                 Submit
               </button>
               <br />

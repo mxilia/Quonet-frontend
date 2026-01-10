@@ -10,11 +10,11 @@ export type SmallThreadProps = {
 
 export const SmallThread = ({ thread }: SmallThreadProps) => {
   return (
-    <div className="h-fit w-full rounded-xl border border-black bg-(--foreground)/30 p-2 hover:border-secondary inline-flex justify-between">
+    <div className="hover:border-secondary inline-flex h-fit w-full justify-between rounded-xl border border-black bg-(--foreground)/30 p-2">
       <Link href={path.public.thread.getHref(thread.id)} className="w-full">
         <div className="inline-flex w-full items-center gap-2">
           {thread.image_url === "" ? (
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-foreground text-[8px]">
+            <div className="bg-foreground flex h-8 w-8 items-center justify-center rounded-xl text-[8px]">
               {" "}
               no img{" "}
             </div>

@@ -73,9 +73,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 height={30}
                 width={30}
                 alt="user profile"
-                className="rounded-full border border-foreground bg-white"
+                className="border-foreground rounded-full border bg-white"
               />
-              <div className="hidden truncate transition-all hover:text-secondary hover:underline [@media(min-width:420px)]:inline">
+              <div className="hover:text-secondary hidden truncate transition-all hover:underline [@media(min-width:420px)]:inline">
                 {user.data!.handler}
               </div>
             </Link>

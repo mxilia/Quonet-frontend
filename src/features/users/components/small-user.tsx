@@ -7,7 +7,7 @@ type SmallUserProps = {
 
 export const SmallUser = ({ user }: SmallUserProps) => {
   return (
-    <div className="inline-flex w-full gap-2 rounded-lg border items-center border-foreground p-2">
+    <div className="border-foreground inline-flex w-full items-center gap-2 rounded-lg border p-2">
       {user.profile_url ? (
         <Image
           src={user.profile_url}
@@ -21,10 +21,10 @@ export const SmallUser = ({ user }: SmallUserProps) => {
       )}
       {user.handler}
       <div
-          className={`mt-1 rounded-xl border w-fit h-fit pr-1 pl-1 text-center text-[10px] ${user.role === "owner" ? "border-secondary text-secondary" : user.role === "admin" ? "border-yellow-300 text-yellow-300" : "border-green-300 text-green-300"}`}
-        >
-          {user.role}
-        </div>
+        className={`mt-1 h-fit w-fit rounded-xl border pr-1 pl-1 text-center text-[10px] ${user.role === "owner" ? "border-secondary text-secondary" : user.role === "admin" ? "border-yellow-300 text-yellow-300" : "border-green-300 text-green-300"}`}
+      >
+        {user.role}
+      </div>
     </div>
   )
 }

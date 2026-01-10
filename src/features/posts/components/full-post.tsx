@@ -28,7 +28,7 @@ export const FullPost = ({ postId }: FullPostProps) => {
     <div className="inline-flex w-200 flex-col p-4">
       <Link href={path.public.thread.getHref(post.thread.id)} className="inline-flex items-center">
         {post?.thread.image_url === "" ? (
-          <div className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-foreground text-[6px]">
+          <div className="bg-foreground flex h-10 w-10 items-center justify-center rounded-[14px] text-[6px]">
             {" "}
             no img{" "}
           </div>
@@ -41,9 +41,7 @@ export const FullPost = ({ postId }: FullPostProps) => {
             className="rounded-2xl"
           />
         )}
-        <div className="ml-2 text-lg text-secondary hover:underline">
-          {`${post.thread.title}`}
-        </div>
+        <div className="text-secondary ml-2 text-lg hover:underline">{`${post.thread.title}`}</div>
       </Link>
       <div className="mt-3 inline text-3xl text-neutral-100">{post?.title}</div>
       <p className="mt-3 text-[16px] whitespace-pre-line text-neutral-100">{post?.content}</p>
@@ -56,7 +54,7 @@ export const FullPost = ({ postId }: FullPostProps) => {
         alt={""}
       />
       <div className="mt-2 inline-flex items-center gap-2 text-[16px] text-neutral-200">
-        Posted by
+        <div className="hidden [@media(min-width:500px)]:inline">Posted by</div>
         <ImageFrame
           src={post?.author.profile_url ? post.author.profile_url : "/default-avatar.png"}
           height={50}
@@ -67,7 +65,7 @@ export const FullPost = ({ postId }: FullPostProps) => {
         <Link href={path.public.user.getHref(post.author_id)} className="hover:underline">
           {post.author.handler}
         </Link>{" "}
-        <div className="text-neutral-400 text-sm">• {timestampToDate(post.created_at)}</div>
+        <div className="text-sm text-neutral-400">• {timestampToDate(post.created_at)}</div>
       </div>
       <div className="mt-3 mb-4 flex justify-between">
         <LikeModify

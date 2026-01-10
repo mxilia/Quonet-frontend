@@ -78,7 +78,7 @@ async function fetchApi<T>(url: string, options: RequestOptions = {}): Promise<T
     const body = await response.json()
     const message = body.message || response.statusText
     if (typeof window !== "undefined") {
-      if(response.status !== 401){
+      if (response.status !== 401) {
         useNotificationStore.getState().notify({
           type: "error",
           message,
