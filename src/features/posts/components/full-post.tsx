@@ -44,7 +44,9 @@ export const FullPost = ({ postId }: FullPostProps) => {
         <div className="text-secondary ml-2 text-lg hover:underline">{`${post.thread.title}`}</div>
       </Link>
       <div className="mt-3 inline text-3xl text-neutral-100">{post?.title}</div>
-      <p className="mt-3 text-[16px] whitespace-pre-line text-neutral-100 break-all">{post?.content}</p>
+      <p className="mt-3 text-[16px] break-all whitespace-pre-line text-neutral-100">
+        {post?.content}
+      </p>
       <ImageFrame
         src={post.thumbnail_url}
         height={80}

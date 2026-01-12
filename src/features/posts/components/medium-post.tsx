@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { ImageFrame } from "@/components/ui/image-frame/image-frame"
 import { path } from "@/config/path"
@@ -11,8 +11,8 @@ import { LikeButton } from "@/features/likes/components/like-button"
 import { LikeCounter } from "@/features/likes/components/like-counter"
 import { UpdatePost } from "./update-post"
 import { ConfigurePost } from "./configure-post"
-import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { useEffect, useRef, useState } from "react"
+import { cn } from "@/lib/utils"
 
 type MediumPostProps = {
   post: Post
@@ -25,7 +25,7 @@ export const MediumPost = ({ post }: MediumPostProps) => {
 
   useEffect(() => {
     const e = ref.current
-    if(!e) return
+    if (!e) return
     setIsClamped(e.scrollHeight > e.clientHeight)
   }, [])
 
@@ -71,8 +71,23 @@ export const MediumPost = ({ post }: MediumPostProps) => {
           {`/thread/${post.thread.title}`}
         </div>
       </Link>
-      <p ref={ref} className={cn("mt-3 text-[16px] whitespace-pre-line break-all text-neutral-200 max-w-150 w-full", !readMore && "line-clamp-3")}>{post.content}</p>
-      {isClamped && <span onClick={() => setReadMore(!readMore)} className="text-secondary text-[16px] hover:underline">{readMore ? "show less" : "read more"}</span>}
+      <p
+        ref={ref}
+        className={cn(
+          "mt-3 w-full max-w-150 text-[16px] break-all whitespace-pre-line text-neutral-200",
+          !readMore && "line-clamp-3",
+        )}
+      >
+        {post.content}
+      </p>
+      {isClamped && (
+        <span
+          onClick={() => setReadMore(!readMore)}
+          className="text-secondary text-[16px] hover:underline"
+        >
+          {readMore ? "show less" : "read more"}
+        </span>
+      )}
       <ImageFrame
         src={post.thumbnail_url}
         height={80}
