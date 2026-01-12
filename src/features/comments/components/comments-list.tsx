@@ -42,7 +42,7 @@ const CommentBox = ({
   const [showMore, setShowMore] = useState(false)
   return (
     <div className="w-full pt-2">
-      <div className="flex items-stretch gap-2">
+      <div className="inline-flex items-stretch gap-2">
         <div className="flex shrink-0 flex-col items-center pt-1.5">
           <Image
             src={
@@ -53,9 +53,9 @@ const CommentBox = ({
             height={32}
             width={32}
             alt="user profile"
-            className="flex w-8 items-center justify-center rounded-2xl border border-(--foreground) bg-white"
+            className="border-foreground flex w-8 items-center justify-center rounded-2xl border bg-white"
           />
-          {showMore && false && <div className="mt-1 w-px flex-1 bg-(--foreground)"></div>}
+          {showMore && false && <div className="bg-foreground mt-1 w-px flex-1"></div>}
         </div>
 
         <div className="flex flex-1 flex-col">
@@ -65,7 +65,9 @@ const CommentBox = ({
           >
             {comment.author && comment.author ? comment.author.handler : "Deleted User"}
           </Link>
-          <p className="text-md whitespace-pre-line text-neutral-100">{comment.content}</p>
+          <p className="text-md max-w-200 wrap-break-word whitespace-normal text-neutral-100">
+            {comment.content}
+          </p>
           <div className="flex items-center gap-2">
             <LikeModify parentId={comment.id} parentType="comment" className="flex gap-2">
               {({ parentId, parentType, likeState, user, createLike, likeCount }) => (
@@ -83,7 +85,7 @@ const CommentBox = ({
                               border-r-6 border-r-transparent
                               border-b-8 border-b-(--secondary)"
                   />
-                  <LikeCounter likeCount={likeCount} className="text-xs text-(--secondary)" />
+                  <LikeCounter likeCount={likeCount} className="text-secondary text-xs" />
                   <LikeButton
                     parentId={parentId}
                     parentType={parentType}
@@ -101,7 +103,7 @@ const CommentBox = ({
               )}
             </LikeModify>
             <div
-              className="text-xs text-(--secondary)"
+              className="text-secondary text-xs"
               onClick={() => {
                 setIsReplying(true)
                 setParentId(comment.id)
@@ -151,7 +153,7 @@ export const CommentsList = ({
 
   const comments = commentsQuery.data?.pages.flatMap((page) => page.data)
   return (
-    <div className={"flex flex-col gap-3" + (depth > 0 ? " pl-8" : "")}>
+    <div className={"inline-flex w-full flex-col gap-3" + (depth > 0 ? " pl-8" : "")}>
       {depth === 0 && (
         <div
           onClick={() => {
@@ -168,7 +170,7 @@ export const CommentsList = ({
             alt="user profile"
             className="flex h-8 w-8 items-center justify-center rounded-2xl border bg-white"
           />
-          <div className="w-full rounded-2xl bg-(--darker-foreground) p-1 pl-4 text-(--foreground)">
+          <div className="text-foreground w-full rounded-xl bg-neutral-800 p-1 pt-[5px] pl-4 text-sm transition-colors duration-300 hover:bg-neutral-500">
             Reply
           </div>
         </div>
