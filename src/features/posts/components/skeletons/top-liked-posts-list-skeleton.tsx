@@ -4,7 +4,7 @@ export const TopLikedPostsListSkeleton = () => {
   return (
     <div className="w-full">
       <h1 className="mb-2 text-lg">Top Posts (Sorted by likes)</h1>
-      <div className="inline-flex w-full gap-2">
+      <div className="grid grid-cols-3 w-full gap-2">
         <SmallPostSkeleton />
         <SmallPostSkeleton />
         <SmallPostSkeleton />

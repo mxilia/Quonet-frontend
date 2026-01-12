@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton/skeleton"
 
 export const SmallPostSkeleton = () => {
   return (
-    <div className="inline-flex w-50 flex-col justify-between rounded-xl border border-black bg-(--darker-foreground) p-2">
+    <div className="inline-flex max-w-50 flex-col justify-between rounded-xl border border-black bg-(--darker-foreground) p-2">
       <div className="inline-flex max-w-50 gap-2">
         <Skeleton className="h-10 w-10" />
         <div>
