@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useInfiniteComments } from "../api/get-comments"
 import { Comment } from "@/types/api"
 import Image from "next/image"
@@ -11,7 +11,7 @@ import { LikeCounter } from "@/features/likes/components/like-counter"
 import Link from "next/link"
 import { path } from "@/config/path"
 import { DeleteComment } from "./delete-comment"
-import { textToHtml } from "@/utils/format"
+import { parseImageFromText } from "@/utils/parse"
 
 type CommentBox = {
   comment: Comment
@@ -41,6 +41,9 @@ const CommentBox = ({
   setParentId,
 }: CommentBox) => {
   const [showMore, setShowMore] = useState(false)
+  const { content, images } = useMemo(() => {
+    return parseImageFromText(comment.content)
+  }, [comment.content])
   return (
     <div className="w-full pt-2">
       <div className="inline-flex items-stretch gap-2">
@@ -67,8 +70,11 @@ const CommentBox = ({
             {comment.author && comment.author ? comment.author.handler : "Deleted User"}
           </Link>
           <p className="text-md max-w-200 wrap-break-word whitespace-pre-line text-neutral-100">
-            {textToHtml(comment.content)}
+            {content}
           </p>
+          {images?.map((e) => (
+            <img src={e} alt="" />
+          ))}
           <div className="flex items-center gap-2">
             <LikeModify parentId={comment.id} parentType="comment" className="flex gap-2">
               {({ parentId, parentType, likeState, user, createLike, likeCount }) => (

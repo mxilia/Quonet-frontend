@@ -9,13 +9,3 @@ export const spacesToDashes = (s: string): string => {
 export const timestampToDate = (timestamp: number): string => {
   return dayjs(timestamp).format("DD/MM/YYYY - HH:mm")
 }
-
-export const textToHtml = (text: string) => {
-  return text.replace(
-    /(https?:\/\/\S+\.(png|jpe?g|gif|webp))/gi,
-    url => `<img src="${url}" alt="" />`
-  ).replace(
-    /(https?:\/\/[^\s]+)/gi,
-    url => `${url}`
-  );
-}
