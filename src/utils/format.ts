@@ -16,6 +16,6 @@ export const textToHtml = (text: string) => {
     url => `<img src="${url}" alt="" />`
   ).replace(
     /(https?:\/\/[^\s]+)/gi,
-    url => `<a href="${url}">${url}</a>`
+    url => `${url}`
   );
 }
