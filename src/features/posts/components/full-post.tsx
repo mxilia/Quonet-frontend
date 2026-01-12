@@ -44,7 +44,7 @@ export const FullPost = ({ postId }: FullPostProps) => {
         <div className="text-secondary ml-2 text-lg hover:underline">{`${post.thread.title}`}</div>
       </Link>
       <div className="mt-3 inline text-3xl text-neutral-100">{post?.title}</div>
-      <p className="mt-3 text-[16px] wrap-break-word whitespace-normal text-neutral-100">
+      <p className="mt-3 text-[16px] whitespace-pre-line wrap-break-word text-neutral-100">
         {post?.content}
       </p>
       <ImageFrame

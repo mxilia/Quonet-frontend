@@ -65,7 +65,7 @@ const CommentBox = ({
           >
             {comment.author && comment.author ? comment.author.handler : "Deleted User"}
           </Link>
-          <p className="text-md max-w-200 wrap-break-word whitespace-normal text-neutral-100">
+          <p className="text-md max-w-200 wrap-break-word whitespace-pre-line text-neutral-100">
             {comment.content}
           </p>
           <div className="flex items-center gap-2">
