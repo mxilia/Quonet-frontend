@@ -1,3 +1,5 @@
+"use client";
+
 import { ImageFrame } from "@/components/ui/image-frame/image-frame"
 import { path } from "@/config/path"
 import { Post } from "@/types/api"
@@ -7,15 +9,26 @@ import { timestampToDate } from "@/utils/format"
 import { LikeModify } from "@/features/likes/components/like-modify"
 import { LikeButton } from "@/features/likes/components/like-button"
 import { LikeCounter } from "@/features/likes/components/like-counter"
-import { DeletePost } from "./delete-post"
 import { UpdatePost } from "./update-post"
 import { ConfigurePost } from "./configure-post"
+import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 
 type MediumPostProps = {
   post: Post
 }
 
 export const MediumPost = ({ post }: MediumPostProps) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const [isClamped, setIsClamped] = useState(false)
+  const [readMore, setReadMore] = useState(false)
+
+  useEffect(() => {
+    const e = ref.current
+    if(!e) return
+    setIsClamped(e.scrollHeight > e.clientHeight)
+  }, [])
+
   return (
     <div className="border-foreground mt-5 inline-flex w-full flex-col rounded-xl border p-3 pt-3">
       <div className="inline-flex gap-2">
@@ -58,7 +71,8 @@ export const MediumPost = ({ post }: MediumPostProps) => {
           {`/thread/${post.thread.title}`}
         </div>
       </Link>
-      <p className="mt-3 text-[16px] whitespace-break-spaces text-neutral-200 w-full">{post.content}</p>
+      <p ref={ref} className={cn("mt-3 text-[16px] whitespace-pre-line break-all text-neutral-200 max-w-150 w-full", !readMore && "line-clamp-3")}>{post.content}</p>
+      {isClamped && <span onClick={() => setReadMore(!readMore)} className="text-secondary text-[16px] hover:underline">{readMore ? "show less" : "read more"}</span>}
       <ImageFrame
         src={post.thumbnail_url}
         height={80}
