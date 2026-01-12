@@ -3,7 +3,9 @@ import { PostsListSkeleton } from "@/features/posts/components/skeletons/posts-l
 const FeedLoading = () => {
   return (
     <div className="flex min-h-screen justify-center gap-2 bg-black px-2 pt-17 text-white sm:px-0">
-      <PostsListSkeleton />
+      <div className="sm:w-150">
+        <PostsListSkeleton />
+      </div>
     </div>
   )
 }
