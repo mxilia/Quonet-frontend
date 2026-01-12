@@ -17,7 +17,7 @@ type MediumPostProps = {
 
 export const MediumPost = ({ post }: MediumPostProps) => {
   return (
-    <div className="border-foreground mt-5 inline-flex w-full flex-col rounded-xl border p-3 pt-3 sm:w-150">
+    <div className="border-foreground mt-5 inline-flex w-full flex-col rounded-xl border p-3 pt-3">
       <div className="inline-flex gap-2">
         <ImageFrame
           src={post.author.profile_url ? post.author.profile_url : "/default-avatar.png"}

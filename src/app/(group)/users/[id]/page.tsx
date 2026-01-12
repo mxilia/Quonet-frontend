@@ -21,7 +21,7 @@ const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <HydrationBoundary state={dehydratedState}>
       <div className="flex min-h-screen justify-center bg-black pt-17 text-white">
-        <div className="inline-flex w-full flex-col pt-3 pr-4 pl-4 sm:w-150 sm:p-2">
+        <div className="inline-flex w-full flex-col p-2 pt-3 sm:w-150">
           <FullUser userId={userId} />
           <TopLikedPostsList authorId={userId} />
           <PostsList authorId={userId} />

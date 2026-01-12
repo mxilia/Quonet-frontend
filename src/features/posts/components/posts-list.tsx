@@ -37,7 +37,7 @@ export const PostsList = ({ authorId, threadId, title }: PostsListProps) => {
     return <div className="text-sm text-neutral-500">no posts found</div>
 
   return (
-    <div className="inline-flex w-full flex-col pt-3 sm:w-150">
+    <div className="inline-flex w-full flex-col pt-3">
       {posts?.map((e) => (
         <MediumPost key={e.id} post={e} />
       ))}

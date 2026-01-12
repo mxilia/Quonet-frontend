@@ -16,7 +16,9 @@ const FeedPage = async () => {
   return (
     <HydrationBoundary state={dehydratedState}>
       <div className="flex min-h-screen justify-center gap-2 bg-black px-2 pt-17 text-white sm:px-0">
-        <PostsList />
+        <div className="sm:w-150">
+          <PostsList />
+        </div>
       </div>
     </HydrationBoundary>
   )

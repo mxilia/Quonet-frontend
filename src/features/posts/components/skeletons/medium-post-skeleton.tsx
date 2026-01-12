@@ -5,7 +5,7 @@ export const MediumPostSkeleton = ({ ref }: { ref?: RefObject<HTMLDivElement | n
   return (
     <div
       ref={ref}
-      className="mt-5 inline-flex h-fit w-full flex-col rounded-xl border border-(--foreground) p-3 pt-3 pr-4 pl-4 sm:w-150 sm:p-2"
+      className="border-foreground mt-5 inline-flex h-fit w-full flex-col rounded-xl border p-3 pt-3 pr-4 pl-4"
     >
       <div className="mb-2 inline-flex gap-2">
         <Skeleton className="h-10 w-10" />

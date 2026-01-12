@@ -18,7 +18,7 @@ export const TopLikedPostsList = ({ authorId, threadId, title, limit }: TopLiked
   return (
     <div className="w-full">
       <h1 className="mb-2 text-lg">Top Posts (Sorted by likes)</h1>
-      <div className="inline-flex w-full gap-2">
+      <div className="grid w-full grid-cols-3 gap-2">
         {topLikedPosts.data?.map((e) => (
           <SmallPost key={e.id} post={e} />
         ))}
