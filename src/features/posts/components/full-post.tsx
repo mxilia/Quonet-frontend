@@ -88,7 +88,7 @@ export const FullPost = ({ postId }: FullPostProps) => {
                           border-r-8 border-r-transparent
                           border-b-12 border-b-(--secondary)"
               />
-              <div>{post.like_count}</div>
+              <LikeCounter likeCount={likeCount} />
               <LikeButton
                 parentId={parentId}
                 parentType={parentType}
