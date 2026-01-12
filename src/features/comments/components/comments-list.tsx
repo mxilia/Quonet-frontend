@@ -12,6 +12,7 @@ import Link from "next/link"
 import { path } from "@/config/path"
 import { DeleteComment } from "./delete-comment"
 import { parseImageFromText } from "@/utils/parse"
+import { ImageFrame } from "@/components/ui/image-frame/image-frame"
 
 type CommentBox = {
   comment: Comment
@@ -46,7 +47,7 @@ const CommentBox = ({
   }, [comment.content])
   return (
     <div className="w-full pt-2">
-      <div className="inline-flex items-stretch gap-2">
+      <div className="inline-flex w-full gap-2">
         <div className="flex shrink-0 flex-col items-center pt-1.5">
           <Image
             src={
@@ -62,18 +63,18 @@ const CommentBox = ({
           {showMore && false && <div className="bg-foreground mt-1 w-px flex-1"></div>}
         </div>
 
-        <div className="flex flex-1 flex-col">
+        <div className="inline-flex w-full flex-col">
           <Link
             href={path.public.user.getHref(comment.author_id ?? "")}
             className="w-fit text-sm text-neutral-200 hover:underline"
           >
             {comment.author && comment.author ? comment.author.handler : "Deleted User"}
           </Link>
-          <p className="text-md max-w-200 wrap-break-word whitespace-pre-line text-neutral-100">
+          <p className="text-md wrap-break-word whitespace-pre-line text-neutral-100">
             {content}
           </p>
           {images?.map((e) => (
-            <img src={e} alt="" />
+            <img src={e} key={e} className="rounded-xl aspect-auto max-w-full mb-2" alt="" />
           ))}
           <div className="flex items-center gap-2">
             <LikeModify parentId={comment.id} parentType="comment" className="flex gap-2">
@@ -194,7 +195,7 @@ export const CommentsList = ({
         />
       ))}
       {comments && comments.length > 0 && commentsQuery.hasNextPage && (
-        <div className="text-md text-neutral-300" onClick={() => commentsQuery.fetchNextPage()}>
+        <div className="pl-8 text-sm text-secondary" onClick={() => commentsQuery.fetchNextPage()}>
           load more
         </div>
       )}

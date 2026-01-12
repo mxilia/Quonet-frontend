@@ -25,7 +25,7 @@ export const FullPost = ({ postId }: FullPostProps) => {
   const post = postQuery.data
   if (!post) return <div className="text-sm text-neutral-500">post not found</div>
   return (
-    <div className="inline-flex w-200 flex-col p-4">
+    <div className="inline-flex w-full sm:max-w-200 flex-col p-4">
       <Link href={path.public.thread.getHref(post.thread.id)} className="inline-flex items-center">
         {post?.thread.image_url === "" ? (
           <div className="bg-foreground flex h-10 w-10 items-center justify-center rounded-[14px] text-[6px]">
