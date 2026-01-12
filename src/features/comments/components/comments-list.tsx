@@ -11,6 +11,7 @@ import { LikeCounter } from "@/features/likes/components/like-counter"
 import Link from "next/link"
 import { path } from "@/config/path"
 import { DeleteComment } from "./delete-comment"
+import { textToHtml } from "@/utils/format"
 
 type CommentBox = {
   comment: Comment
@@ -66,7 +67,7 @@ const CommentBox = ({
             {comment.author && comment.author ? comment.author.handler : "Deleted User"}
           </Link>
           <p className="text-md max-w-200 wrap-break-word whitespace-pre-line text-neutral-100">
-            {comment.content}
+            {textToHtml(comment.content)}
           </p>
           <div className="flex items-center gap-2">
             <LikeModify parentId={comment.id} parentType="comment" className="flex gap-2">
