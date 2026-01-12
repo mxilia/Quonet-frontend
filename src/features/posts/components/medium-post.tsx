@@ -88,7 +88,7 @@ export const MediumPost = ({ post }: MediumPostProps) => {
                           border-r-8 border-r-transparent
                           border-b-12 border-b-(--secondary)"
               />
-              <LikeCounter likeCount={likeCount} />
+              <div>{post.like_count}</div>
               <LikeButton
                 parentId={parentId}
                 parentType={parentType}
