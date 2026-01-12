@@ -27,7 +27,7 @@ export const SmallPost = ({ post }: SmallPostProps) => {
         <div>
           <Link
             href={path.public.post.getHref(post.id)}
-            className="line-clamp-1 max-w-17 overflow-hidden pr-2 hover:underline"
+            className="line-clamp-1 max-w-15 overflow-hidden pr-2 hover:underline"
           >
             {post.title}
           </Link>
