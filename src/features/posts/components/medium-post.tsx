@@ -58,7 +58,7 @@ export const MediumPost = ({ post }: MediumPostProps) => {
           {`/thread/${post.thread.title}`}
         </div>
       </Link>
-      <p className="mt-3 text-[16px] whitespace-pre-line text-neutral-200">{post.content}</p>
+      <p className="mt-3 text-[16px] whitespace-break-spaces text-neutral-200 w-full">{post.content}</p>
       <ImageFrame
         src={post.thumbnail_url}
         height={80}
