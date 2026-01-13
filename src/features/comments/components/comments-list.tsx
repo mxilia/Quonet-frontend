@@ -72,7 +72,7 @@ const CommentBox = ({
           </Link>
           <p className="text-md wrap-break-word whitespace-pre-line text-neutral-100">{content}</p>
           {images?.map((e) => (
-            <img src={e} key={e} className="mb-2 aspect-auto max-w-full rounded-xl" alt="" />
+            <img src={e} key={e} className="mb-2 aspect-auto max-w-50 rounded-xl" alt="" />
           ))}
           <div className="flex items-center gap-2">
             <LikeModify parentId={comment.id} parentType="comment" className="flex gap-2">
