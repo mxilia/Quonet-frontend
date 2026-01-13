@@ -22,6 +22,11 @@ export const AdminUsersList = () => {
           </div>
         </div>
       ))}
+      {users && users.length > 0 && usersQuery.hasNextPage && (
+        <div className="text-secondary text-sm" onClick={() => usersQuery.fetchNextPage()}>
+          load more
+        </div>
+      )}
     </div>
   )
 }

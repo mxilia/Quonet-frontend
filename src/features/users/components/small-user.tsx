@@ -1,5 +1,7 @@
+import { path } from "@/config/path"
 import { User } from "@/types/api"
 import Image from "next/image"
+import Link from "next/link"
 
 type SmallUserProps = {
   user: User
@@ -19,7 +21,7 @@ export const SmallUser = ({ user }: SmallUserProps) => {
       ) : (
         <div className="h-7 w-7 rounded-sm bg-neutral-700 text-xs"> no img </div>
       )}
-      {user.handler}
+      <Link href={path.public.user.getHref(user.id)} className="hover:underline">{user.handler}</Link>
       <div
         className={`mt-1 h-fit w-fit rounded-xl border pr-1 pl-1 text-center text-[10px] ${user.role === "owner" ? "border-secondary text-secondary" : user.role === "admin" ? "border-yellow-300 text-yellow-300" : "border-green-300 text-green-300"}`}
       >

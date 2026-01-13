@@ -27,11 +27,11 @@ export const FullUser = ({ userId }: FullUserProps) => {
           width={40}
           alt="user profile"
           imgClassName="rounded-full"
-          className="flex items-center justify-center rounded-full border border-(--foreground) bg-white"
+          className="flex items-center justify-center rounded-full border border-foreground bg-white"
         />
         <div className="text-center text-xl">{user.handler}</div>
         <div
-          className={`mt-2 rounded-xl border pr-1 pl-1 text-center text-[10px] ${user.role === "owner" ? "border-(--secondary) text-(--secondary)" : user.role === "admin" ? "border-yellow-300 text-yellow-300" : "border-green-300 text-green-300"}`}
+          className={`mt-2 rounded-xl border pr-1 pl-1 text-center text-[10px] ${user.role === "owner" ? "border-secondary text-secondary" : user.role === "admin" ? "border-yellow-300 text-yellow-300" : "border-green-300 text-green-300"}`}
         >
           {user.role}
         </div>
