@@ -22,31 +22,30 @@ type CreateCommentProps = {
 export const CreateComment = ({ parentId, rootId, handler, setIsReplying }: CreateCommentProps) => {
   const user = useUser()
   const resetRef = useRef<(() => void) | null>(null)
-  const createPost = useCreateComment()
+  const createPost = useCreateComment({
+    mutationConfig: {
+      onSuccess: () => {
+        notify({
+          type: "success",
+          message: "Created comment successfully",
+        })
+        resetRef.current?.()
+        setIsReplying(false)
+      },
+      onError: () => {
+        notify({
+          type: "error",
+          message: "Failed to create comment",
+        })
+      },
+    },
+  })
   const notify = useNotificationStore((s) => s.notify)
 
   if (!canCreateComment(user.data)) return null
 
   const onSubmit = async (data: CreateCommentInput) => {
-    createPost.mutate(
-      { authorId: user.data!.id, parentId: parentId, rootId: rootId, data: data },
-      {
-        onSuccess: () => {
-          notify({
-            type: "success",
-            message: "Created comment successfully",
-          })
-          resetRef.current?.()
-          setIsReplying(false)
-        },
-        onError: () => {
-          notify({
-            type: "error",
-            message: "Failed to create comment",
-          })
-        },
-      },
-    )
+    createPost.mutate({ authorId: user.data!.id, parentId: parentId, rootId: rootId, data: data })
   }
   return (
     <>

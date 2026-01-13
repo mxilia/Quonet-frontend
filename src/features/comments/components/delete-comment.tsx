@@ -29,7 +29,17 @@ export const DeleteComment = ({ comment }: DeleteCommentProps) => {
         onError: (error, variables, onMutateResult, context) => {
           notify({
             type: "error",
-            message: "Failed to delete comment "+error.message+", "+(onMutateResult||"null")+", "+error.name+", "+(error.cause||"null")+", "+(error.stack||"null"),
+            message:
+              "Failed to delete comment " +
+              error.message +
+              ", " +
+              (onMutateResult || "null") +
+              ", " +
+              error.name +
+              ", " +
+              (error.cause || "null") +
+              ", " +
+              (error.stack || "null"),
           })
         },
       },
