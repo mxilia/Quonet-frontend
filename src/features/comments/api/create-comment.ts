@@ -6,7 +6,7 @@ import z from "zod"
 import { getInfiniteCommentsQueryOptions } from "./get-comments"
 
 export const createCommentInputSchema = z.object({
-  content: z.string().min(1, "Required"),
+  content: z.string().min(1, "Required").max(2000, "content cannot be longer than 2000 characters"),
 })
 
 export type CreateCommentInput = z.infer<typeof createCommentInputSchema>

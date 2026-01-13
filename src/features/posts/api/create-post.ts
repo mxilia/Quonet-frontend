@@ -9,9 +9,9 @@ const MAX_SIZE = 1 * 1024 * 1024
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"]
 
 export const createPostInputSchema = z.object({
-  title: z.string().min(1, "Required"),
+  title: z.string().min(1, "Required").max(200, "title cannot be longer than 200 characters"),
   thread_id: z.string().min(1, "Required"),
-  content: z.string().min(1, "Required"),
+  content: z.string().min(1, "Required").max(2000, "post cannot be longer than 2000 characters"),
   thumbnail: z
     .any()
     .transform((files) => {
