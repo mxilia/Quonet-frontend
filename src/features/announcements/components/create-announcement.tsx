@@ -13,20 +13,19 @@ import { Textarea } from "@/components/ui/form/textarea"
 export const CreateAnnouncement = () => {
   const user = useUser()
   const resetRef = useRef<(() => void) | null>(null)
-  const createAnnouncement = useCreateAnnouncement()
+  const createAnnouncement = useCreateAnnouncement({
+    mutationConfig: {
+      onSuccess: () => {
+        console.log("Announcement created!")
+        resetRef.current?.()
+      },
+    },
+  })
 
   if (user.isLoading) return <div>loading</div>
 
   const onSubmit = async (data: CreateAnnouncementInput) => {
-    createAnnouncement.mutate(
-      { data },
-      {
-        onSuccess: () => {
-          console.log("Announcement created!")
-          resetRef.current?.()
-        },
-      },
-    )
+    createAnnouncement.mutate({ data })
   }
   return (
     <div className="mb-2">
@@ -45,7 +44,7 @@ export const CreateAnnouncement = () => {
               <button
                 type="submit"
                 disabled={formState.isSubmitting}
-                className="w-fit rounded-xl border border-(--foreground) p-1 px-2 text-sm text-neutral-200 hover:border-(--secondary) hover:text-(--secondary)"
+                className="border-foreground hover:border-secondary hover:text-secondary w-fit rounded-xl border p-1 px-2 text-sm text-neutral-200"
               >
                 Submit
               </button>

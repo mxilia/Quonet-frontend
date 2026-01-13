@@ -15,36 +15,35 @@ type UpdateUserRoleProps = {
 
 export const UpdateUserRole = ({ userId, handler, email }: UpdateUserRoleProps) => {
   const user = useUser()
-  const updateUser = useUpdateUser()
+  const updateUser = useUpdateUser({
+    mutationConfig: {
+      onSuccess: () => {
+        notify({
+          type: "success",
+          message: "Updated role successfully",
+        })
+        resetRef.current?.()
+      },
+      onError: () => {
+        notify({
+          type: "error",
+          message: "Failed to update role",
+        })
+      },
+    },
+  })
   const resetRef = useRef<(() => void) | null>(null)
   const notify = useNotificationStore((s) => s.notify)
 
   if (!user || !user.data) return null
 
   const onSubmit = async (data: UpdateUserInput) => {
-    updateUser.mutate(
-      {
-        userId: userId,
-        data: data,
-        handler: handler,
-        email: email,
-      },
-      {
-        onSuccess: () => {
-          notify({
-            type: "success",
-            message: "Updated role successfully",
-          })
-          resetRef.current?.()
-        },
-        onError: () => {
-          notify({
-            type: "error",
-            message: "Failed to update role",
-          })
-        },
-      },
-    )
+    updateUser.mutate({
+      userId: userId,
+      data: data,
+      handler: handler,
+      email: email,
+    })
   }
 
   return (
@@ -71,10 +70,10 @@ export const UpdateUserRole = ({ userId, handler, email }: UpdateUserRoleProps) 
                 ]}
                 registration={register("role")}
                 error={formState.errors.role}
-                className="rounded-xl border border-(--foreground) bg-neutral-950 p-1 px-2 text-sm"
+                className="border-foreground rounded-xl border bg-neutral-950 p-1 px-2 text-sm"
               />
               <button
-                className="rounded-xl border border-(--foreground) p-1 px-2 text-sm text-neutral-200 hover:border-(--secondary) hover:text-(--secondary)"
+                className="border-foreground hover:border-secondary hover:text-secondary rounded-xl border p-1 px-2 text-sm text-neutral-200"
                 type="submit"
               >
                 submit

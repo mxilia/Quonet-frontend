@@ -50,7 +50,7 @@ export const CreateComment = ({ parentId, rootId, handler, setIsReplying }: Crea
   return (
     <>
       <div className="fixed top-0 left-0 z-10 flex h-screen w-screen flex-col items-center justify-center">
-        <div className="w-70 rounded-lg border border-(--foreground) bg-black p-3 text-neutral-100 [@media(min-width:400px)]:w-100">
+        <div className="border-foreground w-70 rounded-lg border bg-black p-3 text-neutral-100 [@media(min-width:400px)]:w-100">
           <div className="flex items-center justify-between pb-1">
             <h1 className="text-xl font-semibold"> {`Replying to ${handler}`} </h1>
             <div onClick={() => setIsReplying(false)} className="text-xs text-red-500">
@@ -65,13 +65,13 @@ export const CreateComment = ({ parentId, rootId, handler, setIsReplying }: Crea
                   <Textarea
                     registration={register("content")}
                     placeholder={`Your thoughts on ${handler}`}
-                    className="no-scrollbar h-20 w-full rounded-xl border border-(--foreground) bg-neutral-950 p-1 px-2 text-sm"
+                    className="no-scrollbar border-foreground h-20 w-full rounded-xl border bg-neutral-950 p-1 px-2 text-sm"
                     error={formState.errors.content}
                   />
                   <button
                     type="submit"
                     disabled={formState.isSubmitting}
-                    className="mt-1 w-fit rounded-xl border border-(--foreground) p-1 px-2 text-sm text-neutral-200 hover:border-(--secondary) hover:text-(--secondary)"
+                    className="border-foreground hover:border-secondary hover:text-secondary mt-1 w-fit rounded-xl border p-1 px-2 text-sm text-neutral-200"
                   >
                     Submit
                   </button>

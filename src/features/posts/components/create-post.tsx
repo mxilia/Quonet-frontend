@@ -20,32 +20,31 @@ type CreatePostProps = {
 export const CreatePost = ({ active, setActive }: CreatePostProps) => {
   const user = useUser()
   const resetRef = useRef<(() => void) | null>(null)
-  const createPost = useCreatePost()
+  const createPost = useCreatePost({
+    mutationConfig: {
+      onSuccess: () => {
+        setActive(false)
+        notify({
+          type: "success",
+          message: "Created post successfully",
+        })
+        resetRef.current?.()
+      },
+      onError: () => {
+        notify({
+          type: "error",
+          message: "Failed to create post",
+        })
+      },
+    },
+  })
   const notify = useNotificationStore((s) => s.notify)
 
   if (user.isLoading) return null
   if (!canCreatePost(user.data)) return null
 
   const onSubmit = async (data: CreatePostInput) => {
-    createPost.mutate(
-      { data },
-      {
-        onSuccess: () => {
-          setActive(false)
-          notify({
-            type: "success",
-            message: "Created post successfully",
-          })
-          resetRef.current?.()
-        },
-        onError: () => {
-          notify({
-            type: "error",
-            message: "Failed to create post",
-          })
-        },
-      },
-    )
+    createPost.mutate({ data })
   }
 
   if (!active) return null

@@ -14,30 +14,28 @@ type DeletePostProps = {
 
 export const DeletePost = ({ post, className }: DeletePostProps) => {
   const user = useUser()
-  const deletePost = useDeletePost()
+  const deletePost = useDeletePost({
+    mutationConfig: {
+      onSuccess: () => {
+        notify({
+          type: "success",
+          message: "Deleted post successfully",
+        })
+      },
+      onError: () => {
+        notify({
+          type: "error",
+          message: "Failed to delete post",
+        })
+      },
+    },
+  })
   const notify = useNotificationStore((s) => s.notify)
 
   if (!canDeletePost(user.data, post)) return null
   if (user.isLoading) return null
 
-  const onDelete = () =>
-    deletePost.mutate(
-      { postId: post.id },
-      {
-        onSuccess: () => {
-          notify({
-            type: "success",
-            message: "Deleted post successfully",
-          })
-        },
-        onError: () => {
-          notify({
-            type: "error",
-            message: "Failed to delete post",
-          })
-        },
-      },
-    )
+  const onDelete = () => deletePost.mutate({ postId: post.id })
 
   return (
     <button className={cn("text-xs text-red-500", className)} onClick={onDelete}>

@@ -20,20 +20,10 @@ export const DeleteComment = ({ comment }: DeleteCommentProps) => {
           message: "Deleted comment successfully",
         })
       },
-      onError: (error, variables, onMutateResult, context) => {
+      onError: () => {
         notify({
           type: "error",
-          message:
-            "Failed to delete comment " +
-            error.message +
-            ", " +
-            (onMutateResult || "null") +
-            ", " +
-            error.name +
-            ", " +
-            (error.cause || "null") +
-            ", " +
-            (error.stack || "null"),
+          message: "Failed to delete comment",
         })
       },
     },

@@ -15,34 +15,33 @@ type DeleteUserProps = {
 export const DeleteUser = ({ userId, handler, email }: DeleteUserProps) => {
   const user = useUser()
   const router = useRouter()
-  const deleteUser = useDeleteUser()
+  const deleteUser = useDeleteUser({
+    mutationConfig: {
+      onSuccess: () => {
+        notify({
+          type: "success",
+          message: "Deleted user successfully",
+        })
+      },
+      onError: () => {
+        notify({
+          type: "error",
+          message: "Failed to delete user",
+        })
+      },
+    },
+  })
   const notify = useNotificationStore((s) => s.notify)
 
   if (!user || !user.data) return null
 
   const onDeleteUser = () => {
-    deleteUser.mutate(
-      {
-        userId: userId,
-        handler: handler,
-        email: email,
-      },
-      {
-        onSuccess: () => {
-          notify({
-            type: "success",
-            message: "Updated handler successfully",
-          })
-        },
-        onError: () => {
-          notify({
-            type: "error",
-            message: "Failed to update handler",
-          })
-        },
-      },
-    )
-    router.push(path.public.login.getHref())
+    deleteUser.mutate({
+      userId: userId,
+      handler: handler,
+      email: email,
+    })
+    // router.push(path.public.login.getHref())
   }
 
   return (

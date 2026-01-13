@@ -16,18 +16,17 @@ export const CreateThread = () => {
   if (user.isLoading) return null
   if (!canCreateThread(user.data)) return null
 
-  const createThread = useCreateThread()
+  const createThread = useCreateThread({
+    mutationConfig: {
+      onSuccess: () => {
+        resetRef.current?.()
+        console.log("Thread created!")
+      },
+    },
+  })
 
   const onSubmit = async (data: CreateThreadInput) => {
-    createThread.mutate(
-      { data: data },
-      {
-        onSuccess: () => {
-          resetRef.current?.()
-          console.log("Thread created!")
-        },
-      },
-    )
+    createThread.mutate({ data: data })
   }
 
   return (
@@ -57,7 +56,7 @@ export const CreateThread = () => {
                 error={formState.errors.image as FieldError | undefined}
                 type="file"
                 accept="image/*"
-                className="hover:file:border-secondary inline text-sm file:rounded-2xl file:border file:px-2 file:py-1 file:text-xs file:font-semibold hover:file:text-(--secondary)"
+                className="hover:file:border-secondary hover:file:text-secondary inline text-sm file:rounded-2xl file:border file:px-2 file:py-1 file:text-xs file:font-semibold"
               />
               <button
                 disabled={formState.isSubmitting}
