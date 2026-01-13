@@ -74,7 +74,7 @@ export const MediumPost = ({ post }: MediumPostProps) => {
       <p
         ref={ref}
         className={cn(
-          "wwhitespace-pre-line mt-3 w-full max-w-150 text-[16px] wrap-break-word text-neutral-200",
+          "wwhitespace-pre-line mt-3 w-full text-[16px] wrap-break-word text-neutral-200",
           !readMore && "line-clamp-3",
         )}
       >
