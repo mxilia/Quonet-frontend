@@ -70,11 +70,9 @@ const CommentBox = ({
           >
             {comment.author && comment.author ? comment.author.handler : "Deleted User"}
           </Link>
-          <p className="text-md wrap-break-word whitespace-pre-line text-neutral-100">
-            {content}
-          </p>
+          <p className="text-md wrap-break-word whitespace-pre-line text-neutral-100">{content}</p>
           {images?.map((e) => (
-            <img src={e} key={e} className="rounded-xl aspect-auto max-w-full mb-2" alt="" />
+            <img src={e} key={e} className="mb-2 aspect-auto max-w-full rounded-xl" alt="" />
           ))}
           <div className="flex items-center gap-2">
             <LikeModify parentId={comment.id} parentType="comment" className="flex gap-2">
@@ -195,7 +193,7 @@ export const CommentsList = ({
         />
       ))}
       {comments && comments.length > 0 && commentsQuery.hasNextPage && (
-        <div className="pl-8 text-sm text-secondary" onClick={() => commentsQuery.fetchNextPage()}>
+        <div className="text-secondary pl-8 text-sm" onClick={() => commentsQuery.fetchNextPage()}>
           load more
         </div>
       )}

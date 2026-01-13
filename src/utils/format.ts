@@ -9,4 +9,3 @@ export const spacesToDashes = (s: string): string => {
 export const timestampToDate = (timestamp: number): string => {
   return dayjs(timestamp).format("DD/MM/YYYY - HH:mm")
 }
-

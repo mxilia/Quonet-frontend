@@ -26,10 +26,10 @@ export const DeleteComment = ({ comment }: DeleteCommentProps) => {
             message: "Deleted comment successfully",
           })
         },
-        onError: () => {
+        onError: (error) => {
           notify({
             type: "error",
-            message: "Failed to delete comment",
+            message: "Failed to delete comment " + error.message,
           })
         },
       },
